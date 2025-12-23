@@ -16,7 +16,7 @@
     "environment": "*",
     "entrypoints": {
         "main": [
-            "com.example.examplemod.ExampleMod"
+          "org.hedgetech.fairylightsredux.FabricFairyLightsRedux"
         ]
     },
     "mixins": [
