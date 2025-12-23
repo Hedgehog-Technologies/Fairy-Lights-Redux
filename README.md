@@ -2,3 +2,6 @@
 
 # Fairy Lights
 Fairy Lights is a Minecraft mod which adds decorative string lights of 16 colors and 16 variants as well as vine and tinsel garland.
+
+## What happened to the original?
+As of starting this project on 12-22-2025, the [original Fairy Lights](https://github.com/pau101/Fairy-Lights) has not been touched in 2+ years. This is a very popular mod that a lot of people would like to see get updated to more recent versions of Minecraft. We have decided to try and take up the mantle and revive this project and push it wider via Multiloader compatibility.
