@@ -1,9 +1,11 @@
 package org.hedgetech.fairylightsredux;
 
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.network.ChannelBuilder;
+import net.minecraftforge.network.SimpleChannel;
 
 @Mod(Constants.MOD_ID)
-public class ForgeFairyLightsRedux {
+public final class ForgeFairyLightsRedux {
 
     public ForgeFairyLightsRedux() {
 
@@ -15,5 +17,12 @@ public class ForgeFairyLightsRedux {
         Constants.LOG.info("Hello Forge world!");
         CommonClass.init();
 
+        public static final SimpleChannel NETWORK = ChannelBuilder
+                .named(Constants.NETWORK)
+                .optionalClient()
+                .networkProtocolVersion(1)
+                .simpleChannel()
+                    .any()
+                        .serverbound()
     }
 }
