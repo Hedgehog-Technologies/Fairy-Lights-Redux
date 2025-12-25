@@ -1,7 +1,27 @@
 package org.hedgetech.fairylightsredux.server.connection;
 
+import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
+import org.hedgetech.fairylightsredux.ForgeFairyLightsRedux;
+import org.hedgetech.fairylightsredux.server.collision.Collidable;
+import org.hedgetech.fairylightsredux.server.collision.Intersection;
+import org.hedgetech.fairylightsredux.server.fastener.Fastener;
+import org.hedgetech.fairylightsredux.server.fastener.accessor.FastenerAccessor;
 import org.hedgetech.fairylightsredux.server.feature.FeatureType;
+import org.hedgetech.fairylightsredux.server.sound.FLRSounds;
 import org.hedgetech.fairylightsredux.util.CubicBezier;
+import org.hedgetech.fairylightsredux.util.Curve;
+
+import javax.annotation.Nullable;
+import java.util.UUID;
 
 public abstract class Connection {
     public static final int MAX_LENGTH = 32;
@@ -11,5 +31,165 @@ public abstract class Connection {
     private static final CubicBezier SLACK_CURVE = new CubicBezier(0.495F, 0.505F, 0.495F, 0.505F);
     private static final float MAX_SLACK = 3;
 
-     
+    private final ConnectionType<?> type;
+    private final UUID uuid;
+
+    protected final Fastener<?> fastener;
+
+    private FastenerAccessor destination;
+    @Nullable
+    private FastenerAccessor prevDestination;
+    @Nullable
+    private Curve catenary;
+    private Collidable collision = Collidable.empty();
+    private boolean updateCatenary;
+    private int prevStretchStage;
+    private boolean removed;
+    private boolean drop;
+
+    protected Level world;
+    @Nullable
+    protected Curve prevCatenary;
+    protected float slack = 1;
+
+    public Connection(final ConnectionType<?> type, final Level world, final Fastener<?> fastener, final UUID uuid) {
+        this.type = type;
+        this.world = world;
+        this.fastener = fastener;
+        this.uuid = uuid;
+        this.computeCatenary();
+    }
+
+    public ConnectionType<?> getType() {
+        return this.type;
+    }
+
+    @Nullable
+    public final Curve getCatenary() {
+        return this.catenary;
+    }
+
+    @Nullable
+    public final Curve getPrevCatenary() {
+        return this.prevCatenary == null ? this.catenary : this.prevCatenary;
+    }
+
+    public void setWorld(final Level world) {
+        this.world = world;
+    }
+
+    public final Level getWorld() {
+        return this.world;
+    }
+
+    public final Collidable getCollision() {
+        return this.collision;
+    }
+
+    public final Fastener<?> getFastener() {
+        return this.fastener;
+    }
+
+    public final UUID getUUID() {
+        return this.uuid;
+    }
+
+    public final void setDestination(final Fastener<?> destination) {
+        this.prevDestination = this.destination;
+        this.destination = destination.createAccessor();
+        this.computeCatenary();
+    }
+
+    public final FastenerAccessor getDestination() {
+        return this.destination;
+    }
+
+    public boolean isDestination(final FastenerAccessor location) {
+        return this.destination.equals(location);
+    }
+
+    public void setDrop() {
+        this.drop = true;
+    }
+
+    public void noDrop() {
+        this.drop = false;
+    }
+
+    public boolean shouldDrop() {
+        return this.drop;
+    }
+
+    public ItemStack getItemStack() {
+        final ItemStack stack = new ItemStack(this.getType().getItem());
+        final DataComponentMap componentMap = this.serializeLogic();
+        if (!componentMap.isEmpty()) {
+            stack.applyComponents(componentMap);
+        }
+        return stack;
+    }
+
+    public float getRadius() {
+        return 0.0625F;
+    }
+
+    public final boolean isDynamic() {
+        return this.fastener.isMoving() || this.destination.get(this.world, false).filter(Fastener::isMoving).isPresent();
+    }
+
+    public final boolean isModifiable(final Player player) {
+        return this.world.mayInteract(player, this.fastener.getPos());
+    }
+
+    public final void remove() {
+        if (!this.removed) {
+            this.removed = true;
+            this.onRemove();
+        }
+    }
+
+    public final boolean isRemoved() {
+        return this.removed;
+    }
+
+    public void computeCatenary() {
+        this.updateCatenary = true;
+    }
+
+    public void processClientAction(final Player player, final PlayerAction action, final Intersection intersection) {
+        // @TODO Implement client action processing
+        // REQUIRES: ForgeFairyLightsRedux.NETWORK
+    }
+
+    public void disconnect(final Player player, final Vec3 hit) {
+        this.destination.get(this.world).ifPresent(f -> this.disconnect(f, hit));
+    }
+
+    private void disconnect(final Fastener<?> destinationFastener, final Vec3 hit) {
+        this.fastener.removeConnection(this);
+        destinationFastener.removeConnection(this.uuid);
+        if (this.shouldDrop()) {
+            final ItemStack stack = this.getItemStack();
+            final ItemEntity item = new ItemEntity(this.world, hit.x, hit.y, hit.z, stack);
+            final float scale = 0.05F;
+            item.setDeltaMovement(
+                    this.world.random.nextGaussian() * scale,
+                    this.world.random.nextGaussian() * scale + 0.2F,
+                    this.world.random.nextGaussian() * scale
+            );
+            this.world.addFreshEntity(item);
+        }
+        this.world.playSound(null, hit.x, hit.y, hit.z, FLRSounds.CORD_DISCONNECT.get(), SoundSource.BLOCKS, 1, 1);
+    }
+
+    public boolean interact(final Player player, final Vec3 hit, final FeatureType featureType, final int feature, final ItemStack heldStack, final InteractionHand hand) {
+        final Item item = heldStack.getItem();
+
+    }
+
+    protected void onRemove() {}
+
+    public DataComponentMap serializeLogic() {
+        return DataComponentMap.EMPTY;
+    }
 }

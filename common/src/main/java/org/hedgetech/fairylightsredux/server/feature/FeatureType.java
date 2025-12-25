@@ -18,8 +18,6 @@ public final class FeatureType {
 
     public static final FeatureType DEFAULT = register("default");
 
-    private FeatureType() {}
-
     public int getId() {
         return REGISTRY.getId(this);
     }
@@ -31,4 +29,6 @@ public final class FeatureType {
     public static FeatureType fromId(final int id) {
         return REGISTRY.byId(id);
     }
+
+    private FeatureType() {}
 }
