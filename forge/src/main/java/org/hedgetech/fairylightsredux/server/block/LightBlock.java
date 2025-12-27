@@ -1,14 +1,20 @@
 package org.hedgetech.fairylightsredux.server.block;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.FaceAttachedHorizontalDirectionalBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.hedgetech.fairylightsredux.server.block.entity.LightBlockEntity;
 import org.hedgetech.fairylightsredux.server.item.LightVariant;
 
 public class LightBlock extends FaceAttachedHorizontalDirectionalBlock implements EntityBlock {
@@ -42,7 +48,16 @@ public class LightBlock extends FaceAttachedHorizontalDirectionalBlock implement
             this.northWallShape = clampBox(w0, u + bb.minY, w0 + t, w1, u + bb.maxY, w1 + t);
             this.ceilingShape = clampBox(w0, 1.0D + bb.minY - 4.0D / 16.0D, w0, w1, 1.0D, w1);
         }
-        this.registerDefaultState();
+        this.registerDefaultState(this.getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(FACE, AttachFace.WALL).setValue(LIT, true));
+    }
+
+    public LightVariant<?> getVariant() {
+        return this.variant;
+    }
+
+    @Override
+    public BlockEntity newBlockEntity(final BlockPos pos, final BlockState state) {
+        return new LightBlockEntity(pos, state);
     }
 
     private static VoxelShape clampBox(double x0, double y0, double z0, double x1, double y1, double z1) {
