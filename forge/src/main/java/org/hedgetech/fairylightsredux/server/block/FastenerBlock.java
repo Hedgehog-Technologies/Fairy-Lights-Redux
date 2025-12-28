@@ -2,8 +2,12 @@ package org.hedgetech.fairylightsredux.server.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -13,6 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.hedgetech.fairylightsredux.server.block.entity.FLRBlockEntities;
@@ -20,6 +25,7 @@ import org.hedgetech.fairylightsredux.server.block.entity.FastenerBlockEntity;
 import org.hedgetech.fairylightsredux.server.capability.CapabilityHandler;
 
 import javax.annotation.Nullable;
+import java.util.stream.Stream;
 
 public final class FastenerBlock extends DirectionalBlock implements EntityBlock {
     public static final BooleanProperty TRIGGERED = BlockStateProperties.TRIGGERED;
@@ -94,13 +100,66 @@ public final class FastenerBlock extends DirectionalBlock implements EntityBlock
     }
 
     @Override
-    public void onRemove(final BlockState state, final Level world, final BlockPos pos, final BlockState newState, final boolean isMoving) {
-        if (!state.is(newState.getBlock())) {
-            final BlockEntity entity = world.getBlockEntity(pos);
-            if (entity instanceof FastenerBlockEntity) {
-                entity.getCapability(CapabilityHandler.FASTENER_CAP).ifPresent(f -> f.dropItems(world, pos));
-            }
-            super.onRemove(state, world, pos, newState, isMoving);
+    public void affectNeighborsAfterRemoval(final BlockState state, final ServerLevel world, final BlockPos pos, final boolean isMoving) {
+        final BlockEntity entity = world.getBlockEntity(pos);
+        if (entity instanceof FastenerBlockEntity) {
+            entity.getCapability(CapabilityHandler.FASTENER_CAP).ifPresent(f -> f.dropItems(world, pos));
         }
+        // @TODO - verify if this is needed
+        super.affectNeighborsAfterRemoval(state, world, pos, isMoving);
+    }
+
+    @Override
+    public boolean canSurvive(final BlockState state, final LevelReader world, final BlockPos pos) {
+        final Direction facing = state.getValue(FACING);
+        final BlockPos attachedPos = pos.relative(facing.getOpposite());
+        final BlockState attachedState = world.getBlockState(attachedPos);
+        return attachedState.is(BlockTags.LEAVES) || attachedState.isFaceSturdy(world, attachedPos, facing) || facing == Direction.UP && attachedState.is(BlockTags.WALLS);
+    }
+
+    @Nullable
+    @Override
+    public BlockState getStateForPlacement(final BlockPlaceContext context) {
+        BlockState result = this.defaultBlockState();
+        final Level world = context.getLevel();
+        final BlockPos pos = context.getClickedPos();
+        for (final Direction dir : context.getNearestLookingDirections()) {
+            result = result.setValue(FACING, dir.getOpposite());
+            if (result.canSurvive(world, pos)) {
+                return result.setValue(TRIGGERED, world.hasNeighborSignal(pos.relative(dir)));
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void neighborChanged(final BlockState state, final Level world, final BlockPos pos, final Block blockIn, final Orientation orientation, final boolean isMoving) {
+        if (state.canSurvive(world, pos)) {
+            final boolean receivingPower = world.hasNeighborSignal(pos);
+            final boolean isPowered = state.getValue(TRIGGERED);
+            if (receivingPower && !isPowered) {
+                world.scheduleTick(pos, this, 2);
+                world.setBlock(pos, state.setValue(TRIGGERED, true), 4);
+            } else if (!receivingPower && isPowered) {
+                world.setBlock(pos, state.setValue(TRIGGERED, false), 4);
+            }
+        } else {
+            final BlockEntity entity = world.getBlockEntity(pos);
+            dropResources(state, world, pos, entity);
+            world.removeBlock(pos, false);
+        }
+    }
+
+    @Override
+    public boolean hasAnalogOutputSignal(final BlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getAnalogOutputSignal(final BlockState state, final Level world, final BlockPos pos) {
+        final BlockEntity entity = world.getBlockEntity(pos);
+        if (entity == null) return super.getAnalogOutputSignal(state, world, pos);
+        return entity.getCapability(CapabilityHandler.FASTENER_CAP).map(f -> f.getAllConnections().stream()).orElse(Stream.empty())
+                .filter()
     }
 }

@@ -1,5 +1,6 @@
 package org.hedgetech.fairylightsredux.server.fastener;
 
+import net.minecraft.core.component.DataComponentMap;
 import org.hedgetech.fairylightsredux.server.connection.Connection;
 import org.hedgetech.fairylightsredux.server.connection.ConnectionType;
 import org.hedgetech.fairylightsredux.server.fastener.accessor.FastenerAccessor;
@@ -71,6 +72,8 @@ public interface Fastener<F extends FastenerAccessor> extends ICapabilitySeriali
     boolean reconnect(final Level world, Connection connection, Fastener<?> newDestination);
 
     Connection connect(Level world, Fastener<?> destination, ConnectionType<?> type, CompoundTag compound, final boolean drop);
+
+    Connection connect(Level world, Fastener<?> destination, ConnectionType<?> type, DataComponentMap components, final boolean drop);
 
     Connection createOutgoingConnection(Level world, UUID uuid, Fastener<?> destination, ConnectionType<?> type, CompoundTag compound, final boolean drop);
 

@@ -1,24 +1,31 @@
 package org.hedgetech.fairylightsredux.server.connection;
 
+import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.Tags;
+import net.minecraftforge.items.ItemHandlerHelper;
 import org.hedgetech.fairylightsredux.ForgeFairyLightsRedux;
 import org.hedgetech.fairylightsredux.server.collision.Collidable;
 import org.hedgetech.fairylightsredux.server.collision.Intersection;
 import org.hedgetech.fairylightsredux.server.fastener.Fastener;
 import org.hedgetech.fairylightsredux.server.fastener.accessor.FastenerAccessor;
 import org.hedgetech.fairylightsredux.server.feature.FeatureType;
+import org.hedgetech.fairylightsredux.server.item.ConnectionItem;
 import org.hedgetech.fairylightsredux.server.sound.FLRSounds;
 import org.hedgetech.fairylightsredux.util.CubicBezier;
 import org.hedgetech.fairylightsredux.util.Curve;
+import org.hedgetech.fairylightsredux.util.Utils;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
@@ -182,12 +189,119 @@ public abstract class Connection {
         this.world.playSound(null, hit.x, hit.y, hit.z, FLRSounds.CORD_DISCONNECT.get(), SoundSource.BLOCKS, 1, 1);
     }
 
-    public boolean interact(final Player player, final Vec3 hit, final FeatureType featureType, final int feature, final ItemStack heldStack, final InteractionHand hand) {
-        final Item item = heldStack.getItem();
-
+    public boolean reconnect(final Fastener<?> destination) {
+        return this.fastener.reconnect(this.world, this, destination);
     }
 
+    public boolean interact(final Player player, final Vec3 hit, final FeatureType featureType, final int feature, final ItemStack heldStack, final InteractionHand hand) {
+        final Item item = heldStack.getItem();
+        if (item instanceof ConnectionItem && !this.matches(heldStack)) {
+            return this.replace(player, hit, heldStack);
+        } else if (heldStack.is(Tags.Items.STRINGS)) {
+            return this.slacken(hit, heldStack, 0.2F);
+        } else if (heldStack.is(Items.STICK)) {
+            return this.slacken(hit, heldStack, -0.2F);
+        }
+        return false;
+    }
+
+    public boolean matches(final ItemStack stack) {
+        if (this.getType().getItem().equals(stack.getItem())) {
+            final DataComponentMap components = stack.getComponents();
+            return Utils.impliesComponents(this.serializeLogic(), components);
+        }
+        return false;
+    }
+
+    private boolean replace(final Player player, final Vec3 hit, final ItemStack heldStack) {
+        return this.destination.get(this.world).map(dest -> {
+            this.fastener.removeConnection(this);
+            dest.removeConnection(this.uuid);
+            if (this.shouldDrop()) {
+                ItemHandlerHelper.giveItemToPlayer(player, this.getItemStack());
+            }
+            final DataComponentMap components = heldStack.getComponents();
+            final ConnectionType<? extends Connection> type = ((ConnectionItem) heldStack.getItem()).getConnectionType();
+            final Connection conn = this.fastener.connect(this.world, dest, type, components, true);
+            conn.slack = this.slack;
+            conn.onConnect(player.level(), player, heldStack);
+            heldStack.shrink(1);
+            this.world.playSound(null, hit.x, hit.y, hit.z, FLRSounds.CORD_CONNECT.get(), SoundSource.BLOCKS, 1, 1);
+            return true;
+        }).orElse(false);
+    }
+
+    private boolean slacken(final Vec3 hit, final ItemStack heldStack, final float amount) {
+        if (this.slack <= 0 && amount < 0 || this.slack >= MAX_SLACK && amount > 0) {
+            return true;
+        }
+        this.slack = Mth.clamp(this.slack + amount, 0, MAX_SLACK);
+        if (this.slack < 1e-2F) {
+            this.slack = 0;
+        }
+        this.computeCatenary();
+        this.world.playSound(null, hit.x, hit.y, hit.z, FLRSounds.CORD_STRETCH.get(), SoundSource.BLOCKS, 1, 0.8F + (MAX_SLACK - this.slack) * -0.4F);
+        return true;
+    }
+
+    public void onConnect(final Level world, final Player user, final ItemStack heldStack) {}
+
     protected void onRemove() {}
+
+    protected void onUpdate() {}
+
+    protected void onCalculateCatenary(final boolean relocated) {}
+
+    public final boolean update(final Vec3 from) {
+        this.prevCatenary = this.catenary;
+        final boolean changed = this.destination.get(this.world, false).map(dest -> {
+            final Vec3 point = dest.getConnectionPoint();
+            final boolean c = this.updateCatenary(from, dest, point);
+            this.onUpdate();
+            final double dist = point.distanceTo(from);
+            final double pull = dist - MAX_LENGTH + PULL_RANGE;
+            if (pull > 0) {
+                final int stage = (int) (pull + 0.1F);
+                if (stage > this.prevStretchStage) {
+                    this.world.playSound(null, point.x, point.y, point.z, FLRSounds.CORD_STRETCH.get(), SoundSource.BLOCKS, 0.25F, 0.5F + stage / 8F);
+                }
+                this.prevStretchStage = stage;
+            }
+            if (dist > MAX_LENGTH + PULL_RANGE) {
+                this.world.playSound(null, point.x, point.y, point.z, FLRSounds.CORD_SNAP.get(), SoundSource.BLOCKS, 0.75F, 0.8F + this.world.random.nextFloat() * 0.3F);
+                this.remove();
+            } else if (dest.isMoving()) {
+                dest.resistSnap(from);
+            }
+            return c;
+        }).orElse(false);
+        if (this.destination.isGone(this.world)) {
+            this.remove();
+        }
+        return changed;
+    }
+
+    private boolean updateCatenary(final Vec3 from, final Fastener<?> dest, final Vec3 point) {
+        if (this.updateCatenary || this.isDynamic()) {
+            final Vec3 vec = point.subtract(from);
+            if (vec.length() > 1e-6) {
+                final Direction facing = this.fastener.getFacing();
+                if (this.fastener instanceof FenceFastener && dest instanceof FenceFastener && vec.horizontalDistance() < 1e-2) {
+                    this.catenary = this.verticalHelix(vec);
+                } else {
+                    this.catenary = Catenary.from(vec, facing.getAxis() == Direction.Axis.Y ? 0.0F : (float) Math.toRadians(90.0F - facing.toYRot()), SLACK_CURVE, this.slack);
+                }
+                this.onCalculateCatenary(!this.destination.equals(this.prevDestination));
+                final CollidableList.Builder bob = new ColliadableList.Builder();
+                this.addCollision(bob, from);
+                this.collision = bob.build();
+            }
+            this.updateCatenary = false;
+            this.prevDestination = this.destination;
+            return true;
+        }
+        return false;
+    }
 
     public DataComponentMap serializeLogic() {
         return DataComponentMap.EMPTY;
