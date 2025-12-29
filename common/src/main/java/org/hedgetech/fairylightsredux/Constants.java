@@ -12,6 +12,7 @@ public class Constants {
 	public static final Logger LOG = LoggerFactory.getLogger(MOD_NAME);
 
 	public static final ResourceLocation CONNECTION_TYPE = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "connection_type");
+	public static final ResourceLocation FASTENER = ResourceLocation.fromNamespaceAndPath(MOD_ID, "fastener");
 	public static final ResourceLocation FEATURE = ResourceLocation.fromNamespaceAndPath(MOD_ID, "feature");
 	public static final ResourceLocation NETWORK = ResourceLocation.fromNamespaceAndPath(MOD_ID, "net");
 	public static final ResourceLocation STRING_TYPE = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "string_type");

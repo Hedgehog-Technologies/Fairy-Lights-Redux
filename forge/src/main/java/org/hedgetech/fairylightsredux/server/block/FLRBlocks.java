@@ -1,6 +1,9 @@
 package org.hedgetech.fairylightsredux.server.block;
 
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -12,7 +15,7 @@ import java.util.function.Supplier;
 public final class FLRBlocks {
     public static final DeferredRegister<Block> REG = DeferredRegister.create(ForgeRegistries.BLOCKS, Constants.MOD_ID);
 
-    public static final RegistryObject<FastenerBlock>
+    public static final RegistryObject<FastenerBlock> FASTENER = REG.register("fastener", () -> new FastenerBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).forceSolidOn().strength(3.5F).sound(SoundType.LANTERN)));
 
     private static Supplier<LightBlock> createLight(final LightVariant<?> variant) {
         return createLight(variant, LightBlock::new);

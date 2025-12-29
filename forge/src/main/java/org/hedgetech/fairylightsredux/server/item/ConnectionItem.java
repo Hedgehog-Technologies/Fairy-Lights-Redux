@@ -7,7 +7,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.RegistryObject;
+import org.hedgetech.fairylightsredux.server.block.FLRBlocks;
 import org.hedgetech.fairylightsredux.server.connection.ConnectionType;
 
 public abstract class ConnectionItem extends Item {
@@ -31,6 +33,6 @@ public abstract class ConnectionItem extends Item {
         final Level world = context.getLevel();
         final Direction side = context.getClickedFace();
         final BlockPos clickPos = context.getClickedPos();
-//        final Block fastener =
+        final Block fastener = FLRBlocks.FAS
     }
 }

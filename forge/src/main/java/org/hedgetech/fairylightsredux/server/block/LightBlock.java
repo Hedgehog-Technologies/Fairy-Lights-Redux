@@ -2,7 +2,13 @@ package org.hedgetech.fairylightsredux.server.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.FaceAttachedHorizontalDirectionalBlock;
@@ -12,10 +18,13 @@ import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.hedgetech.fairylightsredux.server.block.entity.LightBlockEntity;
 import org.hedgetech.fairylightsredux.server.item.LightVariant;
+
+import javax.annotation.Nullable;
 
 public class LightBlock extends FaceAttachedHorizontalDirectionalBlock implements EntityBlock {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
@@ -51,6 +60,11 @@ public class LightBlock extends FaceAttachedHorizontalDirectionalBlock implement
         this.registerDefaultState(this.getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(FACE, AttachFace.WALL).setValue(LIT, true));
     }
 
+    private static VoxelShape clampBox(double x0, double y0, double z0, double x1, double y1, double z1) {
+        return Shapes.box(Mth.clamp(x0, 0.0D, 1.0D), Mth.clamp(y0, 0.0D, 1.0D), Mth.clamp(z0, 0.0D, 1.0D),
+                Mth.clamp(x1, 0.0D, 1.0D), Mth.clamp(y1, 0.0D, 1.0D), Mth.clamp(z1, 0.0D, 1.0D));
+    }
+
     public LightVariant<?> getVariant() {
         return this.variant;
     }
@@ -60,8 +74,58 @@ public class LightBlock extends FaceAttachedHorizontalDirectionalBlock implement
         return new LightBlockEntity(pos, state);
     }
 
-    private static VoxelShape clampBox(double x0, double y0, double z0, double x1, double y1, double z1) {
-        return Shapes.box(Mth.clamp(x0, 0.0D, 1.0D), Mth.clamp(y0, 0.0D, 1.0D), Mth.clamp(z0, 0.0D, 1.0D),
-                Mth.clamp(x1, 0.0D, 1.0D), Mth.clamp(y1, 0.0D, 1.0D), Mth.clamp(z1, 0.0D, 1.0D));
+    @Override
+    public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+        final AttachFace value = state.getValue(FACE);
+        if (value == AttachFace.WALL) {
+            final Direction facing = state.getValue(FACING);
+            final BlockPos anchorPos = pos.relative(facing.getOpposite());
+            BlockState anchorState = world.getBlockState(anchorPos);
+            if (anchorState.is(BlockTags.LEAVES)) {
+                return true;
+            }
+            final VoxelShape shape = anchorState.getBlockSupportShape(world, anchorPos);
+            return Block.isFaceFull(shape, facing);
+        }
+        final Direction facing = value == AttachFace.FLOOR ? Direction.DOWN : Direction.UP;
+        final BlockPos anchorPos = pos.relative(facing);
+        BlockState anchorState = world.getBlockState(anchorPos);
+        if (anchorState.is(BlockTags.LEAVES)) {
+            return true;
+        }
+        final VoxelShape shape = anchorState.getBlockSupportShape(world, anchorPos);
+        return !Shapes.joinIsNotEmpty(shape.getFaceShape(facing.getOpposite()), MIN_ANCHOR_SHAPE, BooleanOp.ONLY_SECOND);
+    }
+
+    @Nullable
+    @Override
+    public BlockState getStateForPlacement(final BlockPlaceContext context) {
+        for (final Direction dir : context.getNearestLookingDirections()) {
+            final BlockState state;
+            if (dir.getAxis() == Direction.Axis.Y) {
+                state = this.defaultBlockState()
+                        .setValue(FACE, dir == Direction.UP ? AttachFace.CEILING : AttachFace.FLOOR)
+                        .setValue(FACING, context.getHorizontalDirection().getOpposite());
+            } else {
+                state = this.defaultBlockState()
+                        .setValue(FACE, AttachFace.WALL)
+                        .setValue(FACING, dir.getOpposite());
+            }
+            if (state.canSurvive(context.getLevel(), context.getClickedPos())) {
+                return state;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        super.setPlacedBy(world, pos, state, placer, stack);
+        final BlockEntity entity = world.getBlockEntity(pos);
+        if (entity instanceof LightBlockEntity lightBlock) {
+            final ItemStack lightItem = stack.copy();
+            lightItem.setCount(1);
+            lightBlock.
+        }
     }
 }

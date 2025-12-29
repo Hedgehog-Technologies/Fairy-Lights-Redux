@@ -23,6 +23,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.hedgetech.fairylightsredux.server.block.entity.FLRBlockEntities;
 import org.hedgetech.fairylightsredux.server.block.entity.FastenerBlockEntity;
 import org.hedgetech.fairylightsredux.server.capability.CapabilityHandler;
+import org.hedgetech.fairylightsredux.server.connection.HangingLightConnection;
 
 import javax.annotation.Nullable;
 import java.util.stream.Stream;
@@ -160,6 +161,9 @@ public final class FastenerBlock extends DirectionalBlock implements EntityBlock
         final BlockEntity entity = world.getBlockEntity(pos);
         if (entity == null) return super.getAnalogOutputSignal(state, world, pos);
         return entity.getCapability(CapabilityHandler.FASTENER_CAP).map(f -> f.getAllConnections().stream()).orElse(Stream.empty())
-                .filter()
+                .filter(HangingLightConnection.class::isInstance)
+                .map(HangingLightConnection.class::cast)
+                .mapToInt(c -> (int) Math.ceil(c.getJingleProgress() * 15))
+                .max().orElse(0);
     }
 }
