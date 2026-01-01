@@ -18,8 +18,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface Fastener<F extends FastenerAccessor> extends ICapabilitySerializable<CompoundTag> {
-    @Override
-    CompoundTag serializeNBT();
+//    @Override
+//    CompoundTag serializeNBT();
 
     Optional<Connection> get(final UUID id);
 

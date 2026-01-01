@@ -1,4 +1,4 @@
-package org.hedgetech.fairylightsredux.server.item;
+package org.hedgetech.fairylightsredux.server.item.crafting;
 
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.fml.common.Mod;

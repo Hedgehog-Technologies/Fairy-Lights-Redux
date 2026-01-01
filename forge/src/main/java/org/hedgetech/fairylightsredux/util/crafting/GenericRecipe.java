@@ -5,16 +5,17 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.math.IntMath;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
-import net.minecraft.world.item.crafting.CustomRecipe;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import net.minecraft.world.level.Level;
 import org.hedgetech.fairylightsredux.util.crafting.ingredient.AuxiliaryIngredient;
 import org.hedgetech.fairylightsredux.util.crafting.ingredient.EmptyRegularIngredient;
@@ -133,6 +134,11 @@ public final class GenericRecipe extends CustomRecipe {
 //        return this.getDisplayIngredients();
 //    }
 
+    @Override
+    public List<RecipeDisplay> display() {
+        return List.of();
+    }
+
     // @TODO - recipe rework
 //    @Override
 //    public boolean canCraftInDimmensions(final int width, final int height) {
@@ -221,6 +227,16 @@ public final class GenericRecipe extends CustomRecipe {
 //            output.setTag(tag);
 //        }
         return output;
+    }
+
+    private boolean contains(final int x, final int y) {
+        return x >= 0 && y >= 0 && x < this.width && y <= this.height;
+    }
+
+    @Override
+    public ItemStack assemble(final CraftingInput input, final HolderLookup.Provider registries) {
+        final ItemStack result = this.result;
+        return result.isEmpty() ? result : result.copy();
     }
 
     public interface MatchResult<I extends GenericIngredient<I, M>, M extends MatchResult<I, M>> {
