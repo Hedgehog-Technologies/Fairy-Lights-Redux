@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -18,12 +19,15 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.redstone.Orientation;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.hedgetech.fairylightsredux.server.block.entity.FLRBlockEntities;
 import org.hedgetech.fairylightsredux.server.block.entity.FastenerBlockEntity;
 import org.hedgetech.fairylightsredux.server.capability.CapabilityHandler;
 import org.hedgetech.fairylightsredux.server.connection.HangingLightConnection;
+import org.hedgetech.fairylightsredux.server.fastener.accessor.BlockFastenerAccessor;
+import org.jspecify.annotations.NonNull;
 
 import javax.annotation.Nullable;
 import java.util.stream.Stream;
@@ -52,42 +56,35 @@ public final class FastenerBlock extends DirectionalBlock implements EntityBlock
     }
 
     @Override
-    public BlockState rotate(final BlockState state, final Rotation rot) {
+    public @NonNull BlockState rotate(final BlockState state, final Rotation rot) {
         return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
     }
 
     @Override
-    public BlockState mirror(final BlockState state, final Mirror mirrorIn) {
+    public @NonNull BlockState mirror(final BlockState state, final Mirror mirrorIn) {
         return state.setValue(FACING, mirrorIn.mirror(state.getValue(FACING)));
     }
 
     @Override
-    public VoxelShape getShape(final BlockState state, final BlockGetter worldIn, final BlockPos pos, final CollisionContext context) {
-        switch (state.getValue(FACING)) {
-            case NORTH:
-                return NORTH_AABB;
-            case SOUTH:
-                return SOUTH_AABB;
-            case WEST:
-                return WEST_AABB;
-            case EAST:
-                return EAST_AABB;
-            case DOWN:
-                return DOWN_AABB;
-            case UP:
-            default:
-                return UP_AABB;
-        }
+    public @NonNull VoxelShape getShape(final BlockState state, final @NonNull BlockGetter worldIn, final @NonNull BlockPos pos, final @NonNull CollisionContext context) {
+        return switch (state.getValue(FACING)) {
+            case NORTH -> NORTH_AABB;
+            case SOUTH -> SOUTH_AABB;
+            case WEST -> WEST_AABB;
+            case EAST -> EAST_AABB;
+            case DOWN -> DOWN_AABB;
+            default -> UP_AABB;
+        };
     }
 
     @Override
-    public BlockEntity newBlockEntity(final BlockPos pos, final BlockState state) {
+    public BlockEntity newBlockEntity(final @NonNull BlockPos pos, final @NonNull BlockState state) {
         return new FastenerBlockEntity(pos, state);
     }
 
     @Nullable
     @Override
-    public <T extends BlockEntity>BlockEntityTicker<T> getTicker(final Level level, final BlockState state, final BlockEntityType<T> type) {
+    public <T extends BlockEntity>BlockEntityTicker<T> getTicker(final Level level, final @NonNull BlockState state, final @NonNull BlockEntityType<T> type) {
         if (level.isClientSide()) {
             return createTickerHelper(type, FLRBlockEntities.FASTENER.get(), FastenerBlockEntity::tickClient);
         }
@@ -101,7 +98,7 @@ public final class FastenerBlock extends DirectionalBlock implements EntityBlock
     }
 
     @Override
-    public void affectNeighborsAfterRemoval(final BlockState state, final ServerLevel world, final BlockPos pos, final boolean isMoving) {
+    public void affectNeighborsAfterRemoval(final @NonNull BlockState state, final ServerLevel world, final @NonNull BlockPos pos, final boolean isMoving) {
         final BlockEntity entity = world.getBlockEntity(pos);
         if (entity instanceof FastenerBlockEntity) {
             entity.getCapability(CapabilityHandler.FASTENER_CAP).ifPresent(f -> f.dropItems(world, pos));
@@ -134,7 +131,7 @@ public final class FastenerBlock extends DirectionalBlock implements EntityBlock
     }
 
     @Override
-    public void neighborChanged(final BlockState state, final Level world, final BlockPos pos, final Block blockIn, final Orientation orientation, final boolean isMoving) {
+    public void neighborChanged(final BlockState state, final @NonNull Level world, final @NonNull BlockPos pos, final @NonNull Block blockIn, final Orientation orientation, final boolean isMoving) {
         if (state.canSurvive(world, pos)) {
             final boolean receivingPower = world.hasNeighborSignal(pos);
             final boolean isPowered = state.getValue(TRIGGERED);
@@ -152,12 +149,12 @@ public final class FastenerBlock extends DirectionalBlock implements EntityBlock
     }
 
     @Override
-    public boolean hasAnalogOutputSignal(final BlockState state) {
+    public boolean hasAnalogOutputSignal(final @NonNull BlockState state) {
         return true;
     }
 
     @Override
-    public int getAnalogOutputSignal(final BlockState state, final Level world, final BlockPos pos) {
+    public int getAnalogOutputSignal(final @NonNull BlockState state, final Level world, final @NonNull BlockPos pos) {
         final BlockEntity entity = world.getBlockEntity(pos);
         if (entity == null) return super.getAnalogOutputSignal(state, world, pos);
         return entity.getCapability(CapabilityHandler.FASTENER_CAP).map(f -> f.getAllConnections().stream()).orElse(Stream.empty())
@@ -165,5 +162,39 @@ public final class FastenerBlock extends DirectionalBlock implements EntityBlock
                 .map(HangingLightConnection.class::cast)
                 .mapToInt(c -> (int) Math.ceil(c.getJingleProgress() * 15))
                 .max().orElse(0);
+    }
+
+    @Override
+    public void tick(final @NonNull BlockState state, final @NonNull ServerLevel world, final @NonNull BlockPos pos, final @NonNull RandomSource random) {
+        this.jingle(world, pos);
+    }
+
+    public Vec3 getOffset(final Direction facing, final float offset) {
+        return getFastenerOffset(facing, offset);
+    }
+
+    public static Vec3 getFastenerOffset(final Direction facing, final float offset) {
+        double x = offset, y = offset, z = offset;
+        switch (facing) {
+            case DOWN: y += 0.75F;
+            case UP: x += 0.375F; z += 0.375F; break;
+            case WEST: x += 0.75F;
+            case EAST: z += 0.375F; y += 0.375F; break;
+            case NORTH: z += 0.75F;
+            case SOUTH: x += 0.375F; y += 0.375F; break;
+        }
+        return new Vec3(x, y, z);
+    }
+
+    private void jingle(final Level world, final BlockPos pos) {
+        final BlockEntity entity = world.getBlockEntity(pos);
+        if (!(entity instanceof FastenerBlockEntity)) return;
+
+        entity.getCapability(CapabilityHandler.FASTENER_CAP).ifPresent(fastener -> fastener.getAllConnections().stream()
+                .filter(HangingLightConnection.class::isInstance)
+                .map(HangingLightConnection.class::cast)
+                .filter(conn -> conn.canCurrentlyPlayAJingle() && conn.isDestination(new BlockFastenerAccessor(fastener.getPos())) && world.getBlockState(fastener.getPos()).getValue(TRIGGERED))
+                .findFirst().ifPresent(conn -> ServerEventHandler.tryJingle(world, conn))
+        );
     }
 }

@@ -1,14 +1,16 @@
 package org.hedgetech.fairylightsredux.server.net;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.network.Channel;
 import net.minecraftforge.network.ChannelBuilder;
 import net.minecraftforge.network.SimpleChannel;
-import net.minecraftforge.network.simple.SimpleConnection;
 import org.hedgetech.fairylightsredux.server.net.interfaces.ConsumerFactoryInterface;
 import org.hedgetech.fairylightsredux.server.net.interfaces.MessageInterface;
 
 import java.util.function.BiConsumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public final class NetBuilder {
@@ -78,11 +80,15 @@ public final class NetBuilder {
         return this.channel;
     }
 
+    public <T extends IMessage> MessageBuilder<T, ServerMessageContext> serverbound(final Supplier<T> factory) {
+        return new MessageBuilder<>(factory, new HandlerConsumerFactory<>(LogicalSide.SERVER, ServerMessageContext::new));
+    }
+
     public SimpleChannel build() {
         return this.channel();
     }
 
-    public class MessageBuilder<T extends MessageInterface, S extends MessageContext> {
+    public class MessageBuilder<T extends IMessage, S extends MessageContext> {
         private final Supplier<T> factory;
         private final ConsumerFactoryInterface<T, S> consumerFactory;
 
@@ -107,5 +113,10 @@ public final class NetBuilder {
 
             return NetBuilder.this;
         }
+    }
+
+    private static class HandlerConsumerFactory<T extends IMessage, S extends MessageContext> implements ConsumerFactory<T, S> {
+        private final LogicalSide side;
+        private final Function<CustomPayloadEvent.Context, S> contextFactory;
     }
 }

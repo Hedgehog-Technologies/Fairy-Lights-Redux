@@ -1,0 +1,33 @@
+package org.hedgetech.fairylightsredux.server.net;
+
+
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.fml.LogicalSide;
+
+import java.util.Objects;
+
+public class ServerMessageContext extends MessageContext {
+    public ServerMessageContext(final CustomPayloadEvent.Context context) {
+        super(context);
+    }
+
+    @Override
+    public LogicalSide getSide() {
+        return LogicalSide.SERVER;
+    }
+
+    public MinecraftServer getServer() {
+        return this.getPlayer().getServer();
+    }
+
+    public ServerLevel getWorld() {
+        return this.getPlayer().level();
+    }
+
+    public ServerPlayer getPlayer() {
+        return Objects.requireNonNull(this.context.getSender());
+    }
+}
