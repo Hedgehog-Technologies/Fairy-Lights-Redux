@@ -1,0 +1,101 @@
+{
+    "itemGroup.fairylightsredux": "Fairy Lights Redux",
+
+    "fairylightsredux.config": "Fairy Lights Redux Configuration",
+
+    "block.fairylightsredux.fastener": "Connection Fastener",
+
+    "item.fairylightsredux.hanging_lights": "Hanging Lights",
+    "item.fairylightsredux.garland": "Vine Garland",
+    "item.fairylightsredux.tinsel": "Tinsel Garland",
+
+    "item.fairylightsredux.black_string": "Black String",
+    "item.fairylightsredux.white_string": "White String",
+    "item.fairylightsredux.twinkle": "Twinkles",
+
+    "item.fairylightsredux.pennant_bunting": "Pennant Bunting",
+
+    "item.fairylightsredux.letter_bunting": "Letter Bunting",
+
+    "item.fairylightsredux.triangle_pennant": "Triangle Pennant",
+    "item.fairylightsredux.spearhead_pennant": "Spearhead Pennant",
+    "item.fairylightsredux.swallowtail_pennant": "Swallowtail Pennant",
+    "item.fairylightsredux.square_pennant": "Square Pennant",
+
+    "block.fairylightsredux.fairy_light": "Fairy Light",
+    "block.fairylightsredux.paper_lantern": "Paper Lantern",
+    "block.fairylightsredux.orb_lantern": "Orb Lantern",
+    "block.fairylightsredux.flower_light": "Flower Light",
+    "block.fairylightsredux.candle_lantern_light": "Candle Lantern Light",
+    "block.fairylightsredux.oil_lantern_light": "Oil Lantern Light",
+    "block.fairylightsredux.jack_o_lantern": "Jack o'Lantern",
+    "block.fairylightsredux.skull_light": "Skull Light",
+    "block.fairylightsredux.ghost_light": "Ghost Light",
+    "block.fairylightsredux.spider_light": "Spider Light",
+    "block.fairylightsredux.witch_light": "Witch Light",
+    "block.fairylightsredux.snowflake_light": "Snowflake Light",
+    "block.fairylightsredux.heart_light": "Heart Light",
+    "block.fairylightsredux.moon_light": "Moon Light",
+    "block.fairylightsredux.star_light": "Star Light",
+    "block.fairylightsredux.icicle_lights": "Icicle Lights",
+    "block.fairylightsredux.meteor_light": "Meteor Light",
+    "block.fairylightsredux.oil_lantern": "Oil Lantern",
+    "block.fairylightsredux.candle_lantern": "Candle Lantern",
+    "block.fairylightsredux.incandescent_light": "Incandescent Light",
+
+    "entity.fairylightsredux.fastener": "Fastener",
+
+    "fairylightsredux.editLetteredConnection": "Set Bunting Text",
+    "fairylightsredux.editLetteredConnection.allowed_characters": "Allowed characters: %1$s",
+
+    "recipe.ingredient.tooltip": "§7%s",
+    "recipe.fairylightsredux.ingredient.auxiliary.optional": "(Optional)",
+    "recipe.fairylightsredux.twinkling_lights.glowstone": "Causes lights to twinkle",
+    "recipe.fairylightsredux.hangingLights.light": "Add multiple lights to customize pattern",
+    "recipe.fairylightsredux.pennantBunting.pennant": "Add multiple pennants to customize pattern",
+    "recipe.fairylightsredux.hangingLights.string": "Add white dye to create white string",
+
+    "format.fairylightsredux.colored": "%1$s %2$s",
+    "format.fairylightsredux.dyed_colored": "Dyed %1$s",
+    "format.fairylightsredux.color_changing": "Color Changing %1$s",
+    "format.fairylightsredux.text": "Text: %1$s",
+
+    "color.fairylightsredux.black": "Black",
+    "color.fairylightsredux.red": "Red",
+    "color.fairylightsredux.green": "Green",
+    "color.fairylightsredux.brown": "Brown",
+    "color.fairylightsredux.blue": "Blue",
+    "color.fairylightsredux.purple": "Purple",
+    "color.fairylightsredux.cyan": "Cyan",
+    "color.fairylightsredux.light_gray": "Light Gray",
+    "color.fairylightsredux.gray": "Gray",
+    "color.fairylightsredux.pink": "Pink",
+    "color.fairylightsredux.lime": "Lime",
+    "color.fairylightsredux.yellow": "Yellow",
+    "color.fairylightsredux.light_blue": "Light Blue",
+    "color.fairylightsredux.magenta": "Magenta",
+    "color.fairylightsredux.orange": "Orange",
+    "color.fairylightsredux.white": "White",
+
+    "subtitles.block.fairylightsredux.jingleBell": "Bell jingles",
+    "subtitles.block.fairylightsredux.cord.connect": "Cord connects",
+    "subtitles.block.fairylightsredux.cord.disconnect": "Cord disconnects",
+    "subtitles.block.fairylightsredux.cord.stretch": "Cord stretches",
+    "subtitles.block.fairylightsredux.cord.snap": "Cord snaps",
+    "subtitles.block.fairylightsredux.feature.lightTurnOn": "Lights click on",
+    "subtitles.block.fairylightsredux.feature.lightTurnOff": "Lights click off",
+    "subtitles.block.fairylightsredux.feature.colorChange": "Color plops",
+
+    "commands.jingler.open.success": "Successfully opened %1$s",
+    "commands.jingler.open.failure.no_hanging_lights": "No hanging lights selected",
+    "commands.jingler.open.failure.device_unavailable": "Device %1$s is unavailable, likely in use by another program",
+    "commands.jingler.open.failure.not_found": "No device named %1$s",
+    "commands.jingler.close.success.single": "Successfully closed %1$s connection",
+    "commands.jingler.close.success.multiple": "Successfully closed %1$s connections",
+    "commands.jingler.close.failure": "No devices to close",
+    "commands.jingler.device.vendor": "Vendor: %1$s",
+    "commands.jingler.device.description": "Description: %1$s",
+
+    "tutorial.fairylightsredux.craft_hanging_lights.title": "Craft hanging lights",
+    "tutorial.fairylightsredux.craft_hanging_lights.description": "The recipe book can help"
+}

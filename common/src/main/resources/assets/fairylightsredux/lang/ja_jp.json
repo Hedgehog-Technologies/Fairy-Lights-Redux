@@ -1,0 +1,101 @@
+{
+    "itemGroup.fairylightsredux": "Fairy Lights",
+
+    "fairylightsredux.config": "Fairy Lights Configuration",
+
+    "block.fairylightsredux.fastener": "接続留め具",
+
+    "item.fairylightsredux.hanging_lights": "吊り下げライト",
+    "item.fairylightsredux.garland": "ツタのガーランド",
+    "item.fairylightsredux.tinsel": "飾り付けられたガーランド",
+
+    "item.fairylightsredux.black_string": "黒い紐",
+    "item.fairylightsredux.white_string": "白い紐",
+    "item.fairylightsredux.twinkle": "きらめき",
+
+    "item.fairylightsredux.pennant_bunting": "ペナント付きの旗布",
+
+    "item.fairylightsredux.letter_bunting": "文字入りの旗布",
+
+    "item.fairylightsredux.triangle_pennant": "三角形のペナント",
+    "item.fairylightsredux.spearhead_pennant": "先の尖ったペナント",
+    "item.fairylightsredux.swallowtail_pennant": "燕尾形のペナント",
+    "item.fairylightsredux.square_pennant": "四角形のペナント",
+
+    "block.fairylightsredux.fairy_light": "フェアリーライト",
+    "block.fairylightsredux.paper_lantern": "中華提灯",
+    "block.fairylightsredux.orb_lantern": "オーブランタン",
+    "block.fairylightsredux.flower_light": "花のライト",
+    "block.fairylightsredux.candle_lantern_light": "ろうそくランタンライト",
+    "block.fairylightsredux.oil_lantern_light": "オイルランタンライト",
+    "block.fairylightsredux.jack_o_lantern": "ジャック・オ・ランタン",
+    "block.fairylightsredux.skull_light": "ドクロライト",
+    "block.fairylightsredux.ghost_light": "おばけライト",
+    "block.fairylightsredux.spider_light": "蜘蛛ライト",
+    "block.fairylightsredux.witch_light": "魔女ライト",
+    "block.fairylightsredux.snowflake_light": "雪の結晶形ライト",
+    "block.fairylightsredux.heart_light": "ハート形ライト",
+    "block.fairylightsredux.moon_light": "月形ライト",
+    "block.fairylightsredux.star_light": "星形ライト",
+    "block.fairylightsredux.icicle_lights": "つららライト",
+    "block.fairylightsredux.meteor_light": "隕石ライト",
+    "block.fairylightsredux.oil_lantern": "オイルランタン",
+    "block.fairylightsredux.candle_lantern": "ろうそくランタン",
+    "block.fairylightsredux.incandescent_light": "白熱電球",
+
+    "entity.fairylightsredux.fastener": "留め具",
+
+    "fairylightsredux.editLetteredConnection": "吊り下げる文字を入力",
+    "fairylightsredux.editLetteredConnection.allowed_characters": "使用可能な文字: %1$s",
+
+    "recipe.ingredient.tooltip": "§7%s",
+    "recipe.fairylightsredux.ingredient.auxiliary.optional": "(オプション)",
+    "recipe.fairylightsredux.twinkling_lights.glowstone": "照明がきらめくようになる",
+    "recipe.fairylightsredux.hangingLights.light": "複数のライトを追加してパターンをカスタマイズ",
+    "recipe.fairylightsredux.pennantBunting.pennant": "複数のペナントを加えてパターンをカスタマイズ",
+    "recipe.fairylightsredux.hangingLights.string": "白色の染料を加えて紐を白くする",
+
+    "format.fairylightsredux.colored": "%1$s %2$s",
+    "format.fairylightsredux.dyed_colored": "染色済みの%1$s",
+    "format.fairylightsredux.color_changing": "色が変化する%1$s",
+    "format.fairylightsredux.text": "文字: %1$s",
+
+    "color.fairylightsredux.black": "黒色の",
+    "color.fairylightsredux.red": "赤色の",
+    "color.fairylightsredux.green": "緑色の",
+    "color.fairylightsredux.brown": "茶色の",
+    "color.fairylightsredux.blue": "青色の",
+    "color.fairylightsredux.purple": "紫色の",
+    "color.fairylightsredux.cyan": "水色の",
+    "color.fairylightsredux.light_gray": "薄灰色の",
+    "color.fairylightsredux.gray": "灰色の",
+    "color.fairylightsredux.pink": "桃色の",
+    "color.fairylightsredux.lime": "黄緑色の",
+    "color.fairylightsredux.yellow": "黄色の",
+    "color.fairylightsredux.light_blue": "空色の",
+    "color.fairylightsredux.magenta": "赤紫色の",
+    "color.fairylightsredux.orange": "橙色の",
+    "color.fairylightsredux.white": "白色の",
+
+    "subtitles.block.fairylightsredux.jingleBell": "ベルが鳴る",
+    "subtitles.block.fairylightsredux.cord.connect": "コードを接続する",
+    "subtitles.block.fairylightsredux.cord.disconnect": "コードを接続解除する",
+    "subtitles.block.fairylightsredux.cord.stretch": "コードを伸ばす",
+    "subtitles.block.fairylightsredux.cord.snap": "コードをスナップする",
+    "subtitles.block.fairylightsredux.feature.lightTurnOn": "ライトがオンになる",
+    "subtitles.block.fairylightsredux.feature.lightTurnOff": "ライトがオフになる",
+    "subtitles.block.fairylightsredux.feature.colorChange": "色が変化する",
+
+    "commands.jingler.open.success": "Successfully opened %1$s",
+    "commands.jingler.open.failure.no_hanging_lights": "No hanging lights selected",
+    "commands.jingler.open.failure.device_unavailable": "Device %1$s is unavailable, likely in use by another program",
+    "commands.jingler.open.failure.not_found": "No device named %1$s",
+    "commands.jingler.close.success.single": "Successfully closed %1$s connection",
+    "commands.jingler.close.success.multiple": "Successfully closed %1$s connections",
+    "commands.jingler.close.failure": "No devices to close",
+    "commands.jingler.device.vendor": "Vendor: %1$s",
+    "commands.jingler.device.description": "Description: %1$s",
+
+    "tutorial.fairylightsredux.craft_hanging_lights.title": "吊り下げライトを作る",
+    "tutorial.fairylightsredux.craft_hanging_lights.description": "レシピブックが助けになります"
+}

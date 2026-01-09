@@ -1,0 +1,82 @@
+{
+    "itemGroup.fairylightsredux": "Faiwee Litez",
+
+    "fairylightsredux.config": "Faiwee Litez Configurashun",
+
+    "block.fairylightsredux.fastener": "Connecshun Fastenah",
+
+    "item.fairylightsredux.hanging_lights": "Hangz Litez",
+    "item.fairylightsredux.garland": "Vineh Garladn",
+    "item.fairylightsredux.tinsel": "Tisnel Garladn",
+
+    "item.fairylightsredux.pattern": "Pattrrrnz:",
+    "item.fairylightsredux.twinkle": "Twinklee",
+    "item.fairylightsredux.tight": "Likah stik",
+
+    "item.fairylightsredux.pennant_bunting": "Pointee Toyz",
+    "item.pennantBunting.colors": "Pritee Colors:",
+
+    "item.fairylightsredux.letter_bunting": "Lettr Toyz",
+
+    "item.fairylightsredux.pennant": "Pointee",
+
+    "item.light.name": "Lite",
+    "block.fairylightsredux.fairy_light": "Faiwee Lite",
+    "block.fairylightsredux.paper_lantern": "Papr Lantrn",
+    "block.fairylightsredux.orb_lantern": "Orb Lantrn",
+    "block.fairylightsredux.flower_light": "Flowr Lite",
+    "block.fairylightsredux.ornate_lantern": "Heavee Lantrn",
+    "block.fairylightsredux.oil_lantern": "Oily Lantrn",
+    "item.light.luxoBall.name": "Colorrful Ball",
+    "block.fairylightsredux.jack_o_lantern": "Jack o'Litez",
+    "block.fairylightsredux.skull_light": "Skull Lite",
+    "block.fairylightsredux.ghost_light": "Ghostlee Lite",
+    "block.fairylightsredux.spider_light": "Gud Eatz Lite",
+    "block.fairylightsredux.witch_light": "Scarwee Lite",
+    "block.fairylightsredux.snowflake_light": "Verwee Cold Lite",
+    "block.fairylightsredux.icicle_lights": "Fragl Litez",
+    "block.fairylightsredux.meteor_light": "Fallin Lite",
+
+    "item.fairylightsredux.ladder": "Hooman toy",
+
+    "entity.fairylightsredux.fastener": "Fastenah",
+    "entity.fairylightsredux.ladder": "Hooman toy",
+
+    "gui.editLetteredConnection.name": "Paw paw Lettrz",
+
+    "recipe.ingredient.tooltip": "§7%s",
+    "recipe.ingredient.auxiliary.optional": "(Dont needs itz)",
+    "recipe.hangingLights.glowstone": "Mak litez rly perrrty",
+    "recipe.hangingLights.light": "Moreee litez teh perrtier",
+    "recipe.pennantBunting.pennant": "Moree pointee toyz fo mor playtim",
+
+    "format.pattern.entry": "  %1$s",
+    "format.colored": "%1$s %2$s",
+    "format.text": "Lettrz: %1$s",
+
+    "color.black.name": "Blakc",
+    "color.red.name": "Redd",
+    "color.green.name": "Gren",
+    "color.brown.name": "Broun",
+    "color.blue.name": "Bloo",
+    "color.purple.name": "Purrrple",
+    "color.cyan.name": "Nyan",
+    "color.light_gray.name": "Lite Gra",
+    "color.gray.name": "Gra",
+    "color.pink.name": "Pnk",
+    "color.lime.name": "Liime",
+    "color.yellow.name": "Yalloh",
+    "color.light_blue.name": "Lite Bloo",
+    "color.magenta.name": "Mujnta",
+    "color.orange.name": "Ornge",
+    "color.white.name": "Wite",
+
+    "subtitles.block.jingleBell": "Kat bell jnglez",
+    "subtitles.block.cord.connect": "Cord connectz",
+    "subtitles.block.cord.disconnect": "Cord dizconnectz",
+    "subtitles.block.cord.stretch": "Cord sttrrrreeechhezz",
+    "subtitles.block.cord.snap": "Scarwee cord snapz",
+    "subtitles.block.feature.lightTurnOn": "Litez go brite",
+    "subtitles.block.feature.lightTurnOff": "Litez no mo shiny",
+    "subtitles.block.feature.colorChange": "Pritee color plopz"
+}

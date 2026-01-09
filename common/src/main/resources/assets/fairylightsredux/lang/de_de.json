@@ -1,0 +1,82 @@
+{
+    "itemGroup.fairylightsredux": "Fairy Lights",
+
+    "fairylightsredux.config": "Fairy Lights Einstellungen",
+
+    "block.fairylightsredux.fastener": "Verbindungsverschluss",
+
+    "item.fairylightsredux.hanging_lights": "Hängende Lichter",
+    "item.fairylightsredux.garland": "Rebengirlande",
+    "item.fairylightsredux.tinsel": "Lamettagirlande",
+
+    "item.fairylightsredux.pattern": "Muster:",
+    "item.fairylightsredux.twinkle": "Funkelt",
+    "item.fairylightsredux.tight": "Gerade",
+
+    "item.fairylightsredux.pennant_bunting": "Wimpelgirlande",
+    "item.pennantBunting.colors": "Farben:",
+
+    "item.fairylightsredux.letter_bunting": "Buchstabengirlande",
+
+    "item.fairylightsredux.pennant": "Wimpel",
+
+    "item.light.name": "Licht",
+    "block.fairylightsredux.fairy_light": "Feenlicht",
+    "block.fairylightsredux.paper_lantern": "Papierlaterne",
+    "block.fairylightsredux.orb_lantern": "Ballonlaterne",
+    "block.fairylightsredux.flower_light": "Blumenlicht",
+    "block.fairylightsredux.ornate_lantern": "Ornamentlaterne",
+    "block.fairylightsredux.oil_lantern": "Öllaterne",
+    "item.light.luxoBall.name": "Luxo-Ball",
+    "block.fairylightsredux.jack_o_lantern": "Kürbislaterne",
+    "block.fairylightsredux.skull_light": "Schädellicht",
+    "block.fairylightsredux.ghost_light": "Geisterlicht",
+    "block.fairylightsredux.spider_light": "Spinnenlicht",
+    "block.fairylightsredux.witch_light": "Hexenlicht",
+    "block.fairylightsredux.snowflake_light": "Schneeflockenlicht",
+    "block.fairylightsredux.icicle_lights": "Eiswürfellicht",
+    "block.fairylightsredux.meteor_light": "Meteorlicht",
+
+    "item.fairylightsredux.ladder": "Leiter",
+
+    "entity.fairylightsredux.fastener": "Befestigung",
+    "entity.fairylightsredux.ladder": "Leiter",
+
+    "gui.editLetteredConnection.name": "Buchstaben festlegen",
+
+    "recipe.ingredient.tooltip": "§7%s",
+    "recipe.ingredient.auxiliary.optional": "(Optional)",
+    "recipe.hangingLights.glowstone": "Lässt Lichter funkeln",
+    "recipe.hangingLights.light": "Mehrere Lichter hinzufügen um Muster zu bearbeiten",
+    "recipe.pennantBunting.pennant": "Mehrere Wimpel hinzufügen um Muster zu bearbeiten",
+
+    "format.pattern.entry": "  %1$s",
+    "format.colored": "%1$s %2$s",
+    "format.text": "Text: %1$s",
+
+    "color.black.name": "Schwarz",
+    "color.red.name": "Rot",
+    "color.green.name": "Grün",
+    "color.brown.name": "Braun",
+    "color.blue.name": "Blau",
+    "color.purple.name": "Lila",
+    "color.cyan.name": "Zyan",
+    "color.light_gray.name": "Hellgrau",
+    "color.gray.name": "Grau",
+    "color.pink.name": "Rosa",
+    "color.lime.name": "Hellgrün",
+    "color.yellow.name": "Gelb",
+    "color.light_blue.name": "Hellblau",
+    "color.magenta.name": "Purpur",
+    "color.orange.name": "Orange",
+    "color.white.name": "Weiß",
+
+    "subtitles.block.jingleBell": "Glocke bimmelt",
+    "subtitles.block.cord.connect": "Schnur verbindet",
+    "subtitles.block.cord.disconnect": "Schnur löst ab",
+    "subtitles.block.cord.stretch": "Schnur streckt",
+    "subtitles.block.cord.snap": "Schnur trennt",
+    "subtitles.block.feature.lightTurnOn": "Lichter einschalten",
+    "subtitles.block.feature.lightTurnOff": "Lichter ausschalten",
+    "subtitles.block.feature.colorChange": "Farbige plops"
+}

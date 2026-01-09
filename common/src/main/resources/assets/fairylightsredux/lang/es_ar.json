@@ -1,0 +1,82 @@
+{
+    "itemGroup.fairylightsredux": "Fairy Lights",
+
+    "fairylightsredux.config": "Configuración del Fairy Lights",
+
+    "block.fairylightsredux.fastener": "Gancho de Cable",
+
+    "item.fairylightsredux.hanging_lights": "Luces Decorativas",
+    "item.fairylightsredux.garland": "Guirnalda de Navidad",
+    "item.fairylightsredux.tinsel": "Oropel de Navidad",
+
+    "item.fairylightsredux.pattern": "Patrón:",
+    "item.fairylightsredux.twinkle": "Luces Intermitente",
+    "item.fairylightsredux.tight": "Apretado",
+
+    "item.fairylightsredux.pennant_bunting": "Banderines",
+    "item.pennantBunting.colors": "Colores:",
+
+    "item.fairylightsredux.letter_bunting": "Guirnalda de Letras",
+
+    "item.fairylightsredux.pennant": "Banderín",
+
+    "item.light.name": "Lámpara",
+    "block.fairylightsredux.fairy_light": "Pequeña Lámpara",
+    "block.fairylightsredux.paper_lantern": "Lámpara de Papel",
+    "block.fairylightsredux.orb_lantern": "Lámpara Redonda de Papel",
+    "block.fairylightsredux.flower_light": "Lámpara de Flor",
+    "block.fairylightsredux.ornate_lantern": "Linterna de Vela",
+    "block.fairylightsredux.oil_lantern": "Lámpara de Queroseno",
+    "item.light.luxoBall.name": "Luxo Ball",
+    "block.fairylightsredux.jack_o_lantern": "Calabaza",
+    "block.fairylightsredux.skull_light": "Lámpara de Cráneo",
+    "block.fairylightsredux.ghost_light": "Lámpara de Fantasma",
+    "block.fairylightsredux.spider_light": "Lámpara en Forma de Araña",
+    "block.fairylightsredux.witch_light": "Lámpara de Bruja",
+    "block.fairylightsredux.snowflake_light": "Lámpara de Copo de Nieve",
+    "block.fairylightsredux.icicle_lights": "Lámpara Bar de Hielo",
+    "block.fairylightsredux.meteor_light": "Luces Lluvia de Meteoros",
+
+    "item.fairylightsredux.ladder": "Escalera de Tijera",
+
+    "entity.fairylightsredux.fastener": "Gancho",
+    "entity.fairylightsredux.ladder": "Escalera de Tijera",
+
+    "gui.editLetteredConnection.name": "Establecer Texto Guirnalda",
+
+    "recipe.ingredient.tooltip": "§7%s",
+    "recipe.ingredient.auxiliary.optional": "(Opcionales)",
+    "recipe.hangingLights.glowstone": "Hace que las luces intermitente",
+    "recipe.hangingLights.light": "Agregar varios luces para personalizar el patrón",
+    "recipe.pennantBunting.pennant": "Agregar varios banderines para personalizar el patrón",
+
+    "format.pattern.entry": "  %1$s",
+    "format.colored": "%2$s %1$s",
+    "format.text": "Texto: %1$s",
+
+    "color.black.name": "Negro",
+    "color.red.name": "Rojo",
+    "color.green.name": "Verde",
+    "color.brown.name": "Marrón",
+    "color.blue.name": "Azul",
+    "color.purple.name": "Púrpura",
+    "color.cyan.name": "Cian",
+    "color.light_gray.name": "Gris Claro",
+    "color.gray.name": "Gris",
+    "color.pink.name": "Rosado",
+    "color.lime.name": "Lima",
+    "color.yellow.name": "Amarillo",
+    "color.light_blue.name": "Azul Claro",
+    "color.magenta.name": "Magenta",
+    "color.orange.name": "Naranja",
+    "color.white.name": "Blanco",
+
+    "subtitles.block.jingleBell": "Campana toca",
+    "subtitles.block.cord.connect": "Cable conecta",
+    "subtitles.block.cord.disconnect": "Cable desconecta",
+    "subtitles.block.cord.stretch": "Cable estira",
+    "subtitles.block.cord.snap": "Cable rupturas",
+    "subtitles.block.feature.lightTurnOn": "Luces se encienden",
+    "subtitles.block.feature.lightTurnOff": "Luces se apagan",
+    "subtitles.block.feature.colorChange": "Color cambia"
+}

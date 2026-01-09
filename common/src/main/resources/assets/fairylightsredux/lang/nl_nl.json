@@ -1,0 +1,82 @@
+{
+    "itemGroup.fairylightsredux": "Fairy Lights",
+
+    "fairylightsredux.config": "Fairy Lights instellingen",
+
+    "block.fairylightsredux.fastener": "Haakje",
+
+    "item.fairylightsredux.hanging_lights": "Hangende lichtjes",
+    "item.fairylightsredux.garland": "Guirlande",
+    "item.fairylightsredux.tinsel": "Folie slinger",
+
+    "item.fairylightsredux.pattern": "Patroon:",
+    "item.fairylightsredux.twinkle": "Twinkelen",
+    "item.fairylightsredux.tight": "Gespannen",
+
+    "item.fairylightsredux.pennant_bunting": "Vlaggenslinger",
+    "item.pennantBunting.colors": "Kleuren:",
+
+    "item.fairylightsredux.letter_bunting": "Letterslinger",
+
+    "item.fairylightsredux.pennant": "Vlag",
+
+    "item.light.name": "Lichtje",
+    "block.fairylightsredux.fairy_light": "Kerstverlichting",
+    "block.fairylightsredux.paper_lantern": "Papieren lantaarn",
+    "block.fairylightsredux.orb_lantern": "Bolvormige lantaarn",
+    "block.fairylightsredux.flower_light": "Bloemenlampje",
+    "block.fairylightsredux.ornate_lantern": "Versierde lantaarn",
+    "block.fairylightsredux.oil_lantern": "Olielantaarn",
+    "item.light.luxoBall.name": "Luxo bal",
+    "block.fairylightsredux.jack_o_lantern": "Jack-o'-lantern",
+    "block.fairylightsredux.skull_light": "Schedellampje",
+    "block.fairylightsredux.ghost_light": "Ghostlampje",
+    "block.fairylightsredux.spider_light": "Spinnenlampje",
+    "block.fairylightsredux.witch_light": "Heksenlampje",
+    "block.fairylightsredux.snowflake_light": "Sneeuwvloklampje",
+    "block.fairylightsredux.icicle_lights": "IJspegelverlichting",
+    "block.fairylightsredux.meteor_light": "Meteor regen licht",
+
+    "item.fairylightsredux.ladder": "Trapladder",
+
+    "entity.fairylightsredux.fastener": "Haak",
+    "entity.fairylightsredux.ladder": "Trapladder",
+
+    "gui.editLetteredConnection.name": "Stel letterslinger tekst in:",
+
+    "recipe.ingredient.tooltip": "§7%s",
+    "recipe.ingredient.auxiliary.optional": "(Facultatief)",
+    "recipe.hangingLights.glowstone": "Hierdoor zullen lampjes fonkelen",
+    "recipe.hangingLights.light": "Voeg lampjes toe om het patroon te veranderen",
+    "recipe.pennantBunting.pennant": "Voeg vlaggetjes toe om het patroon te veranderen",
+
+    "format.pattern.entry": "  %1$s",
+    "format.colored": "%1$s %2$s",
+    "format.text": "Tekst: %1$s",
+
+    "color.black.name": "Zwart",
+    "color.red.name": "Rood",
+    "color.green.name": "Groen",
+    "color.brown.name": "Bruin",
+    "color.blue.name": "Blauw",
+    "color.purple.name": "Paars",
+    "color.cyan.name": "Cyaan",
+    "color.light_gray.name": "Lichtgrijs",
+    "color.gray.name": "Grijs",
+    "color.pink.name": "Roze",
+    "color.lime.name": "Limoen",
+    "color.yellow.name": "Geel",
+    "color.light_blue.name": "Lichtblauw",
+    "color.magenta.name": "Magenta",
+    "color.orange.name": "Oranje",
+    "color.white.name": "Wit",
+
+    "subtitles.block.jingleBell": "Bel luidt",
+    "subtitles.block.cord.connect": "Koord verbonden",
+    "subtitles.block.cord.disconnect": "Koord koppelt los",
+    "subtitles.block.cord.stretch": "Koord rekt uit",
+    "subtitles.block.cord.snap": "Koord breekt",
+    "subtitles.block.feature.lightTurnOn": "Lichtjes klikken aan",
+    "subtitles.block.feature.lightTurnOff": "Lichtjes klikken uit",
+    "subtitles.block.feature.colorChange": "Lichtje plopt"
+}

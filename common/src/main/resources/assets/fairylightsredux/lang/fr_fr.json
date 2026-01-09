@@ -1,0 +1,101 @@
+{
+    "itemGroup.fairylightsredux": "Lumières Féériques",
+
+    "fairylightsredux.config": "Configuration des Lumières Féériques",
+
+    "block.fairylightsredux.fastener": "Attache de connexion",
+
+    "item.fairylightsredux.hanging_lights": "Lumières suspendues",
+    "item.fairylightsredux.garland": "Guirlande de vigne",
+    "item.fairylightsredux.tinsel": "Guirlande de clinquant",
+
+    "item.fairylightsredux.black_string": "Ficelle Noire",
+    "item.fairylightsredux.white_string": "Ficelle blanche",
+    "item.fairylightsredux.twinkle": "Scintillements",
+
+    "item.fairylightsredux.pennant_bunting": "Guirlande de fanion",
+
+    "item.fairylightsredux.letter_bunting": "Guirlande de lettres",
+
+    "item.fairylightsredux.triangle_pennant": "Fanion triangulaire",
+    "item.fairylightsredux.spearhead_pennant": "Fanion Fer de lance",
+    "item.fairylightsredux.swallowtail_pennant": "Fanion machaon",
+    "item.fairylightsredux.square_pennant": "Fanion carré",
+
+    "block.fairylightsredux.fairy_light": "Lumière féerique",
+    "block.fairylightsredux.paper_lantern": "Lanterne de papier",
+    "block.fairylightsredux.orb_lantern": "Lanterne orbe",
+    "block.fairylightsredux.flower_light": "Lumière Fleur",
+    "block.fairylightsredux.candle_lantern_light": "Lumière Bougie Lanterne",
+    "block.fairylightsredux.oil_lantern_light": "Lanterne à huile",
+    "block.fairylightsredux.jack_o_lantern": "Citrouille d'Halloween",
+    "block.fairylightsredux.skull_light": "Crâne Lumière",
+    "block.fairylightsredux.ghost_light": "Lumière fantôme",
+    "block.fairylightsredux.spider_light": "Lumière araignée",
+    "block.fairylightsredux.witch_light": "Lumière de sorcière",
+    "block.fairylightsredux.snowflake_light": "Lumière flocon de neige",
+    "block.fairylightsredux.heart_light": "Lumière coeur",
+    "block.fairylightsredux.moon_light": "Lumière lune",
+    "block.fairylightsredux.star_light": "Lumière étoile",
+    "block.fairylightsredux.icicle_lights": "Lumières de glace",
+    "block.fairylightsredux.meteor_light": "Lumière météore",
+    "block.fairylightsredux.oil_lantern": "Lanterne à huile",
+    "block.fairylightsredux.candle_lantern": "Bougie Lanterne",
+    "block.fairylightsredux.incandescent_light": "Lumière incandescente",
+
+    "entity.fairylightsredux.fastener": "Attache",
+
+    "fairylightsredux.editLetteredConnection": "Définir le texte des banderoles",
+    "fairylightsredux.editLetteredConnection.allowed_characters": "Caractères autorisés : %1$s",
+
+    "recipe.ingredient.tooltip": "§7%s",
+    "recipe.fairylightsredux.ingredient.auxiliary.optional": "(Optionnel)",
+    "recipe.fairylightsredux.twinkling_lights.glowstone": "Fait scintiller les lumières",
+    "recipe.fairylightsredux.hangingLights.light": "Ajoutez plusieurs lumières pour personnaliser le motif",
+    "recipe.fairylightsredux.pennantBunting.pennant": "Ajoutez plusieurs fanions pour personnaliser le motif",
+    "recipe.fairylightsredux.hangingLights.string": "Ajouter un colorant blanc pour créer une ficelle blanche",
+
+    "format.fairylightsredux.colored": "%2$s %1$s",
+    "format.fairylightsredux.dyed_colored": "Teint en %1$s",
+    "format.fairylightsredux.color_changing": "Changement de couleur : %1$s",
+    "format.fairylightsredux.text": "Texte : %1$s",
+
+    "color.fairylightsredux.black": "Noir",
+    "color.fairylightsredux.red": "Rouge",
+    "color.fairylightsredux.green": "Vert",
+    "color.fairylightsredux.brown": "Marron",
+    "color.fairylightsredux.blue": "Bleu",
+    "color.fairylightsredux.purple": "Violet",
+    "color.fairylightsredux.cyan": "Cyan",
+    "color.fairylightsredux.light_gray": "Gris clair",
+    "color.fairylightsredux.gray": "Gris",
+    "color.fairylightsredux.pink": "Rose",
+    "color.fairylightsredux.lime": "Vert clair",
+    "color.fairylightsredux.yellow": "Jaune",
+    "color.fairylightsredux.light_blue": "Bleu clair",
+    "color.fairylightsredux.magenta": "Magenta",
+    "color.fairylightsredux.orange": "Orange",
+    "color.fairylightsredux.white": "Blanc",
+
+    "subtitles.block.fairylightsredux.jingleBell": "Tintements de cloche",
+    "subtitles.block.fairylightsredux.cord.connect": "Connection de cordon",
+    "subtitles.block.fairylightsredux.cord.disconnect": "Déconnecter de cordon",
+    "subtitles.block.fairylightsredux.cord.stretch": "Étirements de cordon",
+    "subtitles.block.fairylightsredux.cord.snap": "Cordon qui lâche",
+    "subtitles.block.fairylightsredux.feature.lightTurnOn": "Lumière allumée",
+    "subtitles.block.fairylightsredux.feature.lightTurnOff": "Lumière éteinte",
+    "subtitles.block.fairylightsredux.feature.colorChange": "Plocs de couleur",
+
+    "commands.jingler.open.success": "Ouvert avec succès %1$s",
+    "commands.jingler.open.failure.no_hanging_lights": "Aucune suspension sélectionnée",
+    "commands.jingler.open.failure.device_unavailable": "L'appareil %1$s n'est pas disponible, probablement utilisé par un autre programme",
+    "commands.jingler.open.failure.not_found": "Aucun appareil nommé %1$s",
+    "commands.jingler.close.success.single": "Connexion %1$s fermée avec succès",
+    "commands.jingler.close.success.multiple": "Connexions %1$s fermées avec succès",
+    "commands.jingler.close.failure": "Aucun appareil à fermer",
+    "commands.jingler.device.vendor": "Vendeur : %1$s",
+    "commands.jingler.device.description": "Description : %1$s",
+
+    "tutorial.fairylightsredux.craft_hanging_lights.title": "Artisat luminaires suspendus",
+    "tutorial.fairylightsredux.craft_hanging_lights.description": "Le livre de recettes peut aider"
+}
