@@ -3,7 +3,6 @@ package org.hedgetech.fairylightsredux.server.item;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponentMap;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionResult;
@@ -28,6 +27,7 @@ import org.hedgetech.fairylightsredux.server.connection.ConnectionType;
 import org.hedgetech.fairylightsredux.server.entity.FenceFastenerEntity;
 import org.hedgetech.fairylightsredux.server.fastener.Fastener;
 import org.hedgetech.fairylightsredux.server.sound.FLRSounds;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Optional;
 
@@ -46,7 +46,7 @@ public abstract class ConnectionItem extends Item {
     }
 
     @Override
-    public InteractionResult useOn(final UseOnContext context) {
+    public @NonNull InteractionResult useOn(final UseOnContext context) {
         final Player user = context.getPlayer();
         if (user == null) {
             return super.useOn(context);
@@ -75,9 +75,9 @@ public abstract class ConnectionItem extends Item {
             return InteractionResult.SUCCESS;
         } else if (isFence(currentBlockState)) {
             final HangingEntity entity = FenceFastenerEntity.findHanging(world, clickPos);
-            if (entity == null || entity instanceof FenceFastenerEntity ffe) {
+            if (entity == null || entity instanceof FenceFastenerEntity) {
                 if (!world.isClientSide()) {
-                    this.connectFence(stack, user, world, clickPos, ffe);
+                    this.connectFence(stack, user, world, clickPos, (FenceFastenerEntity) entity);
                 }
                 return InteractionResult.SUCCESS;
             }

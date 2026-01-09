@@ -1,76 +1,31 @@
 package org.hedgetech.fairylightsredux.server.net;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.minecraftforge.fml.LogicalSide;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.Channel;
 import net.minecraftforge.network.ChannelBuilder;
+import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.SimpleChannel;
-import org.hedgetech.fairylightsredux.server.net.interfaces.ConsumerFactoryInterface;
-import org.hedgetech.fairylightsredux.server.net.interfaces.MessageInterface;
 
+import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 public final class NetBuilder {
     private final ChannelBuilder builder;
-    private int version = -1;
     private SimpleChannel channel;
     private int id;
 
-    public NetBuilder(final ResourceLocation name) {
+    public NetBuilder(ResourceLocation name) {
         this.builder = ChannelBuilder.named(name);
     }
 
-    public NetBuilder version(final int version) {
-        if (this.version == -1 && version >= 0) {
-            this.version = version;
-            this.builder.networkProtocolVersion(version);
-            return this;
-        }
-
-        throw new IllegalArgumentException("Version already assigned");
-    }
-
-    public NetBuilder optionalServer() {
-        this.builder.clientAcceptedVersions(this.optionalVersion());
+    public NetBuilder version(int version) {
+        this.builder.networkProtocolVersion(version);
+        this.builder.clientAcceptedVersions(Channel.VersionTest.exact(version));
+        this.builder.clientAcceptedVersions(Channel.VersionTest.exact(version));
         return this;
-    }
-
-    public NetBuilder requiredServer() {
-        this.builder.clientAcceptedVersions(this.requiredVersion());
-        return this;
-    }
-
-    public NetBuilder optionalClient() {
-        this.builder.serverAcceptedVersions(this.optionalVersion());
-        return this;
-    }
-
-    public NetBuilder requiredClient() {
-        this.builder.serverAcceptedVersions(this.requiredVersion());
-        return this;
-    }
-
-    private Channel.VersionTest optionalVersion() {
-        final int v = this.version;
-        if (v < 0) {
-            throw new IllegalStateException("Version not specified");
-        }
-        return Channel.VersionTest.ACCEPT_VANILLA.or(
-                Channel.VersionTest.ACCEPT_MISSING.or(
-                        Channel.VersionTest.exact(v)
-                )
-        );
-    }
-
-    private Channel.VersionTest requiredVersion() {
-        final int v = this.version;
-        if (v < 0) {
-            throw new IllegalStateException("Version not specified");
-        }
-        return Channel.VersionTest.exact(v);
     }
 
     private SimpleChannel channel() {
@@ -80,43 +35,37 @@ public final class NetBuilder {
         return this.channel;
     }
 
-    public <T extends IMessage> MessageBuilder<T, ServerMessageContext> serverbound(final Supplier<T> factory) {
-        return new MessageBuilder<>(factory, new HandlerConsumerFactory<>(LogicalSide.SERVER, ServerMessageContext::new));
+    /* -------------------------
+     * Registration entry points
+     * ------------------------- */
+
+    public <T extends IMessage> NetBuilder serverbound(Class<T> type, Function<T, BiConsumer<T, ServerPlayer>> handler) {
+        register(type, NetworkDirection.PLAY_TO_SERVER, handler);
+        return this;
     }
 
-    public SimpleChannel build() {
-        return this.channel();
+    public <T extends IMessage> NetBuilder clientbound(Class<T> type, Function<T, BiConsumer<T, Minecraft>> handler) {
+        register(type, NetworkDirection.PLAY_TO_CLIENT, handler);
+        return this;
     }
 
-    public class MessageBuilder<T extends IMessage, S extends MessageContext> {
-        private final Supplier<T> factory;
-        private final ConsumerFactoryInterface<T, S> consumerFactory;
-
-        protected MessageBuilder(final Supplier<T> factory, final ConsumerFactoryInterface<T, S> consumerFactory) {
-            this.factory = factory;
-            this.consumerFactory = consumerFactory;
-        }
-
-        public NetBuilder consumer(final Supplier<BiConsumer<? super T, S>> consumer) {
-            final Supplier<T> factory = this.factory;
-            final Class<T> type = (Class<T>) factory.get().getClass();
-            NetBuilder.this.channel().
-//            NetBuilder.this.channel().messageBuilder(type, NetBuilder.this.id++)
-//                    .encoder(MessageInterface::encode)
-//                    .decoder(buf -> {
-//                        final T msg = factory.get();
-//                        msg.decode(buf);
-//                        return msg;
-//                    })
-//                    .consumerMainThread(this.consumerFactory.create(consumer))
-//                    .add();
-
-            return NetBuilder.this;
-        }
-    }
-
-    private static class HandlerConsumerFactory<T extends IMessage, S extends MessageContext> implements ConsumerFactory<T, S> {
-        private final LogicalSide side;
-        private final Function<CustomPayloadEvent.Context, S> contextFactory;
+    private <T extends IMessage, C> void register(Class<T> type, NetworkDirection direction, Function<T, BiConsumer<T, C>> handlerFactory) {
+        channel()
+                .messageBuilder(type, id++, direction)
+                .encoder(IMessage::encode)
+                .decoder(buf -> {
+                    try {
+                        T msg = type.getDeclaredConstructor().newInstance();
+                        msg.decode(buf);
+                        return msg;
+                    } catch (ReflectiveOperationException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .consumerMainThread((msg, ctx) -> {
+                    C target = (C) ctx.getSender();
+                    handlerFactory.apply(msg).accept(msg, target);
+                })
+                .add();
     }
 }
