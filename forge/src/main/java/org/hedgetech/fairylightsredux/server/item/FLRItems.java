@@ -11,7 +11,7 @@ public final class FLRItems {
 
     public static final RegistryObject<ConnectionItem> HANGING_LIGHTS = REG.register("hanging_lights", () -> new HangingLightsConnectionItem(defaultProperties()));
 
-    // PENNANT_BUNTING
+    public static final RegistryObject<ConnectionItem> PENNANT_BUNTING = REG.register("pennant_bunting", () -> new PennantBuntingConnectionItem(defaultProperties()));
 
     // TINSEL
 

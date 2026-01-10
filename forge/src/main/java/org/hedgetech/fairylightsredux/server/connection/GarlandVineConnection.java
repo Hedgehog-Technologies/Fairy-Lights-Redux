@@ -1,7 +1,9 @@
 package org.hedgetech.fairylightsredux.server.connection;
 
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.world.level.Level;
 import org.hedgetech.fairylightsredux.server.fastener.Fastener;
+import org.hedgetech.fairylightsredux.server.item.DyeableItem;
 
 import java.util.UUID;
 
