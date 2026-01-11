@@ -2,7 +2,6 @@ package org.hedgetech.fairylightsredux.server.connection;
 
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponentMap;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -12,20 +11,23 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.items.ItemHandlerHelper;
-import org.hedgetech.fairylightsredux.ForgeFairyLightsRedux;
+import org.apache.commons.lang3.NotImplementedException;
 import org.hedgetech.fairylightsredux.server.collision.Collidable;
+import org.hedgetech.fairylightsredux.server.collision.CollidableList;
+import org.hedgetech.fairylightsredux.server.collision.FeatureCollisionTree;
 import org.hedgetech.fairylightsredux.server.collision.Intersection;
 import org.hedgetech.fairylightsredux.server.fastener.Fastener;
+import org.hedgetech.fairylightsredux.server.fastener.FenceFastener;
 import org.hedgetech.fairylightsredux.server.fastener.accessor.FastenerAccessor;
+import org.hedgetech.fairylightsredux.server.feature.Feature;
 import org.hedgetech.fairylightsredux.server.feature.FeatureType;
 import org.hedgetech.fairylightsredux.server.item.ConnectionItem;
 import org.hedgetech.fairylightsredux.server.sound.FLRSounds;
-import org.hedgetech.fairylightsredux.util.CubicBezier;
-import org.hedgetech.fairylightsredux.util.Curve;
-import org.hedgetech.fairylightsredux.util.Utils;
+import org.hedgetech.fairylightsredux.util.*;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
@@ -292,7 +294,7 @@ public abstract class Connection {
                     this.catenary = Catenary.from(vec, facing.getAxis() == Direction.Axis.Y ? 0.0F : (float) Math.toRadians(90.0F - facing.toYRot()), SLACK_CURVE, this.slack);
                 }
                 this.onCalculateCatenary(!this.destination.equals(this.prevDestination));
-                final CollidableList.Builder bob = new ColliadableList.Builder();
+                final CollidableList.Builder bob = new CollidableList.Builder();
                 this.addCollision(bob, from);
                 this.collision = bob.build();
             }
@@ -303,7 +305,73 @@ public abstract class Connection {
         return false;
     }
 
+    private Curve verticalHelix(final Vec3 vec) {
+        final float length = (float) vec.length();
+        final float height = (float) vec.y;
+        final float stepSize = 0.25F;
+        final float loopsPerBlock = 1.0F;
+        final float radius = 0.33F;
+        final int steps = (int) (Mth.TWO_PI * radius * loopsPerBlock * length / stepSize);
+        final float rad = -Mth.TWO_PI * (loopsPerBlock * length);
+        final float[] x = new float[steps];
+        final float[] y = new float[steps];
+        final float[] z = new float[steps];
+        float helixLength = 0.0F;
+        for (int i = 0; i < steps; i++) {
+            float t = (float) i / (steps - 1);
+            x[i] = radius * Mth.cos(t * rad);
+            y[i] = t * height;
+            z[i] = radius * Mth.sin(t * rad);
+            if (i > 0) {
+                helixLength += Mth.sqrt(
+                        Mth.square(x[i] - x[i - 1]) +
+                                Mth.square(y[i] - y[i - 1]) +
+                                Mth.square(z[i] - z[i - 1])
+                );
+            }
+        }
+        return new Curve3d(steps, x, y, z, helixLength);
+    }
+
+    public void addCollision(final CollidableList.Builder collision, final Vec3 origin) {
+        if (this.catenary == null) return;
+
+        final int count = this.catenary.getCount();
+        if (count <= 2) return;
+
+        final float r = this.getRadius();
+        final Curve.SegmentIterator it = this.catenary.iterator();
+        final AABB[] bounds = new AABB[count - 1];
+        int index = 0;
+        while (it.next()) {
+            final float x0 = it.getX(0.0F);
+            final float y0 = it.getY(0.0F);
+            final float z0 = it.getZ(0.0F);
+            final float x1 = it.getX(1.0F);
+            final float y1 = it.getY(1.0F);
+            final float z1 = it.getZ(1.0F);
+            bounds[index++] = new AABB(
+                    origin.x + x0, origin.y + y0, origin.z + z0,
+                    origin.x + x1, origin.y + y1, origin.z + z1
+            ).inflate(r);
+        }
+        collision.add(FeatureCollisionTree.build(CORD_FEATURE, i -> Segment.INSTANCE, i -> bounds[i], 1, bounds.length - 2));
+    }
+
     public DataComponentMap serializeLogic() {
-        return DataComponentMap.EMPTY;
+        throw new NotImplementedException("Connection.serializeLogic");
+    }
+
+    public void deserializeLogic(final DataComponentMap map) {
+        throw new NotImplementedException("Connection.deserializeLogic");
+    }
+
+    static class Segment implements Feature {
+        static final Segment INSTANCE = new Segment();
+
+        @Override
+        public int getId() {
+            return 0;
+        }
     }
 }

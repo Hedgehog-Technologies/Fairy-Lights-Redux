@@ -1,16 +1,23 @@
 package org.hedgetech.fairylightsredux.server.connection;
 
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.ItemHandlerHelper;
+import org.apache.commons.lang3.NotImplementedException;
 import org.hedgetech.fairylightsredux.server.collision.Intersection;
 import org.hedgetech.fairylightsredux.server.fastener.Fastener;
 import org.hedgetech.fairylightsredux.server.feature.FeatureType;
 import org.hedgetech.fairylightsredux.server.feature.Pennant;
+import org.hedgetech.fairylightsredux.server.item.DyeableItem;
+import org.hedgetech.fairylightsredux.server.net.serverbound.EditLetteredConnectionMessage;
 import org.hedgetech.fairylightsredux.server.sound.FLRSounds;
 import org.hedgetech.fairylightsredux.util.OreDictUtils;
 import org.hedgetech.fairylightsredux.util.styledstring.StyledString;
@@ -70,5 +77,48 @@ public final class PennantBuntingConnection extends HangingFeatureConnection<Pen
     @Override
     protected Pennant[] createFeatures(final int length) {
         return new Pennant[length];
+    }
+
+    @Override
+    protected Pennant createFeature(final int index, final Vec3 point, final float yaw, final float pitch) {
+        final ItemStack data = this.pattern.isEmpty() ? ItemStack.EMPTY : this.pattern.get(index % this.pattern.size());
+        return new Pennant(index, point, yaw, pitch, DyeableItem.getColor(data), data.getItem());
+    }
+
+    @Override
+    protected float getFeatureSpacing() {
+        return 0.6875F;
+    }
+
+    @Override
+    public boolean isSupportedText(final StyledString text) {
+        return text.length() <= this.features.length && Lettered.super.isSupportedText(text);
+    }
+
+    @Override
+    public void setText(final StyledString text) {
+        this.text = text;
+        this.computeCatenary();
+    }
+
+    @Override
+    public StyledString getText() {
+        return this.text;
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public Screen createTextGUI() {
+        return new EditLetteredConnectionScreen<>(this);
+    }
+
+    @Override
+    public DataComponentMap serializeLogic() {
+        throw new NotImplementedException("PennantBuntingConnection.serializeLogic");
+    }
+
+    @Override
+    public void deserializeLogic(final DataComponentMap map) {
+        throw new NotImplementedException("PennantBuntingConnection.deserializeLogic");
     }
 }

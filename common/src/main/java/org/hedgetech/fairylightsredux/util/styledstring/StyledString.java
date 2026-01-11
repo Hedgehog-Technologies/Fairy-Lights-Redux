@@ -333,7 +333,7 @@ public final class StyledString implements Comparable<StyledString>, CharSequenc
         return this.value.lastIndexOf(str);
     }
 
-    public int lastInddexOf(final String str, final int fromIndex) {
+    public int lastIndexOf(final String str, final int fromIndex) {
         return this.value.lastIndexOf(str, fromIndex);
     }
 
