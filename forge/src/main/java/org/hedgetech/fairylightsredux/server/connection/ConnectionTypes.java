@@ -4,7 +4,6 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import org.hedgetech.fairylightsredux.Constants;
 import org.hedgetech.fairylightsredux.server.item.FLRItems;
-import org.hedgetech.fairylightsredux.server.item.PennantBuntingConnectionItem;
 
 public final class ConnectionTypes {
     public static final DeferredRegister<ConnectionType<?>> REG = DeferredRegister.create(Constants.CONNECTION_TYPE, Constants.MOD_ID);
@@ -18,7 +17,7 @@ public final class ConnectionTypes {
     );
 
     public static final RegistryObject<ConnectionType<GarlandVineConnection>> TINSEL_GARLAND = REG.register("tinsel_garland",
-            ()  -> ConnectionType.Builder.create(GarlandTinselConnection::new).item(FLRItems.TINSEL).build()
+            ()  -> ConnectionType.Builder.create(GarlandVineConnection::new).item(FLRItems.TINSEL).build()
     );
 
     public static final RegistryObject<ConnectionType<PennantBuntingConnection>> PENNANT_BUNTING = REG.register("pennant_bunting",

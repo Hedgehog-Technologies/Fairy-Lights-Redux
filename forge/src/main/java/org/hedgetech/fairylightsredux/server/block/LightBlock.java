@@ -1,12 +1,18 @@
 package org.hedgetech.fairylightsredux.server.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -14,17 +20,27 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.FaceAttachedHorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.hedgetech.fairylightsredux.server.block.entity.LightBlockEntity;
 import org.hedgetech.fairylightsredux.server.item.LightVariant;
+import org.jspecify.annotations.NonNull;
 
 import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.List;
 
 public class LightBlock extends FaceAttachedHorizontalDirectionalBlock implements EntityBlock {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
@@ -70,12 +86,12 @@ public class LightBlock extends FaceAttachedHorizontalDirectionalBlock implement
     }
 
     @Override
-    public BlockEntity newBlockEntity(final BlockPos pos, final BlockState state) {
+    public BlockEntity newBlockEntity(final @NonNull BlockPos pos, final @NonNull BlockState state) {
         return new LightBlockEntity(pos, state);
     }
 
     @Override
-    public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+    public boolean canSurvive(BlockState state, @NonNull LevelReader world, @NonNull BlockPos pos) {
         final AttachFace value = state.getValue(FACE);
         if (value == AttachFace.WALL) {
             final Direction facing = state.getValue(FACING);
@@ -119,13 +135,61 @@ public class LightBlock extends FaceAttachedHorizontalDirectionalBlock implement
     }
 
     @Override
-    public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+    public void setPlacedBy(@NonNull Level world, @NonNull BlockPos pos, @NonNull BlockState state, @Nullable LivingEntity placer, @NonNull ItemStack stack) {
         super.setPlacedBy(world, pos, state, placer, stack);
         final BlockEntity entity = world.getBlockEntity(pos);
         if (entity instanceof LightBlockEntity lightBlock) {
             final ItemStack lightItem = stack.copy();
             lightItem.setCount(1);
-            lightBlock.
+            lightBlock.setItemStack(lightItem);
         }
+    }
+
+    @Override
+    public @NonNull List<ItemStack> getDrops(final @NonNull BlockState state, final LootParams.@NonNull Builder builder) {
+        final BlockEntity entity = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
+        if (entity instanceof LightBlockEntity lbe) {
+            return Collections.singletonList(lbe.getLight().getItem().copy());
+        }
+        return Collections.emptyList();
+    }
+
+    @Override
+    public @NonNull InteractionResult useItemOn(@NonNull ItemStack stack, final @NonNull BlockState state, final @NonNull Level world, final @NonNull BlockPos pos, final @NonNull Player player, final @NonNull InteractionHand hand, final @NonNull BlockHitResult hit) {
+        final BlockEntity entity = world.getBlockEntity(pos);
+        if (entity instanceof LightBlockEntity lbe) {
+            lbe.interact(world, pos, state, player, hand, hit);
+            return InteractionResult.SUCCESS;
+        }
+        return super.useItemOn(stack, state, world, pos, player, hand, hit);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public void animateTick(final @NonNull BlockState state, final @NonNull Level world, final @NonNull BlockPos pos, final @NonNull RandomSource random) {
+        super.animateTick(state, world, pos, random);
+        final BlockEntity entity = world.getBlockEntity(pos);
+        if (entity instanceof LightBlockEntity lbe) {
+            lbe.animateTick();
+        }
+    }
+
+    @Override
+    public @NonNull VoxelShape getShape(final BlockState state, final @NonNull BlockGetter world, final @NonNull BlockPos pos, final @NonNull CollisionContext random) {
+        return switch (state.getValue(FACE)) {
+            default -> this.floorShape;
+            case WALL -> switch (state.getValue(FACING)) {
+                default -> this.eastWallShape;
+                case WEST -> this.westWallShape;
+                case SOUTH -> this.southWallShape;
+                case NORTH -> this.northWallShape;
+            };
+            case CEILING -> this.ceilingShape;
+        };
+    }
+
+    @Override
+    protected void createBlockStateDefinition(final StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACE, FACING, LIT);
     }
 }

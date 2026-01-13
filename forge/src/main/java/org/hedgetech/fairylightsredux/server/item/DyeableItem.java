@@ -4,7 +4,7 @@ import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
-import org.hedgetech.fairylightsredux.server.item.component.FLRColor;
+import org.hedgetech.fairylightsredux.server.datacomponent.ColorComponent;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -87,14 +87,14 @@ public final class DyeableItem {
     }
 
     public static Optional<DyeColor> getDyeColor(final DataComponentMap map) {
-        if (map.has(FLRColor.TYPE)) {
-            return Optional.of(Objects.requireNonNull(map.get(FLRColor.TYPE)).color());
+        if (map.has(ColorComponent.TYPE)) {
+            return Optional.of(Objects.requireNonNull(map.get(ColorComponent.TYPE)).color());
         }
         return Optional.empty();
     }
 
     public static ItemStack setColor(final ItemStack stack, final DyeColor color) {
-        stack.set(FLRColor.TYPE, new FLRColor(color));
+        stack.set(ColorComponent.TYPE, new ColorComponent(color));
         return stack;
     }
 
@@ -104,7 +104,7 @@ public final class DyeableItem {
     }
 
     public static DataComponentMap setColor(final DataComponentMap map, final DyeColor color) {
-        return DataComponentMap.builder().addAll(map).set(FLRColor.TYPE, new FLRColor(color)).build();
+        return DataComponentMap.builder().addAll(map).set(ColorComponent.TYPE, new ColorComponent(color)).build();
     }
 
     public static DataComponentMap setColor(final DataComponentMap map, final int color) {

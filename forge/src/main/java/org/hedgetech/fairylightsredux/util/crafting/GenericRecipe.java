@@ -5,24 +5,22 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.math.IntMath;
-import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
-import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import net.minecraft.world.level.Level;
+import org.apache.commons.lang3.NotImplementedException;
 import org.hedgetech.fairylightsredux.util.crafting.ingredient.AuxiliaryIngredient;
 import org.hedgetech.fairylightsredux.util.crafting.ingredient.EmptyRegularIngredient;
 import org.hedgetech.fairylightsredux.util.crafting.ingredient.GenericIngredient;
 import org.hedgetech.fairylightsredux.util.crafting.ingredient.RegularIngredient;
+import org.jspecify.annotations.NonNull;
 
-import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.IntUnaryOperator;
 import java.util.function.Supplier;
@@ -38,7 +36,7 @@ public final class GenericRecipe extends CustomRecipe {
     private final int height;
     private final int outputIngredient;
 
-    private ItemStack result = ItemStack.EMPTY;
+    private final ItemStack result = ItemStack.EMPTY;
     private final ImmutableList<IntUnaryOperator> xfunctions = ImmutableList.of(IntUnaryOperator.identity(), i -> this.getWidth() - 1 - i);
     private int room;
 
@@ -74,7 +72,7 @@ public final class GenericRecipe extends CustomRecipe {
         return this.room;
     }
 
-    private NonNullList<Ingredient> getDisplayIngredients() {
+    private List<Ingredient> getDisplayIngredients() {
         final NonNullList<Ingredient> ingredients = NonNullList.withSize(9, Ingredient.of());
         for (int i = 0; i < this.ingredients.length; i++) {
             final int x = i % this.width;
@@ -104,7 +102,7 @@ public final class GenericRecipe extends CustomRecipe {
     }
 
     @Override
-    public RecipeSerializer<? extends CustomRecipe> getSerializer() {
+    public @NonNull RecipeSerializer<? extends CustomRecipe> getSerializer() {
         return this.serializer.get();
     }
 
@@ -130,14 +128,9 @@ public final class GenericRecipe extends CustomRecipe {
 
     // @TODO - recipe rework
 //    @Override
-//    public NonNullList<Ingredient> display() {
+//    public @NonNull List<RecipeDisplay> display() {
 //        return this.getDisplayIngredients();
 //    }
-
-    @Override
-    public List<RecipeDisplay> display() {
-        return List.of();
-    }
 
     // @TODO - recipe rework
 //    @Override
@@ -146,10 +139,10 @@ public final class GenericRecipe extends CustomRecipe {
 //    }
 
     // @TODO - recipe rework
-//    @Override
-//    public boolean matches(final CraftingContainer inventory, @Nullable final Level world) {
-//        if (!This)
-//    }
+    @Override
+    public boolean matches(@NonNull CraftingInput input, @NonNull Level world) {
+        throw new NotImplementedException("GenericRecipe.matches");
+    }
 
     private ItemStack getResult(final CraftingContainer inventory, final int originX, final int originY, final IntUnaryOperator funcX) {
         final MatchResultRegular[] match = new MatchResultRegular[this.ingredients.length];
@@ -234,7 +227,7 @@ public final class GenericRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(final CraftingInput input, final HolderLookup.Provider registries) {
+    public @NonNull ItemStack assemble(final @NonNull CraftingInput input, final HolderLookup.@NonNull Provider registries) {
         final ItemStack result = this.result;
         return result.isEmpty() ? result : result.copy();
     }
@@ -438,5 +431,33 @@ public final class GenericRecipe extends CustomRecipe {
             super.propagate(map);
             this.parent.propagate(map);
         }
+    }
+
+    private static AuxiliaryIngredient<?>[] checkIngredients(final RegularIngredient[] ingredients, final AuxiliaryIngredient<?>[] auxiliaryIngredients) {
+        checkForNulls(ingredients);
+        checkForNulls(auxiliaryIngredients);
+        final boolean ingredientDictator = checkDictatorship(false, ingredients);
+        checkDictatorship(ingredientDictator, auxiliaryIngredients);
+        return auxiliaryIngredients;
+    }
+
+    private static void checkForNulls(final GenericIngredient<?, ?>[] ingredients) {
+        for (int i = 0; i < ingredients.length; i++) {
+            if (ingredients[i] == null) {
+                throw new NullPointerException("Must not have null ingredients, found at index " + i);
+            }
+        }
+    }
+
+    private static boolean checkDictatorship(boolean foundDictator, final GenericIngredient<?, ?>[] ingredients) {
+        for (final GenericIngredient<?, ?> ingredient : ingredients) {
+            if (ingredient.dictatesOutputType()) {
+                if (foundDictator) {
+                    throw new IllegalRecipeException("Only one ingredient can dictate output type");
+                }
+                foundDictator = true;
+            }
+        }
+        return foundDictator;
     }
 }

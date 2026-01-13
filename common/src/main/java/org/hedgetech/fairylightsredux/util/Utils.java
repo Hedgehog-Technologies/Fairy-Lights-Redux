@@ -60,5 +60,17 @@ public final class Utils {
         return true;
     }
 
+    public static int argb(float r, float g, float b, float a) {
+        int ia = (int)(a * 255.0F) & 0xFF;
+        int ir = (int)(r * 255.0F) & 0xFF;
+        int ig = (int)(g * 255.0F) & 0xFF;
+        int ib = (int)(b * 255.0F) & 0xFF;
+        return (ia << 24) | (ir << 16) | (ig << 8) | ib;
+    }
+
+    public static int argb(float a) {
+        return argb(1.0F, 1.0F, 1.0F, a);
+    }
+
     private Utils() {}
 }

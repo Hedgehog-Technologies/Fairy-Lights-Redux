@@ -6,7 +6,12 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import org.apache.commons.lang3.NotImplementedException;
 import org.hedgetech.fairylightsredux.Constants;
+import org.hedgetech.fairylightsredux.client.gui.component.ColorButton;
+import org.hedgetech.fairylightsredux.client.gui.component.PaletteButton;
+import org.hedgetech.fairylightsredux.client.gui.component.StyledTextFieldWidget;
+import org.hedgetech.fairylightsredux.client.gui.component.ToggleButton;
 import org.hedgetech.fairylightsredux.server.connection.Connection;
 import org.hedgetech.fairylightsredux.server.connection.Lettered;
 import org.hedgetech.fairylightsredux.server.net.serverbound.EditLetteredConnectionMessage;
@@ -17,6 +22,8 @@ import org.lwjgl.glfw.GLFW;
 
 public final class EditLetteredConnectionScreen<C extends Connection & Lettered> extends Screen {
     public static final ResourceLocation WIDGETS_TEXTURE = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "textures/gui/widgets.png");
+    public static final int WIDGETS_TEXTURE_WIDTH = 256;
+    public static final int WIDGETS_TEXTURE_HEIGHT = 256;
 
     private final C connection;
     private StyledTextFieldWidget textField;
@@ -39,8 +46,10 @@ public final class EditLetteredConnectionScreen<C extends Connection & Lettered>
         final int pad = 4;
         final int buttonWidth = 150;
         this.doneBtn = this.addRenderableWidget(Button.builder(Component.translatable("gui.done"), b -> {
-            Constants.NETWORK.sendToServer(new EditLetteredConnectionMessage<>(this.connection, this.textField.getValue()));
-            this.onClose();
+            // TODO: NETWORK SEND SERVER PACKET
+            throw new NotImplementedException("EditLetteredConnectionScreen.init.doneBtn");
+//            Constants.NETWORK.sendToServer(new EditLetteredConnectionMessage<>(this.connection, this.textField.getValue()));
+//            this.onClose();
         }).pos(this.width / 2 - pad - buttonWidth, this.height / 4 + 120 + 12).size(buttonWidth, 20).build());
         this.cancelBtn = this.addRenderableWidget(Button.builder(Component.translatable("gui.cancel"), b -> this.onClose())
                 .pos(this.width / 2 + pad, this.height / 4 + 120 + 12).size(buttonWidth, 20).build());
@@ -55,7 +64,7 @@ public final class EditLetteredConnectionScreen<C extends Connection & Lettered>
         this.italicBtn = this.addRenderableWidget(new ToggleButton(buttonX += bInc, buttonY, 60, 0, Component.empty(), b -> this.updateStyleButton(ChatFormatting.ITALIC, this.italicBtn)));
         this.underlineBtn = this.addRenderableWidget(new ToggleButton(buttonX += bInc, buttonY, 80, 0, Component.empty(), b -> this.updateStyleButton(ChatFormatting.UNDERLINE, this.underlineBtn)));
         this.strikethroughBtn = this.addRenderableWidget(new ToggleButton(buttonX += bInc, buttonY, 100, 0, Component.empty(), b -> this.updateStyleButton(ChatFormatting.STRIKETHROUGH, this.strikethroughBtn)));
-        this.textField = new StyledTextFieldWidget(this.font, this.colorBtn, this.boldBtn, this.underlineBtn, this.strikethroughBtn, textFieldX, textFieldY, 300, 20, Component.translatable("fairylightsredux.letteredText"));
+        this.textField = new StyledTextFieldWidget(this.font, this.colorBtn, this.boldBtn, this.italicBtn, this.underlineBtn, this.strikethroughBtn, textFieldX, textFieldY, 300, 20, Component.translatable("fairylightsredux.letteredText"));
         this.textField.setValue(this.connection.getText());
         this.textField.setCaretStart();
         this.textField.setIsBlurable(false);
@@ -142,7 +151,7 @@ public final class EditLetteredConnectionScreen<C extends Connection & Lettered>
 
     @Override
     public void render(final @NonNull GuiGraphics stack, final int mouseX, final int mouseY, final float delta) {
-        this.renderBackground(stack);
+        this.renderBackground(stack, mouseX, mouseY, delta);
         stack.drawCenteredString(this.font, Component.translatable("fairylightsredux.editLetteredConnection"), this.width / 2, 20, 0xFFFFFF);
         super.render(stack, mouseX, mouseY, delta);
         this.textField.render(stack, mouseX, mouseY, delta);
@@ -151,7 +160,7 @@ public final class EditLetteredConnectionScreen<C extends Connection & Lettered>
             stack.drawString(this.font,
                     Component.translatable("fairylightsredux.editLetteredConnection.allowed_characters", allowed)
                             .withStyle(ChatFormatting.GRAY),
-                    this.textfield.getX(),
+                    this.textField.getX(),
                     this.textField.getY() + 24,
                     0xFFFFFFFF
             );

@@ -12,12 +12,12 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.ItemHandlerHelper;
 import org.apache.commons.lang3.NotImplementedException;
+import org.hedgetech.fairylightsredux.client.gui.EditLetteredConnectionScreen;
 import org.hedgetech.fairylightsredux.server.collision.Intersection;
 import org.hedgetech.fairylightsredux.server.fastener.Fastener;
 import org.hedgetech.fairylightsredux.server.feature.FeatureType;
 import org.hedgetech.fairylightsredux.server.feature.Pennant;
 import org.hedgetech.fairylightsredux.server.item.DyeableItem;
-import org.hedgetech.fairylightsredux.server.net.serverbound.EditLetteredConnectionMessage;
 import org.hedgetech.fairylightsredux.server.sound.FLRSounds;
 import org.hedgetech.fairylightsredux.util.OreDictUtils;
 import org.hedgetech.fairylightsredux.util.styledstring.StyledString;
@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.UUID;
 
 public final class PennantBuntingConnection extends HangingFeatureConnection<Pennant> implements Lettered {
-    private List<ItemStack> pattern;
+    private final List<ItemStack> pattern;
     private StyledString text;
 
     public PennantBuntingConnection(final ConnectionType<? extends PennantBuntingConnection> type, final Level world, final Fastener<?> fastener, final UUID uuid) {
