@@ -1,12 +1,15 @@
 package org.hedgetech.fairylightsredux.data;
 
+import net.minecraft.ResourceLocationException;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
+import org.hedgetech.fairylightsredux.Constants;
 import org.hedgetech.fairylightsredux.server.item.FLRItems;
 import org.hedgetech.fairylightsredux.server.item.crafting.FLRCraftingRecipes;
 import org.jspecify.annotations.NonNull;
@@ -75,7 +78,9 @@ public final class ForgeFLRRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_torch", has(Items.TORCH))
                 .save(this.output);
 
-        GenericRecipeBuilder.customRecipe(FLRCraftingRecipes)
+        GenericRecipeBuilder.customRecipe(FLRCraftingRecipes.HANGING_LIGHTS.get(), FLRItems.HANGING_LIGHTS.get())
+                .unlockedBy("has_lights", has(FLRCraftingRecipes.LIGHTS))
+                .save(this.output, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "hanging_lights"));
     }
 
     public static class Runner extends RecipeProvider.Runner {
