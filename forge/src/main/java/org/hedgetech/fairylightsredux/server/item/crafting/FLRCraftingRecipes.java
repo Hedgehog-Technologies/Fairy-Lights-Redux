@@ -35,7 +35,7 @@ import java.util.function.UnaryOperator;
 
 @Mod.EventBusSubscriber(modid = Constants.MOD_ID)
 public final class FLRCraftingRecipes {
-    public static final DeferredRegister<CustomRecipe> REG = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Constants.MOD_ID);
+    public static final DeferredRegister<RecipeSerializer<?>> REG = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Constants.MOD_ID);
 
     public static final RegistryObject<RecipeSerializer<GenericRecipe>> HANGING_LIGHTS = REG.register("crafting_special_hanging_lights", () -> new SimpleCraftingRecipeSerializer<>(FLRCraftingRecipes::createHangingLights));
 

@@ -1,0 +1,23 @@
+package org.hedgetech.fairylightsredux.content;
+
+import net.minecraft.world.item.Item;
+import org.hedgetech.fairylightsredux.content.def.ItemDef;
+import org.hedgetech.fairylightsredux.content.def.RecipeDef;
+
+import java.util.List;
+
+public class ItemDefinitions {
+    public static final List<ItemDef> ITEMS = List.of(
+
+    );
+
+    // EXAMPLE SIMPLE ITEM DEF
+    private static ItemDef simple(String name) {
+        return new ItemDef(
+                name,
+                Item.Properties::new,
+                RecipeDefs.simpleItem(name),
+                LootDefs.self(name)
+        );
+    }
+}
