@@ -2,11 +2,12 @@ package org.hedgetech.fairylightsredux.content;
 
 import net.minecraft.world.item.Item;
 import org.hedgetech.fairylightsredux.content.def.ItemDef;
-import org.hedgetech.fairylightsredux.content.def.RecipeDef;
+import org.hedgetech.fairylightsredux.content.loot.LootDefs;
+import org.hedgetech.fairylightsredux.content.recipe.RecipeDefs;
 
 import java.util.List;
 
-public class ItemDefinitions {
+public class ItemDefs {
     public static final List<ItemDef> ITEMS = List.of(
 
     );

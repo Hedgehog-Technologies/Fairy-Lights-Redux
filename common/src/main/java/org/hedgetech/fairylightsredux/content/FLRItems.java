@@ -10,7 +10,7 @@ public final class FLRItems {
     private static final Map<String, Item> ITEMS = new HashMap<>();
 
     public static void registerAll(RegistryBridge bridge) {
-        for (ItemDef def : ItemDefinitions.ITEMS) {
+        for (ItemDef def : ItemDefs.ITEMS) {
             Item item = bridge.registerItem(
                     def.name(),
                     () -> new Item(def.props().get())

@@ -1,7 +1,7 @@
 package org.hedgetech.fairylightsredux.content.def;
 
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.crafting.RecipeBookCategory;
 
 import javax.annotation.Nullable;
 import java.util.function.Supplier;
@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 public record ItemDef(
         String name,
         Supplier<Item.Properties> props,
-        RecipeBookCategory category,
+        RecipeCategory category,
         @Nullable RecipeDef recipe,
         @Nullable LootDef loot
 ) {
