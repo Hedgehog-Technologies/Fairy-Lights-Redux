@@ -5,16 +5,15 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import org.hedgetech.fairylightsredux.Constants;
-import org.hedgetech.fairylightsredux.content.def.ItemDef;
-import org.hedgetech.fairylightsredux.content.def.LootDef;
+import org.hedgetech.fairylightsredux.content.item.ItemDef;
 
 import java.util.function.BiConsumer;
 
-public class SelfDropLoot implements LootDef {
+public class SelfLootDef implements LootDef {
     @Override
     public void generate(BiConsumer<ResourceLocation, LootTable.Builder> output, ItemDef item) {
         output.accept(
-                ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "blocks/" + item.name()),
+                ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "items/" + item.id()),
                 LootTable.lootTable()
                         .withPool(
                                 LootPool.lootPool()

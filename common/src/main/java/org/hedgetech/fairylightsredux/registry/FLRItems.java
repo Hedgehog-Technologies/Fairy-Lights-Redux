@@ -1,7 +1,8 @@
-package org.hedgetech.fairylightsredux.content;
+package org.hedgetech.fairylightsredux.registry;
 
 import net.minecraft.world.item.Item;
-import org.hedgetech.fairylightsredux.content.def.ItemDef;
+import org.hedgetech.fairylightsredux.content.item.ItemDef;
+import org.hedgetech.fairylightsredux.content.item.ItemDefs;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,14 +13,14 @@ public final class FLRItems {
     public static void registerAll(RegistryBridge bridge) {
         for (ItemDef def : ItemDefs.ITEMS) {
             Item item = bridge.registerItem(
-                    def.name(),
-                    () -> new Item(def.props().get())
+                    def.id(),
+                    def::createItem
             );
-            ITEMS.put(def.name(), item);
+            ITEMS.put(def.id(), item);
         }
     }
 
-    public static Item get(String name) {
-        return ITEMS.get(name);
+    public static Item get(String id) {
+        return ITEMS.get(id);
     }
 }

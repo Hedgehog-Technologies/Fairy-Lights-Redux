@@ -1,4 +1,7 @@
 package org.hedgetech.fairylightsredux.content.loot;
 
-public class LootDefs {
+public final class LootDefs {
+    public static LootDef self() {
+        return new SelfLootDef();
+    }
 }

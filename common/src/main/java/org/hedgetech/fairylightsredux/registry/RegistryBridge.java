@@ -1,4 +1,4 @@
-package org.hedgetech.fairylightsredux.content;
+package org.hedgetech.fairylightsredux.registry;
 
 import net.minecraft.world.item.Item;
 

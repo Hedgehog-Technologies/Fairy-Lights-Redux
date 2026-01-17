@@ -1,7 +1,8 @@
-package org.hedgetech.fairylightsredux.content.def;
+package org.hedgetech.fairylightsredux.content.loot;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.LootTable;
+import org.hedgetech.fairylightsredux.content.item.ItemDef;
 
 import java.util.function.BiConsumer;
 
