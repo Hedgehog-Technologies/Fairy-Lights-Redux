@@ -9,4 +9,8 @@ public final class CandleBlock extends Block {
         super(props.lightLevel(state -> lightLevel));
         this.lightLevel = lightLevel;
     }
+
+    public int getLightLevel() {
+        return this.lightLevel;
+    }
 }

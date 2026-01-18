@@ -11,17 +11,17 @@ import java.util.List;
 
 public final class BlockDefs {
     public static final List<BlockDef> BLOCKS = List.of(
-            new BlockDef(
-                    "blue_candle",
-                    RecipeCategory.DECORATIONS,
-                    () -> defaultProperties().strength(0.1F).sound(SoundType.CANDLE),
-                    (props, def) -> {
-                        CandleData d = BlockData.requireData(def, CandleData.class);
-                        return new CandleBlock(props, d.lightLevel());
-                    },
-                    (block, props, def) -> new BlockItem(block, props),
-                    new CandleData(7)
-            )
+//            new BlockDef(
+//                    "blue_candle",
+//                    RecipeCategory.DECORATIONS,
+//                    () -> defaultProperties().strength(0.1F).sound(SoundType.CANDLE),
+//                    (props, def) -> {
+//                        CandleData d = BlockData.requireData(def, CandleData.class);
+//                        return new CandleBlock(props, d.lightLevel());
+//                    },
+//                    (block, props, def) -> new BlockItem(block, props),
+//                    new CandleData(7)
+//            )
     );
 
     private static BlockBehaviour.Properties defaultProperties() {
