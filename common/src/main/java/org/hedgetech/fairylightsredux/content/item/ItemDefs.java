@@ -30,9 +30,7 @@ public class ItemDefs {
                     RecipeCategory.DECORATIONS,
                     ItemDefs::defaultProperties,
                     (props, def) -> new HangingLightsConnectionItem(props),
-                    null,
-                    null,
-                    null
+                    RecipeDefs.hangingLights()
             )
     );
 

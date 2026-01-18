@@ -2,6 +2,7 @@ package org.hedgetech.fairylightsredux.content.item;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.decoration.HangingEntity;
@@ -12,6 +13,8 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.NotNull;
@@ -36,7 +39,7 @@ public abstract class ConnectionItem extends Item {
             return InteractionResult.PASS;
         }
 
-        BlockState fastenerState = fastener.defaultBlockState().setValue(FastenerBlock.FACING, side);
+        BlockState fastenerState = fastener.defaultBlockState().setValue(FastenerBlock.FACING, targetSide);
         BlockState currentTargetState = world.getBlockState(clickPos);
         BlockPlaceContext blockCtx = new BlockPlaceContext(ctx);
         BlockPos placePos = blockCtx.getClickedPos();
@@ -62,30 +65,107 @@ public abstract class ConnectionItem extends Item {
     private boolean isConnectionInOtherHand(Level world, Player player, ItemStack heldStack) {
         // TODO figure out what capabilities equate to in vanilla
         throw new NotImplementedException("ConnectionItem.isConnectionInOtherHand");
+//        final Fastener<?> attacher = user.getCapability(CapabilityHandler.FASTENER_CAP).orElseThrow(IllegalStateException::new);
+//        return attacher.getFirstConnection().filter(connection -> {
+//            final CompoundTag nbt = connection.serializeLogic();
+//            return nbt.isEmpty() ? stack.hasTag() : !NbtUtils.compareNbt(nbt, stack.getTag(), true);
+//        }).isPresent();
     }
 
-    private void connect(ItemStack heldStack, Player player, Level world, BlockPos clickPos) {
-        // TODO figure out what capabilities equate to in vanilla
-        throw new NotImplementedException("ConnectionItem.connect");
+    private void connect(ItemStack stack, Player player, Level world, BlockPos pos) {
+        BlockEntity entity = world.getBlockEntity(pos);
+        // TODO Unsure if this check is equivalent to the original capability check
+        if (entity != null && entity instanceof Fastener<?> fastener) {
+            this.connect(stack, player, world, fastener);
+        }
+//        final BlockEntity entity = world.getBlockEntity(pos);
+//        if (entity != null) {
+//            entity.getCapability(CapabilityHandler.FASTENER_CAP).ifPresent(fastener -> this.connect(stack, user, world, fastener));
+//        }
     }
 
-    private void connect(ItemStack heldStack, Player player, Level world, BlockPos pos, BlockState state) {
-        // TODO figure out what capabilities equate to in vanilla
-        throw new NotImplementedException("ConnectionItem.connect with BlockState");
+    private void connect(ItemStack stack, Player player, Level world, BlockPos pos, BlockState state) {
+        if (world.setBlock(pos, state, 3)) {
+            state.getBlock().setPlacedBy(world, pos, state, player, stack);
+            // TODO Unsure if this will have the same result as `state.getBlock().getSoundType(state, world, pos, user);`
+            SoundType sound = state.getSoundType();
+            world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+                    sound.getPlaceSound(),
+                    SoundSource.BLOCKS,
+                    (sound.getVolume() + 1) / 2,
+                    sound.getPitch() * 0.8F
+            );
+            BlockEntity entity = world.getBlockEntity(pos);
+            // TODO Unsure if this check is equivalent to the original capability check
+            if (entity != null && entity instanceof Fastener<?> fastener) {
+                this.connect(stack, player, world, fastener, false);
+            }
+        }
+//        if (world.setBlock(pos, state, 3)) {
+//            state.getBlock().setPlacedBy(world, pos, state, user, stack);
+//            final SoundType sound = state.getBlock().getSoundType(state, world, pos, user);
+//            world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+//                    sound.getPlaceSound(),
+//                    SoundSource.BLOCKS,
+//                    (sound.getVolume() + 1) / 2,
+//                    sound.getPitch() * 0.8F
+//            );
+//            final BlockEntity entity = world.getBlockEntity(pos);
+//            if (entity != null) {
+//                entity.getCapability(CapabilityHandler.FASTENER_CAP).ifPresent(destination -> this.connect(stack, user, world, destination, false));
+//            }
+//        }
     }
 
-    public void connect(ItemStack heldStack, Player player, final Level world, final Fastener<?> fastener) {
-        this.connect(heldStack, player, world, fastener, true);
+    public void connect(ItemStack stack, Player player, final Level world, final Fastener<?> fastener) {
+        this.connect(stack, player, world, fastener, true);
     }
 
-    public void connect(ItemStack heldStack, Player player, Level world, Fastener<?> fastener, boolean playConnectSound) {
-        // TODO figure out what capabilities equate to in vanilla
+    public void connect(ItemStack stack, Player player, Level world, Fastener<?> fastener, boolean playConnectSound) {
+
         throw new NotImplementedException("ConnectionItem.connect with Fastener");
+//        user.getCapability(CapabilityHandler.FASTENER_CAP).ifPresent(attacher -> {
+//            boolean playSound = playConnectSound;
+//            final Optional<Connection> placing = attacher.getFirstConnection();
+//            if (placing.isPresent()) {
+//                final Connection conn = placing.get();
+//                if (conn.reconnect(fastener)) {
+//                    conn.onConnect(world, user, stack);
+//                    stack.shrink(1);
+//                } else {
+//                    playSound = false;
+//                }
+//            } else {
+//                final CompoundTag data = stack.getTag();
+//                fastener.connect(world, attacher, this.getConnectionType(), data == null ? new CompoundTag() : data, false);
+//            }
+//            if (playSound) {
+//                final Vec3 pos = fastener.getConnectionPoint();
+//                world.playSound(null, pos.x, pos.y, pos.z, FLSounds.CORD_CONNECT.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+//            }
+//        });
     }
 
-    private void connectFence(ItemStack heldStack, Player player, Level world, BlockPos pos, FenceFastenerEntity entity) {
-        // TODO figure out what capabilities equate to in vanilla
-        throw new NotImplementedException("ConnectionItem.connectFence");
+    private void connectFence(ItemStack stack, Player player, Level world, BlockPos pos, FenceFastenerEntity entity) {
+        boolean playConnectSound = true;
+        if (entity == null) {
+            entity = FenceFastenerEntity.create(world, pos);
+            playConnectSound = false;
+        }
+        // TODO Unsure if this check is equivalent to the original capability check
+        if (entity != null && entity instanceof Fastener<?> fastener) {
+            this.connect(stack, player, world, fastener, playConnectSound);
+        } else {
+            throw new IllegalStateException("FenceFastenerEntity is not a Fastener");
+        }
+//        final boolean playConnectSound;
+//        if (fastener == null) {
+//            fastener = FenceFastenerEntity.create(world, pos);
+//            playConnectSound = false;
+//        } else {
+//            playConnectSound = true;
+//        }
+//        this.connect(stack, user, world, fastener.getCapability(CapabilityHandler.FASTENER_CAP).orElseThrow(IllegalStateException::new), playConnectSound);
     }
 
     public static boolean isFence(BlockState state) {

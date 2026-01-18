@@ -21,6 +21,18 @@ public record ItemDef(
         @Nullable LootDef loot,
         @Nullable ItemData data
 ) implements ItemLike {
+    public ItemDef(String id, RecipeCategory category, Supplier<Item.Properties> props, ItemFactory factory) {
+        this(id, category, props, factory, null, null, null);
+    }
+
+    public ItemDef(String id, RecipeCategory category, Supplier<Item.Properties> props, ItemFactory factory, @Nullable RecipeDef recipe) {
+        this(id, category, props, factory, recipe, null, null);
+    }
+
+    public ItemDef(String id, RecipeCategory category, Supplier<Item.Properties> props, ItemFactory factory, @Nullable RecipeDef recipe, @Nullable LootDef loot) {
+        this(id, category, props, factory, recipe, loot, null);
+    }
+
     public Item createItem() {
         return factory.create(this.props.get(), this);
     }
