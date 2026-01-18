@@ -23,4 +23,6 @@ public final class FLRItems {
     public static Item get(String id) {
         return ITEMS.get(id);
     }
+
+    private FLRItems() {}
 }

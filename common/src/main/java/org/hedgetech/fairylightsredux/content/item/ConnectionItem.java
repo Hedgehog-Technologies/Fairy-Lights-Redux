@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.apache.commons.lang3.NotImplementedException;
+import org.hedgetech.fairylightsredux.registry.FLRBlocks;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class ConnectionItem extends Item {
@@ -29,28 +30,33 @@ public abstract class ConnectionItem extends Item {
         final Player player = ctx.getPlayer();
         if (player == null) return super.useOn(ctx);
 
-        Level world = ctx.getLevel();
-        Direction targetSide = ctx.getClickedFace();
-        BlockPos clickPos = ctx.getClickedPos();
-        Block fastener = FLRBlocks.FASTENER.get();
-        ItemStack heldStack = ctx.getItemInHand();
+        final Level world = ctx.getLevel();
+        final Direction targetSide = ctx.getClickedFace();
+        final BlockPos clickPos = ctx.getClickedPos();
+        final Block fastener = FLRBlocks.FASTENER.get();
+        final ItemStack heldStack = ctx.getItemInHand();
 
         if (this.isConnectionInOtherHand(world, player, heldStack)) {
             return InteractionResult.PASS;
         }
 
-        BlockState fastenerState = fastener.defaultBlockState().setValue(FastenerBlock.FACING, targetSide);
-        BlockState currentTargetState = world.getBlockState(clickPos);
-        BlockPlaceContext blockCtx = new BlockPlaceContext(ctx);
-        BlockPos placePos = blockCtx.getClickedPos();
+        final BlockState fastenerState = fastener.defaultBlockState().setValue(FastenerBlock.FACING, targetSide);
+        final BlockState currentTargetState = world.getBlockState(clickPos);
+        final BlockPlaceContext blockCtx = new BlockPlaceContext(ctx);
+        final BlockPos placePos = blockCtx.getClickedPos();
 
         if (currentTargetState.getBlock() == fastener) {
             if (!world.isClientSide()) {
                 this.connect(heldStack, player, world, clickPos);
             }
             return InteractionResult.SUCCESS;
+        } else if (blockCtx.canPlace() && fastenerState.canSurvive(world, placePos)) {
+            if (!world.isClientSide()) {
+                this.connect(heldStack, player, world, placePos, fastenerState);
+            }
+            return InteractionResult.SUCCESS;
         } else if (isFence(currentTargetState)) {
-            HangingEntity entity = FenceFastenerEntity.findHanging(world, clickPos);
+            final HangingEntity entity = FenceFastenerEntity.findHanging(world, clickPos);
             if (entity == null || entity instanceof FenceFastenerEntity ffe) {
                 if (!world.isClientSide()) {
                     this.connectFence(heldStack, player, world, clickPos, ffe);
@@ -74,7 +80,7 @@ public abstract class ConnectionItem extends Item {
 
     private void connect(ItemStack stack, Player player, Level world, BlockPos pos) {
         BlockEntity entity = world.getBlockEntity(pos);
-        // TODO Unsure if this check is equivalent to the original capability check
+        // FIXME Unsure if this check is equivalent to the original capability check
         if (entity != null && entity instanceof Fastener<?> fastener) {
             this.connect(stack, player, world, fastener);
         }
@@ -87,16 +93,16 @@ public abstract class ConnectionItem extends Item {
     private void connect(ItemStack stack, Player player, Level world, BlockPos pos, BlockState state) {
         if (world.setBlock(pos, state, 3)) {
             state.getBlock().setPlacedBy(world, pos, state, player, stack);
-            // TODO Unsure if this will have the same result as `state.getBlock().getSoundType(state, world, pos, user);`
-            SoundType sound = state.getSoundType();
+            // FIXME Unsure if this will have the same result as `state.getBlock().getSoundType(state, world, pos, user);`
+            final SoundType sound = state.getSoundType();
             world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
                     sound.getPlaceSound(),
                     SoundSource.BLOCKS,
                     (sound.getVolume() + 1) / 2,
                     sound.getPitch() * 0.8F
             );
-            BlockEntity entity = world.getBlockEntity(pos);
-            // TODO Unsure if this check is equivalent to the original capability check
+            final BlockEntity entity = world.getBlockEntity(pos);
+            // FIXME Unsure if this check is equivalent to the original capability check
             if (entity != null && entity instanceof Fastener<?> fastener) {
                 this.connect(stack, player, world, fastener, false);
             }
@@ -152,7 +158,7 @@ public abstract class ConnectionItem extends Item {
             entity = FenceFastenerEntity.create(world, pos);
             playConnectSound = false;
         }
-        // TODO Unsure if this check is equivalent to the original capability check
+        // FIXME Unsure if this check is equivalent to the original capability check
         if (entity != null && entity instanceof Fastener<?> fastener) {
             this.connect(stack, player, world, fastener, playConnectSound);
         } else {

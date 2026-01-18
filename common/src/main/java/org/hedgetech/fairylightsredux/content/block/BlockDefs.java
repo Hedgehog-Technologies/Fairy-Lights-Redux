@@ -1,0 +1,32 @@
+package org.hedgetech.fairylightsredux.content.block;
+
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import org.hedgetech.fairylightsredux.content.block.data.BlockData;
+import org.hedgetech.fairylightsredux.content.block.data.CandleData;
+
+import java.util.List;
+
+public final class BlockDefs {
+    public static final List<BlockDef> BLOCKS = List.of(
+            new BlockDef(
+                    "blue_candle",
+                    RecipeCategory.DECORATIONS,
+                    () -> defaultProperties().strength(0.1F).sound(SoundType.CANDLE),
+                    (props, def) -> {
+                        CandleData d = BlockData.requireData(def, CandleData.class);
+                        return new CandleBlock(props, d.lightLevel());
+                    },
+                    (block, props, def) -> new BlockItem(block, props),
+                    new CandleData(7)
+            )
+    );
+
+    private static BlockBehaviour.Properties defaultProperties() {
+        return BlockBehaviour.Properties.of();
+    }
+
+    private BlockDefs() {}
+}

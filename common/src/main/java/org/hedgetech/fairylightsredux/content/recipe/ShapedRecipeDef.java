@@ -3,10 +3,12 @@ package org.hedgetech.fairylightsredux.content.recipe;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.HolderGetter;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
+import org.hedgetech.fairylightsredux.content.block.BlockDef;
 import org.hedgetech.fairylightsredux.content.item.ItemDef;
 
 import java.util.List;
@@ -26,10 +28,23 @@ public class ShapedRecipeDef implements RecipeDef {
 
     @Override
     public void generate(RecipeOutput output, HolderGetter<Item> lookup, ItemDef item) {
+        generateInternal(output, lookup, item, item.category());
+    }
+
+    @Override
+    public void generate(RecipeOutput output, HolderGetter<Item> lookup, BlockDef block) {
+        generateInternal(output, lookup, block, block.category());
+    }
+
+    private void generateInternal(RecipeOutput output, HolderGetter<Item> lookup, ItemLike result) {
+        generateInternal(output, lookup, result, RecipeCategory.MISC);
+    }
+
+    private void generateInternal(RecipeOutput output, HolderGetter<Item> lookup, ItemLike result, RecipeCategory category) {
         ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(
                 lookup,
-                item.category(),
-                item.asItem()
+                category,
+                result
         );
 
         for (String row : this.pattern) {
