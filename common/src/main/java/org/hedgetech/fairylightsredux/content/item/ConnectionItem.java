@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.apache.commons.lang3.NotImplementedException;
+import org.hedgetech.fairylightsredux.content.block.FastenerBlock;
 import org.hedgetech.fairylightsredux.registry.FLRBlocks;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,7 +34,7 @@ public abstract class ConnectionItem extends Item {
         final Level world = ctx.getLevel();
         final Direction targetSide = ctx.getClickedFace();
         final BlockPos clickPos = ctx.getClickedPos();
-        final Block fastener = FLRBlocks.FASTENER.get();
+        final Block fastener = FLRBlocks.get("fastener");
         final ItemStack heldStack = ctx.getItemInHand();
 
         if (this.isConnectionInOtherHand(world, player, heldStack)) {
@@ -101,7 +102,6 @@ public abstract class ConnectionItem extends Item {
                     sound.getPitch() * 0.8F
             );
             final BlockEntity entity = world.getBlockEntity(pos);
-            // FIXME Unsure if this check is equivalent to the original capability check
             if (entity != null && entity instanceof Fastener<?> fastener) {
                 this.connect(stack, player, world, fastener, false);
             }

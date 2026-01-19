@@ -7,6 +7,7 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import org.hedgetech.fairylightsredux.content.block.data.BlockData;
+import org.hedgetech.fairylightsredux.content.block.entity.BlockEntityDef;
 import org.hedgetech.fairylightsredux.content.loot.LootDef;
 import org.hedgetech.fairylightsredux.content.recipe.RecipeDef;
 import org.hedgetech.fairylightsredux.registry.FLRBlockItems;
@@ -22,36 +23,69 @@ public record BlockDef(
         Supplier<BlockBehaviour.Properties> blockProps,
         BlockFactory blockFactory,
         BlockItemFactory itemFactory,
+        @Nullable BlockEntityDef<?> blockEntity,
         @Nullable RecipeDef recipe,
         @Nullable LootDef loot,
         @Nullable BlockData data
 ) implements ItemLike {
     public BlockDef(String id, RecipeCategory category, Supplier<BlockBehaviour.Properties> blockProps, BlockFactory blockFactory, BlockItemFactory itemFactory) {
-        this(id, category, blockProps, blockFactory, itemFactory, null, null, null);
+        this(id, category, blockProps, blockFactory, itemFactory, null, null, null, null);
+    }
+
+    public BlockDef(String id, RecipeCategory category, Supplier<BlockBehaviour.Properties> blockProps, BlockFactory blockFactory, BlockItemFactory itemFactory, @Nullable BlockEntityDef<?> blockEntity) {
+        this(id, category, blockProps, blockFactory, itemFactory, blockEntity, null, null, null);
     }
 
     public BlockDef(String id, RecipeCategory category, Supplier<BlockBehaviour.Properties> blockProps, BlockFactory blockFactory, BlockItemFactory itemFactory, @Nullable RecipeDef recipe) {
-        this(id, category, blockProps, blockFactory, itemFactory, recipe, null, null);
+        this(id, category, blockProps, blockFactory, itemFactory, null, recipe, null, null);
     }
 
     public BlockDef(String id, RecipeCategory category, Supplier<BlockBehaviour.Properties> blockProps, BlockFactory blockFactory, BlockItemFactory itemFactory, @Nullable LootDef loot) {
-        this(id, category, blockProps, blockFactory, itemFactory, null, loot, null);
+        this(id, category, blockProps, blockFactory, itemFactory, null, null, loot, null);
     }
 
     public BlockDef(String id, RecipeCategory category, Supplier<BlockBehaviour.Properties> blockProps, BlockFactory blockFactory, BlockItemFactory itemFactory, @Nullable BlockData data) {
-        this(id, category, blockProps, blockFactory, itemFactory, null, null, data);
+        this(id, category, blockProps, blockFactory, itemFactory, null, null, null, data);
     }
 
     public BlockDef(String id, RecipeCategory category, Supplier<BlockBehaviour.Properties> blockProps, BlockFactory blockFactory, BlockItemFactory itemFactory, @Nullable LootDef loot, @Nullable BlockData data) {
-        this(id, category, blockProps, blockFactory, itemFactory, null, loot, data);
+        this(id, category, blockProps, blockFactory, itemFactory, null, null, loot, data);
     }
 
     public BlockDef(String id, RecipeCategory category, Supplier<BlockBehaviour.Properties> blockProps, BlockFactory blockFactory, BlockItemFactory itemFactory, @Nullable RecipeDef recipe, @Nullable BlockData data) {
-        this(id, category, blockProps, blockFactory, itemFactory, recipe, null, data);
+        this(id, category, blockProps, blockFactory, itemFactory, null, recipe, null, data);
+    }
+
+    public BlockDef(String id, RecipeCategory category, Supplier<BlockBehaviour.Properties> blockProps, BlockFactory blockFactory, BlockItemFactory itemFactory, @Nullable BlockEntityDef<?> blockEntity, @Nullable BlockData data) {
+        this(id, category, blockProps, blockFactory, itemFactory, blockEntity, null, null, data);
     }
 
     public BlockDef(String id, RecipeCategory category, Supplier<BlockBehaviour.Properties> blockProps, BlockFactory blockFactory, BlockItemFactory itemFactory, @Nullable RecipeDef recipe, @Nullable LootDef loot) {
-        this(id, category, blockProps, blockFactory, itemFactory, recipe, loot, null);
+        this(id, category, blockProps, blockFactory, itemFactory, null, recipe, loot, null);
+    }
+
+    public BlockDef(String id, RecipeCategory category, Supplier<BlockBehaviour.Properties> blockProps, BlockFactory blockFactory, BlockItemFactory itemFactory, @Nullable BlockEntityDef<?> blockEntity, @Nullable LootDef loot) {
+        this(id, category, blockProps, blockFactory, itemFactory, blockEntity, null, loot, null);
+    }
+
+    public BlockDef(String id, RecipeCategory category, Supplier<BlockBehaviour.Properties> blockProps, BlockFactory blockFactory, BlockItemFactory itemFactory, @Nullable BlockEntityDef<?> blockEntity, @Nullable RecipeDef recipe) {
+        this(id, category, blockProps, blockFactory, itemFactory, blockEntity, recipe, null, null);
+    }
+
+    public BlockDef(String id, RecipeCategory category, Supplier<BlockBehaviour.Properties> blockProps, BlockFactory blockFactory, BlockItemFactory itemFactory, @Nullable BlockEntityDef<?> blockEntity, @Nullable RecipeDef recipe, @Nullable LootDef loot) {
+        this(id, category, blockProps, blockFactory, itemFactory, blockEntity, recipe, loot, null);
+    }
+
+    public BlockDef(String id, RecipeCategory category, Supplier<BlockBehaviour.Properties> blockProps, BlockFactory blockFactory, BlockItemFactory itemFactory, @Nullable BlockEntityDef<?> blockEntity, @Nullable RecipeDef recipe, @Nullable BlockData data) {
+        this(id, category, blockProps, blockFactory, itemFactory, blockEntity, recipe, null, data);
+    }
+
+    public BlockDef(String id, RecipeCategory category, Supplier<BlockBehaviour.Properties> blockProps, BlockFactory blockFactory, BlockItemFactory itemFactory, @Nullable BlockEntityDef<?> blockEntity, @Nullable LootDef loot, @Nullable BlockData data) {
+        this(id, category, blockProps, blockFactory, itemFactory, blockEntity, null, loot, data);
+    }
+
+    public BlockDef(String id, RecipeCategory category, Supplier<BlockBehaviour.Properties> blockProps, BlockFactory blockFactory, BlockItemFactory itemFactory, @Nullable RecipeDef recipe, @Nullable LootDef loot, @Nullable BlockData data) {
+        this(id, category, blockProps, blockFactory, itemFactory, null, recipe, loot, data);
     }
 
     public Block createBlock() {
