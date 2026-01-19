@@ -29,8 +29,24 @@ public record ItemDef(
         this(id, category, props, factory, recipe, null, null);
     }
 
+    public ItemDef(String id, RecipeCategory category, Supplier<Item.Properties> props, ItemFactory factory, @Nullable LootDef loot) {
+        this(id, category, props, factory, null, loot, null);
+    }
+
+    public ItemDef(String id, RecipeCategory category, Supplier<Item.Properties> props, ItemFactory factory, @Nullable ItemData data) {
+        this(id, category, props, factory, null, null, data);
+    }
+
     public ItemDef(String id, RecipeCategory category, Supplier<Item.Properties> props, ItemFactory factory, @Nullable RecipeDef recipe, @Nullable LootDef loot) {
         this(id, category, props, factory, recipe, loot, null);
+    }
+
+    public ItemDef(String id, RecipeCategory category, Supplier<Item.Properties> props, ItemFactory factory, @Nullable RecipeDef recipe, @Nullable ItemData data) {
+        this(id, category, props, factory, recipe, null, data);
+    }
+
+    public ItemDef(String id, RecipeCategory category, Supplier<Item.Properties> props, ItemFactory factory, @Nullable LootDef loot, @Nullable ItemData data) {
+        this(id, category, props, factory, null, loot, data);
     }
 
     public Item createItem() {

@@ -66,4 +66,8 @@ public record BlockDef(
     public @NotNull Item asItem() {
         return FLRBlockItems.get(this.id);
     }
+
+    public Block asBlock() {
+        return FLRBlocks.get(this.id);
+    }
 }

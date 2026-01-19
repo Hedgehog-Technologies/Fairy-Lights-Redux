@@ -80,7 +80,6 @@ public abstract class ConnectionItem extends Item {
 
     private void connect(ItemStack stack, Player player, Level world, BlockPos pos) {
         BlockEntity entity = world.getBlockEntity(pos);
-        // FIXME Unsure if this check is equivalent to the original capability check
         if (entity != null && entity instanceof Fastener<?> fastener) {
             this.connect(stack, player, world, fastener);
         }
