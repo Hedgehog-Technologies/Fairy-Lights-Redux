@@ -11,6 +11,11 @@ import java.util.Objects;
 import java.util.function.Function;
 
 public final class AABBBuilder {
+    public static final AABB INFINITE_EXTENT_AABB = new AABB(
+            Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY,
+            Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY
+    );
+
     private double minX;
     private double minY;
     private double minZ;

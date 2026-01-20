@@ -1,4 +1,4 @@
-package org.hedgetech.fairylightsredux.mixin;
+package org.hedgetech.fairylightsredux._old.mixin;
 
 import org.hedgetech.fairylightsredux.Constants;
 import net.minecraft.client.Minecraft;

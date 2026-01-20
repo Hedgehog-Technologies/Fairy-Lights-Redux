@@ -3,6 +3,7 @@ package org.hedgetech.fairylightsredux.server.connection;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.player.Player;
+import org.hedgetech.fairylightsredux._old.server.connection.PlayerAction;
 import org.hedgetech.fairylightsredux.server.collision.Intersection;
 import org.hedgetech.fairylightsredux.util.styledstring.StyledString;
 import org.hedgetech.fairylightsredux.util.styledstring.StylingPresence;

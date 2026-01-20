@@ -6,7 +6,7 @@
   "compatibilityLevel": "JAVA_18",
   "mixins": [],
   "client": [
-    "MixinMinecraft"
+    "org.hedgetech.fairylightsredux.old.mixin.mixin.MixinMinecraft"
   ],
   "server": [],
   "injectors": {

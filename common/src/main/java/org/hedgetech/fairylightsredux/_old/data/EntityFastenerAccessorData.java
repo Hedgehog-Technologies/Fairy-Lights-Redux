@@ -1,4 +1,4 @@
-package org.hedgetech.fairylightsredux.data;
+package org.hedgetech.fairylightsredux._old.data;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.hedgetech.fairylightsredux.data.SharedCodecs.VEC3_CODEC;
+import static org.hedgetech.fairylightsredux._old.data.SharedCodecs.VEC3_CODEC;
 
 public record EntityFastenerAccessorData(UUID uuid, @Nullable Vec3 pos) {
     public static final Codec<EntityFastenerAccessorData> CODEC = RecordCodecBuilder.create(instance -> instance.group(

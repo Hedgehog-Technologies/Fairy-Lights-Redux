@@ -4,15 +4,19 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.NotImplementedException;
+import org.hedgetech.fairylightsredux.fastener.Fastener;
 import org.hedgetech.fairylightsredux.registry.FLRBlockEntities;
 import org.hedgetech.fairylightsredux.registry.FLRBlocks;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public final class FastenerBlockEntity extends BlockEntity {
     public FastenerBlockEntity(final BlockPos pos, final BlockState state) {
@@ -25,8 +29,11 @@ public final class FastenerBlockEntity extends BlockEntity {
 //        return this.getFastener().map(fastener -> fastener.getBounds().inflate(1)).orElseGet(super::getRenderBoundingBox);
 //    }
 
+    @Nullable
     public Vec3 getOffset() {
-        return FLRBlocks.get("fastener").getOffset(this.getFacing(), 0.125F);
+        Block block = FLRBlocks.get("fastener");
+        if (!(block instanceof FastenerBlock fb)) return null;
+        return fb.getOffset(this.getFacing(), 0.125F);
     }
 
     public Direction getFacing() {
@@ -81,7 +88,7 @@ public final class FastenerBlockEntity extends BlockEntity {
         super.setRemoved();
     }
 
-    private LazyOptional<Fastener<?>> getFastener() {
+    private Optional<Fastener<?>> getFastener() {
         throw new NotImplementedException("FastenerBlockEntity.getFastener");
         // FIXME - figure out how to store fastener reference now
 //        return this.getCapability(CapabilityHandler.FASTENER_CAP);

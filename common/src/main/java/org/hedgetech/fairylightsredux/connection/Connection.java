@@ -1,7 +1,8 @@
-package org.hedgetech.fairylightsredux.server.connection;
+package org.hedgetech.fairylightsredux.connection;
 
 import net.minecraft.core.Direction;
-import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -13,32 +14,33 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.items.ItemHandlerHelper;
 import org.apache.commons.lang3.NotImplementedException;
-import org.hedgetech.fairylightsredux.server.collision.Collidable;
-import org.hedgetech.fairylightsredux.server.collision.CollidableList;
-import org.hedgetech.fairylightsredux.server.collision.FeatureCollisionTree;
-import org.hedgetech.fairylightsredux.server.collision.Intersection;
-import org.hedgetech.fairylightsredux.server.fastener.Fastener;
-import org.hedgetech.fairylightsredux.server.fastener.FenceFastener;
-import org.hedgetech.fairylightsredux.server.fastener.accessor.FastenerAccessor;
-import org.hedgetech.fairylightsredux.server.feature.Feature;
-import org.hedgetech.fairylightsredux.server.feature.FeatureType;
-import org.hedgetech.fairylightsredux.server.item.ConnectionItem;
-import org.hedgetech.fairylightsredux.server.sound.FLRSounds;
-import org.hedgetech.fairylightsredux.util.*;
+import org.hedgetech.fairylightsredux._old.server.connection.PlayerAction;
+import org.hedgetech.fairylightsredux.collision.Collidable;
+import org.hedgetech.fairylightsredux.collision.CollidableList;
+import org.hedgetech.fairylightsredux.content.item.ConnectionItem;
+import org.hedgetech.fairylightsredux.content.sound.SoundDefs;
+import org.hedgetech.fairylightsredux.fastener.Fastener;
+import org.hedgetech.fairylightsredux.fastener.FenceFastener;
+import org.hedgetech.fairylightsredux.fastener.accessor.FastenerAccessor;
+import org.hedgetech.fairylightsredux.feature.Feature;
+import org.hedgetech.fairylightsredux.feature.FeatureType;
+import org.hedgetech.fairylightsredux.registry.FLRSounds;
+import org.hedgetech.fairylightsredux.util.Catenary;
+import org.hedgetech.fairylightsredux.util.CubicBezier;
+import org.hedgetech.fairylightsredux.util.Curve;
+import org.hedgetech.fairylightsredux.util.Curve3d;
+import org.jetbrains.annotations.Nullable;
+import org.joml.Intersectiond;
 
-import javax.annotation.Nullable;
 import java.util.UUID;
 
 public abstract class Connection {
     public static final int MAX_LENGTH = 32;
-    public static final double PULL_RANGE = 5;
+    public static final double PULL_RANGE = 5.0D;
     public static final FeatureType CORD_FEATURE = FeatureType.register("cord");
-
     private static final CubicBezier SLACK_CURVE = new CubicBezier(0.495F, 0.505F, 0.495F, 0.505F);
-    private static final float MAX_SLACK = 3;
+    private static final float MAX_SLACK = 3.0F;
 
     private final ConnectionType<?> type;
     private final UUID uuid;
@@ -46,20 +48,17 @@ public abstract class Connection {
     protected final Fastener<?> fastener;
 
     private FastenerAccessor destination;
-    @Nullable
-    private FastenerAccessor prevDestination;
-    @Nullable
-    private Curve catenary;
+    private @Nullable FastenerAccessor prevDestination;
+    private @Nullable Curve catenary;
     private Collidable collision = Collidable.empty();
     private boolean updateCatenary;
     private int prevStretchStage;
     private boolean removed;
-    private boolean drop;
+    private boolean shouldDrop;
 
+    protected @Nullable Curve prevCatenary;
     protected Level world;
-    @Nullable
-    protected Curve prevCatenary;
-    protected float slack = 1;
+    protected float slack = 1.0F;
 
     public Connection(final ConnectionType<?> type, final Level world, final Fastener<?> fastener, final UUID uuid) {
         this.type = type;
@@ -117,24 +116,31 @@ public abstract class Connection {
         return this.destination.equals(location);
     }
 
-    public void setDrop() {
-        this.drop = true;
+    public void setShouldDrop(boolean enabled) {
+        this.shouldDrop = enabled;
     }
 
+    @Deprecated(since = "Use setDrop(boolean) instead")
+    public void setDrop() {
+        setShouldDrop(true);
+    }
+
+    @Deprecated(since = "Use setDrop(boolean) instead")
     public void noDrop() {
-        this.drop = false;
+        setShouldDrop(false);
     }
 
     public boolean shouldDrop() {
-        return this.drop;
+        return this.shouldDrop;
     }
 
     public ItemStack getItemStack() {
         final ItemStack stack = new ItemStack(this.getType().getItem());
-        final DataComponentMap componentMap = this.serializeLogic();
-        if (!componentMap.isEmpty()) {
-            stack.applyComponents(componentMap);
-        }
+        // TODO Serialize connection data to stack
+//        final CompoundTag tag = this.serializeLogic();
+//        if (!tag.isEmpty()) {
+//            stack.setTag(tag);
+//        }
         return stack;
     }
 
@@ -143,7 +149,8 @@ public abstract class Connection {
     }
 
     public final boolean isDynamic() {
-        return this.fastener.isMoving() || this.destination.get(this.world, false).filter(Fastener::isMoving).isPresent();
+        return this.fastener.isMoving()
+                || this.destination.get(this.world, false).filter(Fastener::isMoving).isPresent();
     }
 
     public final boolean isModifiable(final Player player) {
@@ -165,16 +172,16 @@ public abstract class Connection {
         this.updateCatenary = true;
     }
 
-    public void processClientAction(final Player player, final PlayerAction action, final Intersection intersection) {
-        // @TODO Implement client action processing
-        // REQUIRES: ForgeFairyLightsRedux.NETWORK
+    public void processClientAction(final Player player, final PlayerAction action, final Intersectiond intersection) {
+        // FIXME - Networking code needed
+        throw new NotImplementedException("Connection.processClientAction");
     }
 
     public void disconnect(final Player player, final Vec3 hit) {
         this.destination.get(this.world).ifPresent(f -> this.disconnect(f, hit));
     }
 
-    private void disconnect(final Fastener<?> destinationFastener, final Vec3 hit) {
+    public void disconnect(final Fastener<?> destinationFastener, final Vec3 hit) {
         this.fastener.removeConnection(this);
         destinationFastener.removeConnection(this.uuid);
         if (this.shouldDrop()) {
@@ -188,7 +195,7 @@ public abstract class Connection {
             );
             this.world.addFreshEntity(item);
         }
-        this.world.playSound(null, hit.x, hit.y, hit.z, FLRSounds.CORD_DISCONNECT.get(), SoundSource.BLOCKS, 1, 1);
+        this.world.playSound(null, hit.x, hit.y, hit.z, FLRSounds.get(SoundDefs.CORD_DISCONNECT), SoundSource.BLOCKS, 1.0F, 1.0F);
     }
 
     public boolean reconnect(final Fastener<?> destination) {
@@ -199,9 +206,11 @@ public abstract class Connection {
         final Item item = heldStack.getItem();
         if (item instanceof ConnectionItem && !this.matches(heldStack)) {
             return this.replace(player, hit, heldStack);
-        } else if (heldStack.is(Tags.Items.STRINGS)) {
+        }
+        if (heldStack.is(Items.STRING)) {
             return this.slacken(hit, heldStack, 0.2F);
-        } else if (heldStack.is(Items.STICK)) {
+        }
+        if (heldStack.is(Items.STICK)) {
             return this.slacken(hit, heldStack, -0.2F);
         }
         return false;
@@ -209,8 +218,10 @@ public abstract class Connection {
 
     public boolean matches(final ItemStack stack) {
         if (this.getType().getItem().equals(stack.getItem())) {
-            final DataComponentMap components = stack.getComponents();
-            return Utils.impliesComponents(this.serializeLogic(), components);
+            // TODO Check NBT data for match
+            throw new NotImplementedException("Connection.matches");
+//            final CompoundTag tag = stack.getTag();
+//            return tag == null || Utils.impliesNbt(this.serializeLogic(), tag);
         }
         return false;
     }
@@ -220,15 +231,18 @@ public abstract class Connection {
             this.fastener.removeConnection(this);
             dest.removeConnection(this.uuid);
             if (this.shouldDrop()) {
-                ItemHandlerHelper.giveItemToPlayer(player, this.getItemStack());
+                // FIXME - Replace with non-forge item giving code
+                throw new NotImplementedException("Connection.replace");
+//                ItemHandlerHelper.giveItemToPlayer(player, this.getItemStack());
             }
-            final DataComponentMap components = heldStack.getComponents();
-            final ConnectionType<? extends Connection> type = ((ConnectionItem) heldStack.getItem()).getConnectionType();
-            final Connection conn = this.fastener.connect(this.world, dest, type, components, true);
-            conn.slack = this.slack;
-            conn.onConnect(player.level(), player, heldStack);
+            // FIXME - Replace with non-CompountTag code
+//            final CompoundTag tag = heldStack.getTag();
+//            final ConnectionType<? extends Connection> type = ((ConnectionItem) heldStack.getItem()).getConnectionType();
+//            final Connection conn = this.fastener.connect(this.world, dest, type, tag == null ? new CompoundTag() : tag, true);
+//            conn.slack = this.slack;
+//            conn.onConnect(player.level(), player, heldStack);
             heldStack.shrink(1);
-            this.world.playSound(null, hit.x, hit.y, hit.z, FLRSounds.CORD_CONNECT.get(), SoundSource.BLOCKS, 1, 1);
+            this.world.playSound(null, hit.x, hit.y, hit.z, FLRSounds.get(SoundDefs.CORD_CONNECT), SoundSource.BLOCKS, 1.0F, 1.0F);
             return true;
         }).orElse(false);
     }
@@ -242,11 +256,11 @@ public abstract class Connection {
             this.slack = 0;
         }
         this.computeCatenary();
-        this.world.playSound(null, hit.x, hit.y, hit.z, FLRSounds.CORD_STRETCH.get(), SoundSource.BLOCKS, 1, 0.8F + (MAX_SLACK - this.slack) * -0.4F);
+        this.world.playSound(null, hit.x, hit.y, hit.z, FLRSounds.get(SoundDefs.CORD_STRETCH), SoundSource.BLOCKS, 1.0F, 0.8F + (MAX_SLACK - this.slack) * 0.4F);
         return true;
     }
 
-    public void onConnect(final Level world, final Player user, final ItemStack heldStack) {}
+    public void onConnect(final Level world, final Player player, final ItemStack heldStack) {}
 
     protected void onRemove() {}
 
@@ -265,12 +279,12 @@ public abstract class Connection {
             if (pull > 0) {
                 final int stage = (int) (pull + 0.1F);
                 if (stage > this.prevStretchStage) {
-                    this.world.playSound(null, point.x, point.y, point.z, FLRSounds.CORD_STRETCH.get(), SoundSource.BLOCKS, 0.25F, 0.5F + stage / 8F);
+                    this.world.playSound(null, point.x, point.y, point.z, FLRSounds.get(SoundDefs.CORD_STRETCH), SoundSource.BLOCKS, 0.25F, 0.5F + stage / 8.0F);
                 }
                 this.prevStretchStage = stage;
             }
             if (dist > MAX_LENGTH + PULL_RANGE) {
-                this.world.playSound(null, point.x, point.y, point.z, FLRSounds.CORD_SNAP.get(), SoundSource.BLOCKS, 0.75F, 0.8F + this.world.random.nextFloat() * 0.3F);
+                this.world.playSound(null, point.x, point.y, point.z, FLRSounds.get(SoundDefs.CORD_SNAP), SoundSource.BLOCKS, 0.75F, 0.8F + this.world.random.nextFloat() * 0.3F);
                 this.remove();
             } else if (dest.isMoving()) {
                 dest.resistSnap(from);
@@ -291,7 +305,7 @@ public abstract class Connection {
                 if (this.fastener instanceof FenceFastener && dest instanceof FenceFastener && vec.horizontalDistance() < 1e-2) {
                     this.catenary = this.verticalHelix(vec);
                 } else {
-                    this.catenary = Catenary.from(vec, facing.getAxis() == Direction.Axis.Y ? 0.0F : (float) Math.toRadians(90.0F - facing.toYRot()), SLACK_CURVE, this.slack);
+                    this.catenary = Catenary.from(vec, facing.getAxis() == Direction.Axis.Y ? 0.0F : (float) Math.toRadians(90.0F + facing.toYRot()), SLACK_CURVE, this.slack);
                 }
                 this.onCalculateCatenary(!this.destination.equals(this.prevDestination));
                 final CollidableList.Builder bob = new CollidableList.Builder();
@@ -318,7 +332,7 @@ public abstract class Connection {
         final float[] z = new float[steps];
         float helixLength = 0.0F;
         for (int i = 0; i < steps; i++) {
-            float t = (float) i / (steps - 1);
+            float t= (float) i / (steps - 1);
             x[i] = radius * Mth.cos(t * rad);
             y[i] = t * height;
             z[i] = radius * Mth.sin(t * rad);
@@ -335,12 +349,10 @@ public abstract class Connection {
 
     public void addCollision(final CollidableList.Builder collision, final Vec3 origin) {
         if (this.catenary == null) return;
-
         final int count = this.catenary.getCount();
         if (count <= 2) return;
-
         final float r = this.getRadius();
-        final Curve.SegmentIterator it = this.catenary.iterator();
+        final Catenary.SegmentIterator it = this.catenary.iterator();
         final AABB[] bounds = new AABB[count - 1];
         int index = 0;
         while (it.next()) {
@@ -358,13 +370,37 @@ public abstract class Connection {
         collision.add(FeatureCollisionTree.build(CORD_FEATURE, i -> Segment.INSTANCE, i -> bounds[i], 1, bounds.length - 2));
     }
 
-    public DataComponentMap serializeLogic() {
-        throw new NotImplementedException("Connection.serializeLogic");
-    }
-
-    public void deserializeLogic(final DataComponentMap map) {
-        throw new NotImplementedException("Connection.deserializeLogic");
-    }
+    // FIXME - Figure out serialization system
+//    public void deserialize(final Fastener<?> destination, final CompoundTag compound, final boolean drop) {
+//        this.destination = destination.createAccessor();
+//        this.drop = drop;
+//        this.deserializeLogic(compound);
+//    }
+//
+//    @Override
+//    public CompoundTag serialize() {
+//        final CompoundTag compound = new CompoundTag();
+//        compound.put("destination", FastenerType.serialize(this.destination));
+//        compound.put("logic", this.serializeLogic());
+//        compound.putFloat("slack", this.slack);
+//        if (!this.drop) compound.putBoolean("drop", false);
+//        return compound;
+//    }
+//
+//    @Override
+//    public void deserialize(final CompoundTag compound) {
+//        this.destination = FastenerType.deserialize(compound.getCompound("destination"));
+//        this.deserializeLogic(compound.getCompound("logic"));
+//        this.slack = compound.contains("slack", Tag.TAG_ANY_NUMERIC) ? compound.getFloat("slack") : 1;
+//        this.drop = !compound.contains("drop", Tag.TAG_ANY_NUMERIC) || compound.getBoolean("drop");
+//        this.updateCatenary = true;
+//    }
+//
+//    public CompoundTag serializeLogic() {
+//        return new CompoundTag();
+//    }
+//
+//    public void deserializeLogic(final CompoundTag compound) {}
 
     static class Segment implements Feature {
         static final Segment INSTANCE = new Segment();

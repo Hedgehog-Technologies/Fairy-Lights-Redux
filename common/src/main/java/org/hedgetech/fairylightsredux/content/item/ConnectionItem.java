@@ -18,6 +18,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.apache.commons.lang3.NotImplementedException;
 import org.hedgetech.fairylightsredux.content.block.FastenerBlock;
+import org.hedgetech.fairylightsredux.entity.FenceFastenerEntity;
+import org.hedgetech.fairylightsredux.fastener.Fastener;
 import org.hedgetech.fairylightsredux.registry.FLRBlocks;
 import org.jetbrains.annotations.NotNull;
 
@@ -58,9 +60,9 @@ public abstract class ConnectionItem extends Item {
             return InteractionResult.SUCCESS;
         } else if (isFence(currentTargetState)) {
             final HangingEntity entity = FenceFastenerEntity.findHanging(world, clickPos);
-            if (entity == null || entity instanceof FenceFastenerEntity ffe) {
+            if (entity == null || entity instanceof FenceFastenerEntity) {
                 if (!world.isClientSide()) {
-                    this.connectFence(heldStack, player, world, clickPos, ffe);
+                    this.connectFence(heldStack, player, world, clickPos, (FenceFastenerEntity) entity);
                 }
                 return InteractionResult.SUCCESS;
             }
@@ -81,7 +83,7 @@ public abstract class ConnectionItem extends Item {
 
     private void connect(ItemStack stack, Player player, Level world, BlockPos pos) {
         BlockEntity entity = world.getBlockEntity(pos);
-        if (entity != null && entity instanceof Fastener<?> fastener) {
+        if (entity instanceof Fastener<?> fastener) {
             this.connect(stack, player, world, fastener);
         }
 //        final BlockEntity entity = world.getBlockEntity(pos);
@@ -102,7 +104,7 @@ public abstract class ConnectionItem extends Item {
                     sound.getPitch() * 0.8F
             );
             final BlockEntity entity = world.getBlockEntity(pos);
-            if (entity != null && entity instanceof Fastener<?> fastener) {
+            if (entity instanceof Fastener<?> fastener) {
                 this.connect(stack, player, world, fastener, false);
             }
         }
@@ -158,11 +160,11 @@ public abstract class ConnectionItem extends Item {
             playConnectSound = false;
         }
         // FIXME Unsure if this check is equivalent to the original capability check
-        if (entity != null && entity instanceof Fastener<?> fastener) {
-            this.connect(stack, player, world, fastener, playConnectSound);
-        } else {
-            throw new IllegalStateException("FenceFastenerEntity is not a Fastener");
-        }
+//        if (entity != null && entity instanceof Fastener<?> fastener) {
+//            this.connect(stack, player, world, fastener, playConnectSound);
+//        } else {
+//            throw new IllegalStateException("FenceFastenerEntity is not a Fastener");
+//        }
 //        final boolean playConnectSound;
 //        if (fastener == null) {
 //            fastener = FenceFastenerEntity.create(world, pos);

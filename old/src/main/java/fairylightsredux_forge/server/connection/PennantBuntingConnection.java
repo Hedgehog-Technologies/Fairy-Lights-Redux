@@ -13,6 +13,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.ItemHandlerHelper;
 import org.apache.commons.lang3.NotImplementedException;
 import org.hedgetech.fairylightsredux.client.gui.EditLetteredConnectionScreen;
+import org.hedgetech.fairylightsredux._old.server.connection.PlayerAction;
 import org.hedgetech.fairylightsredux.server.collision.Intersection;
 import org.hedgetech.fairylightsredux.server.fastener.Fastener;
 import org.hedgetech.fairylightsredux.server.feature.FeatureType;

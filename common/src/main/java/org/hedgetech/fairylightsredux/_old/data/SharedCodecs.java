@@ -1,4 +1,4 @@
-package org.hedgetech.fairylightsredux.data;
+package org.hedgetech.fairylightsredux._old.data;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
