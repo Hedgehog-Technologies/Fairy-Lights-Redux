@@ -3,6 +3,7 @@ package org.hedgetech.fairylightsredux.fastener;
 import net.minecraft.core.BlockPos;
 import org.hedgetech.fairylightsredux.entity.FenceFastenerEntity;
 import org.hedgetech.fairylightsredux.fastener.accessor.EntityFastenerAccessor;
+import org.hedgetech.fairylightsredux.fastener.accessor.FenceFastenerAccessor;
 
 public final class FenceFastener extends EntityFastener<FenceFastenerEntity> {
     public FenceFastener(final FenceFastenerEntity entity) {

@@ -1,6 +1,7 @@
 package org.hedgetech.fairylightsredux;
 
 import net.fabricmc.api.ModInitializer;
+import net.minecraft.world.entity.EntityType;
 
 public class FabricFairyLightsRedux implements ModInitializer {
     

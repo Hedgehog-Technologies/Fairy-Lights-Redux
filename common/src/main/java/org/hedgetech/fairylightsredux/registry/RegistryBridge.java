@@ -1,5 +1,7 @@
 package org.hedgetech.fairylightsredux.registry;
 
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -15,6 +17,8 @@ public interface RegistryBridge {
     Block registerBlock(String name, Supplier<Block> block);
 
     BlockItem registerBlockItem(String name, Supplier<BlockItem> blockItem);
+
+    <T extends Entity> EntityType<T> registerEntityType(String name, EntityType<T> entityType);
 
     <T extends BlockEntity> BlockEntityType<T> registerBlockEntityType(String name, BlockEntityDef<T> def, Supplier<Block[]> validBlocks);
 }

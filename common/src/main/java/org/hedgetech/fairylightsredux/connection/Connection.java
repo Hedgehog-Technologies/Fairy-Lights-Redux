@@ -18,6 +18,7 @@ import org.apache.commons.lang3.NotImplementedException;
 import org.hedgetech.fairylightsredux._old.server.connection.PlayerAction;
 import org.hedgetech.fairylightsredux.collision.Collidable;
 import org.hedgetech.fairylightsredux.collision.CollidableList;
+import org.hedgetech.fairylightsredux.collision.FeatureCollisionTree;
 import org.hedgetech.fairylightsredux.content.item.ConnectionItem;
 import org.hedgetech.fairylightsredux.content.sound.SoundDefs;
 import org.hedgetech.fairylightsredux.fastener.Fastener;
@@ -120,12 +121,12 @@ public abstract class Connection {
         this.shouldDrop = enabled;
     }
 
-    @Deprecated(since = "Use setDrop(boolean) instead")
+    @Deprecated(since = "Use setShouldDrop(boolean) instead")
     public void setDrop() {
         setShouldDrop(true);
     }
 
-    @Deprecated(since = "Use setDrop(boolean) instead")
+    @Deprecated(since = "Use setShouldDrop(boolean) instead")
     public void noDrop() {
         setShouldDrop(false);
     }

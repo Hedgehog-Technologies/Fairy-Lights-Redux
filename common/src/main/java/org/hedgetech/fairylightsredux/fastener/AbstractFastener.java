@@ -141,7 +141,7 @@ public abstract class AbstractFastener<F extends FastenerAccessor> implements Fa
                 world.random.nextGaussian() * scale
         );
         world.addFreshEntity(entityItem);
-        connection.noDrop();
+        connection.setShouldDrop(false);
     }
 
     @Override
@@ -199,7 +199,7 @@ public abstract class AbstractFastener<F extends FastenerAccessor> implements Fa
             return true;
         }).isPresent()) {
             connection.setDestination(newDestination);
-            connection.setDrop();
+            connection.setShouldDrop(true);
             newDestination.createIncomingConnection(this.world, uuid, this, connection.getType());
             this.setDirty();
             return true;

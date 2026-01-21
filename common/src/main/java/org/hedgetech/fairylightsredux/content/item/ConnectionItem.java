@@ -5,6 +5,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.decoration.BlockAttachedEntity;
 import net.minecraft.world.entity.decoration.HangingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -59,7 +60,7 @@ public abstract class ConnectionItem extends Item {
             }
             return InteractionResult.SUCCESS;
         } else if (isFence(currentTargetState)) {
-            final HangingEntity entity = FenceFastenerEntity.findHanging(world, clickPos);
+            final BlockAttachedEntity entity = FenceFastenerEntity.findAttached(world, clickPos);
             if (entity == null || entity instanceof FenceFastenerEntity) {
                 if (!world.isClientSide()) {
                     this.connectFence(heldStack, player, world, clickPos, (FenceFastenerEntity) entity);

@@ -19,7 +19,7 @@ import java.util.UUID;
 
 public abstract class EntityFastenerAccessor<E extends Entity> implements FastenerAccessor {
     private final Class<? extends E> entityClass;
-    private @Nullable UUID uuid;
+    private final @Nullable UUID uuid;
     private @Nullable E entity;
     private @Nullable Vec3 pos;
 
@@ -83,8 +83,9 @@ public abstract class EntityFastenerAccessor<E extends Entity> implements Fasten
     }
 
     // FIXME Deprecated as of "Compound tags be damned"
-//    @Override
-//    public CompoundTag serialize() {
+    @Override
+    public CompoundTag serialize() {
+        throw new NotImplementedException("EntityFastenerAccessor.serialize");
 //        final CompoundTag tag = new CompoundTag();
 //        tag.putUUID("UUID", this.uuid);
 //        if (this.pos != null) {
@@ -95,10 +96,11 @@ public abstract class EntityFastenerAccessor<E extends Entity> implements Fasten
 //            tag.put("Pos", pos);
 //        }
 //        return tag;
-//    }
-//
-//    @Override
-//    public void deserialize(final CompoundTag tag) {
+    }
+
+    @Override
+    public void deserialize(final CompoundTag tag) {
+        throw new NotImplementedException("EntityFastenerAccessor.deserialize");
 //        this.uuid = tag.getUUID("UUID");
 //        if (tag.contains("Pos", Tag.TAG_LIST)) {
 //            final ListTag pos = tag.getList("Pos", Tag.TAG_DOUBLE);
@@ -107,5 +109,5 @@ public abstract class EntityFastenerAccessor<E extends Entity> implements Fasten
 //            this.pos = null;
 //        }
 //        this.entity = null;
-//    }
+    }
 }

@@ -22,4 +22,6 @@ public class SoundDefs {
             new SoundDef(FEATURE_LIGHT_TURNON),
             new SoundDef(FEATURE_LIGHT_TURNOFF)
     );
+
+    private SoundDefs() {}
 }

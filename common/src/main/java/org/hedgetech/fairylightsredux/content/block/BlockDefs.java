@@ -10,6 +10,7 @@ import org.hedgetech.fairylightsredux.content.block.data.CandleData;
 import java.util.List;
 
 public final class BlockDefs {
+    public static final String FASTENER_ID = "fastener";
     public static final List<BlockDef> BLOCKS = List.of(
 //            new BlockDef(
 //                    "blue_candle",

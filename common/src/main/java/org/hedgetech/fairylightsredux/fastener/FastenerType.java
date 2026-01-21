@@ -4,6 +4,7 @@ import net.minecraft.nbt.CompoundTag;
 import org.apache.commons.lang3.NotImplementedException;
 import org.hedgetech.fairylightsredux.fastener.accessor.BlockFastenerAccessor;
 import org.hedgetech.fairylightsredux.fastener.accessor.FastenerAccessor;
+import org.hedgetech.fairylightsredux.fastener.accessor.FenceFastenerAccessor;
 
 import java.util.HashMap;
 import java.util.Locale;

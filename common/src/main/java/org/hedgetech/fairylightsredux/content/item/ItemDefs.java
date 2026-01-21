@@ -37,4 +37,6 @@ public class ItemDefs {
     private static Item.Properties defaultProperties() {
         return new Item.Properties();
     }
+
+    private ItemDefs() {}
 }

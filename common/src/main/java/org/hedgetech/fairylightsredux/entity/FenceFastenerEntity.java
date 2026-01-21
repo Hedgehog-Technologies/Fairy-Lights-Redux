@@ -1,16 +1,10 @@
 package org.hedgetech.fairylightsredux.entity;
 
-import io.netty.buffer.ByteBufInputStream;
-import io.netty.buffer.ByteBufOutputStream;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtAccounter;
-import net.minecraft.nbt.NbtIo;
-import net.minecraft.nbt.NbtUtils;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -20,24 +14,26 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.decoration.HangingEntity;
+import net.minecraft.world.entity.decoration.BlockAttachedEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.phys.AABB;
 import org.apache.commons.lang3.NotImplementedException;
+import org.hedgetech.fairylightsredux.content.block.BlockDefs;
+import org.hedgetech.fairylightsredux.content.entity.EntityDefs;
 import org.hedgetech.fairylightsredux.content.item.ConnectionItem;
 import org.hedgetech.fairylightsredux.fastener.Fastener;
 import org.hedgetech.fairylightsredux.registry.FLRBlocks;
+import org.hedgetech.fairylightsredux.registry.FLREntities;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.IOException;
 import java.util.Optional;
 
-public final class FenceFastenerEntity extends HangingEntity {
+public final class FenceFastenerEntity extends BlockAttachedEntity {
     private int surfaceCheckTime;
 
     public FenceFastenerEntity(final EntityType<? extends FenceFastenerEntity> type, final Level world) {
@@ -45,7 +41,7 @@ public final class FenceFastenerEntity extends HangingEntity {
     }
 
     public FenceFastenerEntity(final Level world) {
-        this(FLREntities.FASTENER.get(), world);
+        this(FLREntities.get(EntityDefs.FENCE_FASTENER_ID, FenceFastenerEntity.class), world);
     }
 
     public FenceFastenerEntity(final Level world, final BlockPos pos) {
@@ -54,19 +50,19 @@ public final class FenceFastenerEntity extends HangingEntity {
     }
 
 //    @Override
-    @Deprecated(since = "No longer exists")
+    @Deprecated(since = "No longer exists - use this.dimensions.width", forRemoval = true)
     public int getWidth() {
         return 9;
     }
 
     //    @Override
-    @Deprecated(since = "No longer exists")
+    @Deprecated(since = "No longer exists - use this.dimensions.height", forRemoval = true)
     public int getHeight() {
         return 9;
     }
 
     //    @Override
-    @Deprecated(since = "No longer exists")
+    @Deprecated(since = "No longer exists - use this.dimensions.eyeHeight", forRemoval = true)
     public float getEyeHeight(final Pose pose, final EntityDimensions dimensions) {
         /*
          * Because this entity is inside of a block when
@@ -91,9 +87,8 @@ public final class FenceFastenerEntity extends HangingEntity {
         return distance < 4096;
     }
 
-    //    @Override
-    @Deprecated(since = "No longer exists")
-    public boolean ignoreExplosion() {
+    @Override
+    public boolean ignoreExplosion(@NotNull Explosion explosion) {
         return true;
     }
 
@@ -103,47 +98,50 @@ public final class FenceFastenerEntity extends HangingEntity {
     }
 
     @Override
+    protected void defineSynchedData(SynchedEntityData.@NotNull Builder builder) {}
+
+    @Override
     public void remove(final @NotNull RemovalReason reason) {
         this.getFastener().ifPresent(Fastener::remove);
         super.remove(reason);
     }
 
-    // Copy from super but remove() moved to after onBroken()
-//    @Override
-    @Deprecated(since = "super is marked final")
-    public boolean hurt(final DamageSource source, final float amount) {
-        if (this.isInvulnerableTo(source)) {
-            return false;
-        }
-        if (!this.level().isClientSide() && this.isAlive()) {
+    @Override
+    public boolean hurtServer(@NotNull ServerLevel world, @NotNull DamageSource source, float amount) {
+        if (this.isInvulnerableToBase(source)) return false;
+        if (this.isAlive()) {
             this.markHurt();
-            this.dropItem(source.getEntity());
+            this.dropItem(world, source.getEntity());
             this.remove(RemovalReason.KILLED);
         }
         return true;
     }
 
     //    @Override
-    @Deprecated(since = "No longer exists")
+    @Deprecated(since = "No longer exists - Use canTeleport", forRemoval = true)
     public boolean canChangeDimensions() {
         return false;
     }
 
-    //    @Override
-    @Deprecated(since = "No longer exists")
-    public void dropItem(@Nullable final Entity breaker) {
-        this.getFastener().ifPresent(fastener -> fastener.dropItems(this.level(), this.pos));
-        if (breaker != null) {
-            this.level().levelEvent(2001, this.pos, Block.getId(FLRBlocks.get("fastener").defaultBlockState()));
-        }
+    @Override
+    public boolean canTeleport(final @NotNull Level fromLevel, final @NotNull Level toLevel) {
+        return false;
     }
 
     @Override
-    public void playPlacementSound() {
-        // TODO - Verify this equates to the original `FLBlocks.FASTENER.get().getSoundType(FLBlocks.FASTENER.get().defaultBlockState(), this.level(), this.getPos(), null)`
-        final SoundType sound = FLRBlocks.get("fastener").defaultBlockState().getSoundType();
-        this.playSound(sound.getPlaceSound(), (sound.getVolume() + 1) / 2, sound.getPitch() * 0.8F);
+    public void dropItem(final @NotNull ServerLevel world, @Nullable final Entity breaker) {
+        this.getFastener().ifPresent(fastener -> fastener.dropItems(world, this.pos));
+        if (breaker != null) {
+            world.levelEvent(2001, this.pos, Block.getId(FLRBlocks.get(BlockDefs.FASTENER_ID).defaultBlockState()));
+        }
     }
+
+//    @Override
+//    public void playPlacementSound() {
+//        // TODO - Verify this equates to the original `FLBlocks.FASTENER.get().getSoundType(FLBlocks.FASTENER.get().defaultBlockState(), this.level(), this.getPos(), null)`
+//        final SoundType sound = FLRBlocks.get("fastener").defaultBlockState().getSoundType();
+//        this.playSound(sound.getPlaceSound(), (sound.getVolume() + 1) / 2, sound.getPitch() * 0.8F);
+//    }
 
     @Override
     public @NotNull SoundSource getSoundSource() {
@@ -155,21 +153,31 @@ public final class FenceFastenerEntity extends HangingEntity {
         super.setPos(Mth.floor(x) + 0.5D, Mth.floor(y) + 0.5D, Mth.floor(z) + 0.5D);
     }
 
-    @Override
-    public void setDirection(final @NotNull Direction facing) {}
+//    @Override
+//    public void setDirection(final @NotNull Direction facing) {}
 
     @Override
     protected void recalculateBoundingBox() {
         final double posX = this.pos.getX() + 0.5D;
         final double posY = this.pos.getY() + 0.5D;
         final double posZ = this.pos.getZ() + 0.5D;
-        this.setPosRaw(posX, posY, posZ);
         final float w = 3 / 16.0F;
         final float h = 3 / 16.0F;
+        this.setPosRaw(posX, posY, posZ);
         this.setBoundingBox(new AABB(posX - w, posY - h, posZ - w,
-                posX + w, posY + h, posZ + w)
-        );
+                posX + w, posY + h, posZ + w));
     }
+
+//    @Override
+//    protected @NotNull AABB calculateBoundingBox(BlockPos blockPos, @NotNull Direction direction) {
+//        final double posX = blockPos.getX() + 0.5D;
+//        final double posY = blockPos.getY() + 0.5D;
+//        final double posZ = blockPos.getZ() + 0.5D;
+//        final float w = 3 / 16.0F;
+//        final float h = 3 / 16.0F;
+//        return new AABB(posX - w, posY - h, posZ - w,
+//                posX + w, posY + h, posZ + w);
+//    }
 
     //    @Override
     @Deprecated(since = "No longer exists")
@@ -182,7 +190,7 @@ public final class FenceFastenerEntity extends HangingEntity {
     public void tick() {
         this.getFastener().ifPresent(fastener -> {
             if (!(this.level().isClientSide() && (fastener.hasNoConnections() || this.checkSurface()))) {
-                this.dropItem(null);
+                this.dropItem((ServerLevel) this.level(), null);
                 this.remove(RemovalReason.DISCARDED);
             } else if (fastener.update() && !this.level().isClientSide()) {
                 // FIXME - implement update packet sending
@@ -215,20 +223,6 @@ public final class FenceFastenerEntity extends HangingEntity {
         return super.interact(player, hand);
     }
 
-    //    @Override
-    @Deprecated(since = "No longer exists")
-    public void addAdditionalSaveData(final CompoundTag compound) {
-        throw new NotImplementedException("FenceFastenerEntity.addAdditionalSaveData");
-//        compound.put("pos", NbtUtils.writeBlockPos(this.pos));
-    }
-
-    //    @Override
-    @Deprecated(since = "No longer exists")
-    public void readAdditionalSaveData(final CompoundTag compound) {
-        throw new NotImplementedException("FenceFastenerEntity.readAdditionalSaveData");
-//        this.pos = NbtUtils.readBlockPos(compound.getCompound("pos"));
-    }
-
     // TODO - Figure out if IEntityAdditionalSpawnData equivalent is needed
 //    @Override
 //    public void writeSpawnData(final FriendlyByteBuf buf) {
@@ -253,7 +247,7 @@ public final class FenceFastenerEntity extends HangingEntity {
 //    }
 
     //    @Override
-    @Deprecated(since = "No longer exists")
+    @Deprecated(since = "No longer exists - was just used to add forge specific stuff anyways", forRemoval = true)
     public Packet<ClientGamePacketListener> getAddEntityPacket() {
         throw new NotImplementedException("FenceFastenerEntity.getAddEntityPacket");
 //        return NetworkHooks.getEntitySpawningPacket(this);
@@ -274,16 +268,16 @@ public final class FenceFastenerEntity extends HangingEntity {
 
     @Nullable
     public static FenceFastenerEntity find(final Level world, final BlockPos pos) {
-        final HangingEntity entity = findHanging(world, pos);
-        if (entity instanceof FenceFastenerEntity ffe) {
+        final BlockAttachedEntity e = findAttached(world, pos);
+        if (e instanceof FenceFastenerEntity ffe) {
             return ffe;
         }
         return null;
     }
 
     @Nullable
-    public static HangingEntity findHanging(final Level world, final BlockPos pos) {
-        for (final HangingEntity e : world.getEntitiesOfClass(HangingEntity.class, new AABB(pos).inflate(2.0D))) {
+    public static BlockAttachedEntity findAttached(final Level world, final BlockPos pos) {
+        for (final BlockAttachedEntity e : world.getEntitiesOfClass(BlockAttachedEntity.class, new AABB(pos).inflate(2.0D))) {
             if (e.getPos().equals(pos)) {
                 return e;
             }
