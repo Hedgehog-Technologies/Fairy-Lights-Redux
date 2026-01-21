@@ -2,6 +2,7 @@ package org.hedgetech.fairylightsredux.fastener.accessor;
 
 import net.minecraft.world.entity.player.Player;
 import org.hedgetech.fairylightsredux.fastener.FastenerType;
+import org.hedgetech.fairylightsredux.fastener.PlayerFastener;
 
 public final class PlayerFastenerAccessor extends EntityFastenerAccessor<Player> {
     public PlayerFastenerAccessor() {

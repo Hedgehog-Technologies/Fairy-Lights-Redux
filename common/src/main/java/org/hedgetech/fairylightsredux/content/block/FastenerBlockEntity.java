@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.NotImplementedException;
 import org.hedgetech.fairylightsredux.fastener.Fastener;
+import org.hedgetech.fairylightsredux.fastener.FastenerHolder;
 import org.hedgetech.fairylightsredux.registry.FLRBlockEntities;
 import org.hedgetech.fairylightsredux.registry.FLRBlocks;
 import org.jetbrains.annotations.NotNull;
@@ -18,7 +19,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 import java.util.Optional;
 
-public final class FastenerBlockEntity extends BlockEntity {
+public final class FastenerBlockEntity extends BlockEntity implements FastenerHolder {
+    private Fastener<?> fastener;
+
     public FastenerBlockEntity(final BlockPos pos, final BlockState state) {
         super(FLRBlockEntities.get("fastener"), pos, state);
     }
@@ -92,5 +95,17 @@ public final class FastenerBlockEntity extends BlockEntity {
         throw new NotImplementedException("FastenerBlockEntity.getFastener");
         // FIXME - figure out how to store fastener reference now
 //        return this.getCapability(CapabilityHandler.FASTENER_CAP);
+    }
+
+    @Override
+    public Fastener<?> getFastener() {
+        if (this.fastener == null) {
+            this.fastener = createFastener();
+        }
+        return this.fastener;
+    }
+
+    private Fastener<?> createFastener() {
+        
     }
 }

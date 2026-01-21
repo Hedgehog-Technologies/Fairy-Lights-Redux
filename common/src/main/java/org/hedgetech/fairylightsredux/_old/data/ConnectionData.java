@@ -7,12 +7,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 
 public record ConnectionData(ResourceLocation type, CompoundTag payload) {
-    public static final Codec<ConnectionData> CODEC = RecordCodecBuilder.create(
-
-    );
-
-    public static final DataComponentType<ConnectionData> CONNECTION = DataComponentType.builder()
-            .persistent(ConnectionData.CODEC)
-            .networkSynchronized(ConnectionData.STREAM_CODEC)
-            .build();
+//    public static final Codec<ConnectionData> CODEC = RecordCodecBuilder.create(
+//
+//    );
+//
+//    public static final DataComponentType<ConnectionData> CONNECTION = DataComponentType.builder()
+//            .persistent(ConnectionData.CODEC)
+//            .networkSynchronized(ConnectionData.STREAM_CODEC)
+//            .build();
 }

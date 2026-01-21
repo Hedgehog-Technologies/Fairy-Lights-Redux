@@ -1,5 +1,6 @@
 package org.hedgetech.fairylightsredux.registry;
 
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.BlockItem;
@@ -8,6 +9,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import org.hedgetech.fairylightsredux.content.block.entity.BlockEntityDef;
+import org.hedgetech.fairylightsredux.content.sound.SoundDef;
 
 import java.util.function.Supplier;
 
@@ -21,4 +23,6 @@ public interface RegistryBridge {
     <T extends Entity> EntityType<T> registerEntityType(String name, EntityType<T> entityType);
 
     <T extends BlockEntity> BlockEntityType<T> registerBlockEntityType(String name, BlockEntityDef<T> def, Supplier<Block[]> validBlocks);
+
+    SoundEvent registerSound(String name, SoundDef sound);
 }
