@@ -6,12 +6,15 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.NotImplementedException;
+import org.hedgetech.fairylightsredux.entity.FenceFastenerEntity;
 import org.hedgetech.fairylightsredux.fastener.EntityFastener;
 import org.hedgetech.fairylightsredux.fastener.Fastener;
+import org.hedgetech.fairylightsredux.fastener.PlayerFastener;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -40,6 +43,7 @@ public abstract class EntityFastenerAccessor<E extends Entity> implements Fasten
 
     @Override
     public Optional<Fastener<?>> get(final Level world, final boolean load) {
+        Optional<Fastener<?>> result = Optional.empty();
         if (this.entity == null && this.uuid != null) {
             if (world instanceof ServerLevel sWorld) {
                 final Entity e = sWorld.getEntity(this.uuid);
@@ -56,21 +60,24 @@ public abstract class EntityFastenerAccessor<E extends Entity> implements Fasten
             }
         }
         if (this.entity != null && this.entity.level() == world) {
-            // FIXME - implement retrieval of Fastener from Entity
-            throw new NotImplementedException("EntityFastenerAccessor.get");
-//            this.pos = this.entity.position();
-//            return this.entity.getCapability(CapabilityHandler.FASTENER_CAP);
+            if (this.entity instanceof FenceFastenerEntity ffe) {
+                result = Optional.of(ffe.getFastener());
+            } else if (this.entity instanceof Player pe) {
+                // TODO - Decide if this is a memory leak risk
+                result = Optional.of(new PlayerFastener(pe));
+            }
+            if (result.isPresent()) {
+                this.pos = this.entity.position();
+            }
         }
-        return Optional.empty();
+        return result;
     }
 
     @Override
     public boolean isGone(final Level world) {
         return !world.isClientSide()
                 && this.entity != null
-                // FIXME - implement retrieval of Fastener from Entity
-                /*&& (!this.entity.getCapability(CapabilityHandler.FASTENER_CAP).isPresent()
-                    || this.entity.level() != world)*/;
+                && (this.get(world, false).isEmpty() || this.entity.level() != world);
     }
 
     @Override

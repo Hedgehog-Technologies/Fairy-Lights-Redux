@@ -5,6 +5,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import org.apache.commons.lang3.NotImplementedException;
+import org.hedgetech.fairylightsredux.content.block.FastenerBlockEntity;
 import org.hedgetech.fairylightsredux.fastener.BlockFastener;
 import org.hedgetech.fairylightsredux.fastener.Fastener;
 import org.hedgetech.fairylightsredux.fastener.FastenerType;
@@ -29,9 +30,8 @@ public final class BlockFastenerAccessor implements FastenerAccessor {
     public Optional<Fastener<?>> get(final Level world, final boolean load) {
         if (load || world.isLoaded(this.pos)) {
             final BlockEntity entity = world.getBlockEntity(this.pos);
-            if (entity != null) {
-                // FIXME - Implement retrieval of Fastener from BlockEntity
-                throw new NotImplementedException("BlockFastenerAccessor.get - Fastener retrieval from BlockEntity");
+            if (entity instanceof FastenerBlockEntity fbe) {
+                return Optional.of(fbe.getFastener());
             }
         }
         return Optional.empty();
@@ -41,7 +41,7 @@ public final class BlockFastenerAccessor implements FastenerAccessor {
     public boolean isGone(final Level world) {
         if (world.isClientSide() || !world.isLoaded(this.pos)) return false;
         final BlockEntity entity = world.getBlockEntity(this.pos);
-        return entity == null /*|| FIXME - implement retrieval of fastener from BlockEntity */;
+        return entity == null || this.get(world, false).isEmpty();
     }
 
     @Override

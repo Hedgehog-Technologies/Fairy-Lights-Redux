@@ -45,7 +45,7 @@ public interface Fastener<F extends FastenerAccessor> {
 
     default void resistSnap(final Vec3 from) {}
 
-    @Deprecated(since = "May not be needed?")
+    @Deprecated(since = "May not be needed? (why did I think this?)")
     boolean update();
 
     void setDirty();

@@ -26,14 +26,14 @@ import org.hedgetech.fairylightsredux.content.block.BlockDefs;
 import org.hedgetech.fairylightsredux.content.entity.EntityDefs;
 import org.hedgetech.fairylightsredux.content.item.ConnectionItem;
 import org.hedgetech.fairylightsredux.fastener.Fastener;
+import org.hedgetech.fairylightsredux.fastener.FenceFastener;
 import org.hedgetech.fairylightsredux.registry.FLRBlocks;
 import org.hedgetech.fairylightsredux.registry.FLREntities;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Optional;
-
 public final class FenceFastenerEntity extends BlockAttachedEntity {
+    private FenceFastener fastener;
     private int surfaceCheckTime;
 
     public FenceFastenerEntity(final EntityType<? extends FenceFastenerEntity> type, final Level world) {
@@ -102,7 +102,7 @@ public final class FenceFastenerEntity extends BlockAttachedEntity {
 
     @Override
     public void remove(final @NotNull RemovalReason reason) {
-        this.getFastener().ifPresent(Fastener::remove);
+        this.getFastener().remove();
         super.remove(reason);
     }
 
@@ -130,7 +130,7 @@ public final class FenceFastenerEntity extends BlockAttachedEntity {
 
     @Override
     public void dropItem(final @NotNull ServerLevel world, @Nullable final Entity breaker) {
-        this.getFastener().ifPresent(fastener -> fastener.dropItems(world, this.pos));
+        this.getFastener().dropItems(world, this.pos);
         if (breaker != null) {
             world.levelEvent(2001, this.pos, Block.getId(FLRBlocks.get(BlockDefs.FASTENER_ID).defaultBlockState()));
         }
@@ -188,17 +188,16 @@ public final class FenceFastenerEntity extends BlockAttachedEntity {
 
     @Override
     public void tick() {
-        this.getFastener().ifPresent(fastener -> {
-            if (!(this.level().isClientSide() && (fastener.hasNoConnections() || this.checkSurface()))) {
-                this.dropItem((ServerLevel) this.level(), null);
-                this.remove(RemovalReason.DISCARDED);
-            } else if (fastener.update() && !this.level().isClientSide()) {
-                // FIXME - implement update packet sending
-                throw new NotImplementedException("FenceFastenerEntity.tick");
+        Fastener<?> fastener = this.getFastener();
+        if (!(this.level().isClientSide() && (fastener.hasNoConnections() || this.checkSurface()))) {
+            this.dropItem((ServerLevel) this.level(), null);
+            this.remove(RemovalReason.DISCARDED);
+        } else if (fastener.update() && !this.level().isClientSide()) {
+            // FIXME - implement update packet sending
+            throw new NotImplementedException("FenceFastenerEntity.tick");
 //                final UpdateEntityFastenerMessage msg = new UpdateEntityFastenerMessage(this, fastener.serializeNBT());
 //                ServerProxy.sendToPlayersWatchingEntity(msg, this);
-            }
-        });
+        }
     }
 
     private boolean checkSurface() {
@@ -216,7 +215,7 @@ public final class FenceFastenerEntity extends BlockAttachedEntity {
             if (this.level().isClientSide()) {
                 player.swing(hand);
             } else {
-                this.getFastener().ifPresent(fastener -> ci.connect(stack, player, this.level(), fastener));
+                ci.connect(stack, player, this.level(), this.getFastener());
             }
             return InteractionResult.SUCCESS;
         }
@@ -253,10 +252,11 @@ public final class FenceFastenerEntity extends BlockAttachedEntity {
 //        return NetworkHooks.getEntitySpawningPacket(this);
     }
 
-    private Optional<Fastener<?>> getFastener() {
-        throw new NotImplementedException("FenceFastenerEntity.getFastener");
-        // FIXME - implement retrieval of fastener from entity
-//        return this.getCapability(CapabilityHandler.FASTENER_CAP);
+    public Fastener<?> getFastener() {
+        if (this.fastener == null) {
+            this.fastener = new FenceFastener(this);
+        }
+        return this.fastener;
     }
 
     public static FenceFastenerEntity create(final Level world, final BlockPos fence) {

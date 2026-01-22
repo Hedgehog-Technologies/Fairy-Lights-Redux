@@ -27,10 +27,7 @@ import org.hedgetech.fairylightsredux.fastener.accessor.FastenerAccessor;
 import org.hedgetech.fairylightsredux.feature.Feature;
 import org.hedgetech.fairylightsredux.feature.FeatureType;
 import org.hedgetech.fairylightsredux.registry.FLRSounds;
-import org.hedgetech.fairylightsredux.util.Catenary;
-import org.hedgetech.fairylightsredux.util.CubicBezier;
-import org.hedgetech.fairylightsredux.util.Curve;
-import org.hedgetech.fairylightsredux.util.Curve3d;
+import org.hedgetech.fairylightsredux.util.*;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Intersectiond;
 
@@ -232,9 +229,7 @@ public abstract class Connection {
             this.fastener.removeConnection(this);
             dest.removeConnection(this.uuid);
             if (this.shouldDrop()) {
-                // FIXME - Replace with non-forge item giving code
-                throw new NotImplementedException("Connection.replace");
-//                ItemHandlerHelper.giveItemToPlayer(player, this.getItemStack());
+                ItemUtils.giveItemToPlayer(player, this.getItemStack());
             }
             // FIXME - Replace with non-CompountTag code
 //            final CompoundTag tag = heldStack.getTag();
