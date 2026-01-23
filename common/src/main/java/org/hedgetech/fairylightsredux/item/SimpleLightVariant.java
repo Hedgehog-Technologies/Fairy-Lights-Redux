@@ -2,7 +2,15 @@ package org.hedgetech.fairylightsredux.item;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
+import org.hedgetech.fairylightsredux.feature.light.BrightnessLightBehavior;
+import org.hedgetech.fairylightsredux.feature.light.ColorChangingBehavior;
+import org.hedgetech.fairylightsredux.feature.light.ColorLightBehavior;
+import org.hedgetech.fairylightsredux.feature.light.CompositeBehavior;
+import org.hedgetech.fairylightsredux.feature.light.DefaultBrightnessBehavior;
+import org.hedgetech.fairylightsredux.feature.light.FixedColorBehavior;
 import org.hedgetech.fairylightsredux.feature.light.LightBehavior;
+import org.hedgetech.fairylightsredux.feature.light.StandardLightBehavior;
+import org.hedgetech.fairylightsredux.feature.light.TwinkleBehavior;
 
 import java.util.function.Function;
 
