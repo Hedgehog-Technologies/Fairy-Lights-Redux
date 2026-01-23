@@ -1,16 +1,11 @@
 package org.hedgetech.fairylightsredux.content.block;
 
-import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import org.hedgetech.fairylightsredux.content.block.data.BlockData;
-import org.hedgetech.fairylightsredux.content.block.data.CandleData;
 
 import java.util.List;
 
 public final class BlockDefs {
-    public static final String FASTENER_ID = "fastener";
+    public static final String FASTENER = "fastener";
     public static final List<BlockDef> BLOCKS = List.of(
 //            new BlockDef(
 //                    "blue_candle",

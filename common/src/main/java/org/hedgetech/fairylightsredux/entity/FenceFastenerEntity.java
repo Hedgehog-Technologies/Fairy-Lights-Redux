@@ -132,7 +132,7 @@ public final class FenceFastenerEntity extends BlockAttachedEntity {
     public void dropItem(final @NotNull ServerLevel world, @Nullable final Entity breaker) {
         this.getFastener().dropItems(world, this.pos);
         if (breaker != null) {
-            world.levelEvent(2001, this.pos, Block.getId(FLRBlocks.get(BlockDefs.FASTENER_ID).defaultBlockState()));
+            world.levelEvent(2001, this.pos, Block.getId(FLRBlocks.get(BlockDefs.FASTENER).defaultBlockState()));
         }
     }
 

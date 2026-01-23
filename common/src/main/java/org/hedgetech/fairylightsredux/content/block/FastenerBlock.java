@@ -23,6 +23,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.apache.commons.lang3.NotImplementedException;
+import org.hedgetech.fairylightsredux.connection.HangingLightsConnection;
 import org.hedgetech.fairylightsredux.fastener.Fastener;
 import org.hedgetech.fairylightsredux.fastener.accessor.BlockFastenerAccessor;
 import org.jetbrains.annotations.NotNull;
@@ -169,7 +170,7 @@ public final class FastenerBlock extends DirectionalBlock implements EntityBlock
         if (entity instanceof FastenerBlockEntity fbe) {
             Fastener<?> fastener = fbe.getFastener();
             fastener.getAllConnections().stream()
-                    .filter(HangingLightsconnection.class::isInstance)
+                    .filter(HangingLightsConnection.class::isInstance)
                     .map(HangingLightsConnection.class::cast)
                     .filter(conn -> conn.canCurrentlyPlayAJingle() && conn.isDestination(new BlockFastenerAccessor(fastener.getPos())) && world.getBlockState(fastener.getPos()).getValue(TRIGGERED))
                     .findFirst().ifPresent(conn -> ServerEventHandler.tryJingle(world, conn));
