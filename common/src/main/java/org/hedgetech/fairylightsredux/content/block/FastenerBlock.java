@@ -22,10 +22,11 @@ import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.apache.commons.lang3.NotImplementedException;
 import org.hedgetech.fairylightsredux.connection.HangingLightsConnection;
 import org.hedgetech.fairylightsredux.fastener.Fastener;
 import org.hedgetech.fairylightsredux.fastener.accessor.BlockFastenerAccessor;
+import org.hedgetech.fairylightsredux.handler.ServerEventHandler;
+import org.hedgetech.fairylightsredux.registry.FLRBlockEntities;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -87,12 +88,11 @@ public final class FastenerBlock extends DirectionalBlock implements EntityBlock
 
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(final Level world, final BlockState state, final BlockEntityType<T> type) {
-        throw new NotImplementedException("FastenerBlock.getTicker");
-//        if (world.isClientSide()) {
-//            return createTickerHelper(type, FLRBlockEntities.FASTENER.get(), FastenerBlockEntity::tickClient);
-//        }
-//        return createTickerHelper(type, FLRBlockEntities.FASTENER.get(), FastenerBlockEntity::tick);
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(final Level world, final @NotNull BlockState state, final @NotNull BlockEntityType<T> type) {
+        if (world.isClientSide()) {
+            return createTickerHelper(type, FLRBlockEntities.get(BlockDefs.FASTENER), FastenerBlockEntity::tickClient);
+        }
+        return createTickerHelper(type, FLRBlockEntities.get(BlockDefs.FASTENER), FastenerBlockEntity::tick);
     }
 
     @SuppressWarnings("unchecked")
@@ -175,18 +175,6 @@ public final class FastenerBlock extends DirectionalBlock implements EntityBlock
                     .filter(conn -> conn.canCurrentlyPlayAJingle() && conn.isDestination(new BlockFastenerAccessor(fastener.getPos())) && world.getBlockState(fastener.getPos()).getValue(TRIGGERED))
                     .findFirst().ifPresent(conn -> ServerEventHandler.tryJingle(world, conn));
         }
-        throw new NotImplementedException("FastenerBlock.jingle");
-        // FIXME Replace Capability system
-//        final BlockEntity entity = world.getBlockEntity(pos);
-//        if (!(entity instanceof FastenerBlockEntity)) {
-//            return;
-//        }
-//        entity.getCapability(CapabilityHandler.FASTENER_CAP).ifPresent(fastener -> fastener.getAllConnections().stream()
-//                .filter(HangingLightsConnection.class::isInstance)
-//                .map(HangingLightsConnection.class::cast)
-//                .filter(conn -> conn.canCurrentlyPlayAJingle() && conn.isDestination(new BlockFastenerAccessor(fastener.getPos())) && world.getBlockState(fastener.getPos()).getValue(TRIGGERED))
-//                .findFirst().ifPresent(conn -> ServerEventHandler.tryJingle(world, conn))
-//        );
     }
 
     public Vec3 getOffset(final Direction facing, final float offset) {

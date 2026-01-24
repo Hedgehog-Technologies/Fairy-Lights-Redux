@@ -31,6 +31,10 @@ public enum FastenerType {
         return this.supplier.get();
     }
 
+    public static FastenerType fromName(final String name) {
+        return NAME_TO_TYPE.get(name);
+    }
+
     @Deprecated(since = "Compound tags be damned")
     public static CompoundTag serialize(final FastenerAccessor accessor) {
         throw new NotImplementedException("FastenerType.serialize");

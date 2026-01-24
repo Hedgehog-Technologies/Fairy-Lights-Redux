@@ -16,6 +16,7 @@ import java.util.Map;
 
 public class RecipeDefs {
     public static final TagKey<Item> LIGHTS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "lights"));
+
 //    public static RecipeDef simpleItem(RecipeCategory category) {
 //        return new SingleIngredientRecipe(() -> Items.IRON_INGOT);
 //    }

@@ -43,9 +43,9 @@ public final class HangingLightsConnection extends HangingFeatureConnection<Ligh
 
     private final Set<BlockPos> litBlocks = new HashSet<>();
     private final Set<BlockPos> oldLitBlocks = new HashSet<>();
-    private StringType string;
-    private List<ItemStack> pattern;
-    private JinglePlayer jinglePlayer = new JinglePlayer();
+    private final StringType string;
+    private final List<ItemStack> pattern;
+    private final JinglePlayer jinglePlayer = new JinglePlayer();
     private boolean wasPlaying = false;
     private boolean isOn = true;
     private int lightUpdateTime = (int) (Math.random() * LIGHT_UPDATE_WAIT / 2);
@@ -117,7 +117,7 @@ public final class HangingLightsConnection extends HangingFeatureConnection<Ligh
         }
         if (on && this.features.length > 0) {
             this.lightUpdateTime++;
-            if (this.lightUpdateTime > LIGHT_UPDATE_WAIT && this.lightUpdateTime % LIGHT_UPDATE_WAIT == 0) {
+            if (this.lightUpdateTime > LIGHT_UPDATE_WAIT && this.lightUpdateTime % LIGHT_UPDATE_RATE == 0) {
                 if (this.lightUpdateIndex >= this.features.length) {
                     this.lightUpdateIndex = 0;
                     this.lightUpdateTime = this.world.random.nextInt(LIGHT_UPDATE_WAIT / 2);

@@ -2,8 +2,6 @@ package org.hedgetech.fairylightsredux.jingle;
 
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtOps;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.hedgetech.fairylightsredux.content.sound.SoundDefs;
@@ -211,7 +209,7 @@ public final class JinglePlayer {
                     return new NotPlayingState();
                 }
                 final Jingle.PlayTick playTick = this.playTicks.get(this.index++);
-                this.rest = playTick.getDuration() - 1;
+                this.rest = playTick.duration() - 1;
                 if (isClient) {
                     this.play(world, origin, lights, playTick);
                 }
@@ -222,7 +220,7 @@ public final class JinglePlayer {
         }
 
         private void play(final Level world, final Vec3 origin, final Light<?>[] lights, final Jingle.PlayTick playTick) {
-            for (final int note : playTick.getNotes()) {
+            for (final int note : playTick.notes()) {
                 final int idx = note - this.jingle.getLowestNote() + this.lightOffset;
                 if (idx >= 0 && idx < lights.length) {
                     lights[idx].jingle(world, origin, note, FLRSounds.get(SoundDefs.JINGLE_BELL), this.noteParticle);

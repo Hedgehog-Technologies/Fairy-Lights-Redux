@@ -4,6 +4,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.DoubleTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -22,7 +23,7 @@ import java.util.UUID;
 
 public abstract class EntityFastenerAccessor<E extends Entity> implements FastenerAccessor {
     private final Class<? extends E> entityClass;
-    private final @Nullable UUID uuid;
+    private @Nullable UUID uuid;
     private @Nullable E entity;
     private @Nullable Vec3 pos;
 
@@ -89,7 +90,20 @@ public abstract class EntityFastenerAccessor<E extends Entity> implements Fasten
         return false;
     }
 
-    // FIXME Deprecated as of "Compound tags be damned"
+    @Override
+    public void writeToBuf(final FriendlyByteBuf buf) {
+        if (this.uuid != null) buf.writeUUID(this.uuid);
+        if (this.pos != null) buf.writeVec3(this.pos);
+    }
+
+    @Override
+    public EntityFastenerAccessor<E> readFromBuf(final FriendlyByteBuf buf) {
+        this.entity = null;
+        this.uuid = buf.readUUID();
+        this.pos = buf.readVec3();
+        return this;
+    }
+
     @Override
     public CompoundTag serialize() {
         throw new NotImplementedException("EntityFastenerAccessor.serialize");

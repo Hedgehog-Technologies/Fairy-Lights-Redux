@@ -1,6 +1,7 @@
 package org.hedgetech.fairylightsredux.fastener.accessor;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
 import org.hedgetech.fairylightsredux.fastener.Fastener;
 import org.hedgetech.fairylightsredux.fastener.FastenerType;
@@ -18,9 +19,13 @@ public interface FastenerAccessor {
 
     FastenerType getType();
 
-    @Deprecated(since = "Compound tags be damned")
+    void writeToBuf(FriendlyByteBuf buf);
+
+    FastenerAccessor readFromBuf(FriendlyByteBuf buf);
+
+    @Deprecated(since = "Use FastenerAccessor.writeToBuf instead", forRemoval = true)
     CompoundTag serialize();
 
-    @Deprecated(since = "Compound tags be damned")
+    @Deprecated(since = "Use FastenerAccessor.readFromBuf instead", forRemoval = true)
     void deserialize(CompoundTag tag);
 }

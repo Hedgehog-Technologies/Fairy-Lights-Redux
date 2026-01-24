@@ -1,0 +1,47 @@
+package org.hedgetech.fairylightsredux.jingle;
+
+import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectMaps;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import net.minecraft.resources.FileToIdConverter;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.util.profiling.ProfilerFiller;
+import org.hedgetech.fairylightsredux.Constants;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Map;
+
+public class JingleManager extends SimpleJsonResourceReloadListener<Jingle> {
+    public static final JingleManager INSTANCE = new JingleManager();
+
+    private Object2ObjectMap<String, JingleLibrary> libraries = Object2ObjectMaps.emptyMap();
+
+    public JingleManager() {
+        super(Jingle.CODEC, FileToIdConverter.json("jingles"));
+    }
+
+    public JingleLibrary get(final String library) {
+        return this.libraries.getOrDefault(library, JingleLibrary.empty());
+    }
+
+    @Override
+    protected void apply(final Map<ResourceLocation, Jingle> elements, final @NotNull ResourceManager manager, final @NotNull ProfilerFiller profiler) {
+        final Object2ObjectMap<String, JingleLibrary.Builder> builders = new Object2ObjectOpenHashMap<>();
+        elements.forEach((file, jingle) -> {
+            final String path = file.getPath();
+            final int sl = path.indexOf('/');
+            final String library = path.substring(0, Math.max(0, sl));
+            final ResourceLocation name = ResourceLocation.fromNamespaceAndPath(file.getNamespace(), path.substring(sl + 1));
+            if (jingle == null) {
+                Constants.LOG.warn("Null jingle parsed for resource {}", file);
+            } else {
+                builders.computeIfAbsent(library, l -> new JingleLibrary.Builder()).add(name, jingle);
+            }
+        });
+        final Object2ObjectMap<String, JingleLibrary> libraries = new Object2ObjectOpenHashMap<>(builders.size());
+        Object2ObjectMaps.fastForEach(builders, e -> libraries.put(e.getKey(), e.getValue().build()));
+        this.libraries = libraries;
+    }
+}

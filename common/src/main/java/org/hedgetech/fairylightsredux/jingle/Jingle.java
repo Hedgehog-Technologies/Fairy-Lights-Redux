@@ -43,7 +43,7 @@ public final class Jingle {
     public int getLength() {
         int length = 0;
         for (final PlayTick playTick : this.ticks) {
-            length += playTick.getDuration();
+            length += playTick.duration();
         }
         return length;
     }
@@ -57,7 +57,7 @@ public final class Jingle {
         return this.min;
     }
 
-    private int getRange() {
+    public int getRange() {
         this.calculateRange();
         return this.range;
     }
@@ -111,28 +111,12 @@ public final class Jingle {
         return new Jingle(title, artist, ObjectLists.unmodifiable(ticks));
     }
 
-    static final class PlayTick {
-        public static final Codec<PlayTick> CODEC = RecordCodecBuilder.create(builder ->
-                builder.group(
-                        Codec.INT.fieldOf("duration").forGetter(t -> t.duration),
-                        Codec.INT_STREAM.fieldOf("notes").xmap(IntStream::toArray, Arrays::stream).forGetter(t -> t.notes)
-                ).apply(builder, PlayTick::new)
-        );
-
-        final int duration;
-        final int[] notes;
-
-        PlayTick(final int duration, final int[] notes) {
-            this.duration = duration;
-            this.notes = notes;
-        }
-
-        public int getDuration() {
-            return this.duration;
-        }
-
-        public int[] getNotes() {
-            return this.notes;
-        }
+    public record PlayTick(int duration, int[] notes) {
+            public static final Codec<PlayTick> CODEC = RecordCodecBuilder.create(builder ->
+                    builder.group(
+                            Codec.INT.fieldOf("duration").forGetter(t -> t.duration),
+                            Codec.INT_STREAM.fieldOf("notes").xmap(IntStream::toArray, Arrays::stream).forGetter(t -> t.notes)
+                    ).apply(builder, PlayTick::new)
+            );
     }
 }

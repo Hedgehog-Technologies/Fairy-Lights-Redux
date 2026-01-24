@@ -2,6 +2,7 @@ package org.hedgetech.fairylightsredux.fastener.accessor;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import org.apache.commons.lang3.NotImplementedException;
@@ -56,13 +57,22 @@ public final class BlockFastenerAccessor implements FastenerAccessor {
         return false;
     }
 
-    @Deprecated(since = "Compound tags be damned")
+    @Override
+    public void writeToBuf(final FriendlyByteBuf buf) {
+        buf.writeBlockPos(this.pos);
+    }
+
+    @Override
+    public BlockFastenerAccessor readFromBuf(final FriendlyByteBuf buf) {
+        this.pos = buf.readBlockPos();
+        return this;
+    }
+
     @Override
     public CompoundTag serialize() {
         throw new NotImplementedException("BlockFastenerAccessor.serialize");
     }
 
-    @Deprecated(since = "Compound tags be damned")
     @Override
     public void deserialize(final CompoundTag tag) {
         throw new NotImplementedException("BlockFastenerAccessor.deserialize");

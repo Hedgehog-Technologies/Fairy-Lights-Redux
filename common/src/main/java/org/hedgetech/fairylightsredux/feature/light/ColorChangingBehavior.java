@@ -1,23 +1,40 @@
 package org.hedgetech.fairylightsredux.feature.light;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.Util;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.hedgetech.fairylightsredux.registry.datacomponent.PrimitiveComponents;
 import org.hedgetech.fairylightsredux.util.FLRMth;
 
 public class ColorChangingBehavior implements ColorLightBehavior {
+    public static final Codec<ColorChangingBehavior> CODEC = RecordCodecBuilder.create(inst ->
+            inst.group(
+                    PrimitiveComponents.FLOAT_ARRAY_CODEC.fieldOf("red").forGetter(ColorChangingBehavior::getRedRaw),
+                    PrimitiveComponents.FLOAT_ARRAY_CODEC.fieldOf("green").forGetter(ColorChangingBehavior::getGreenRaw),
+                    PrimitiveComponents.FLOAT_ARRAY_CODEC.fieldOf("blue").forGetter(ColorChangingBehavior::getBlueRaw)
+            ).apply(inst, ColorChangingBehavior::new));
+
+    public static final DataComponentType<ColorChangingBehavior> TYPE = DataComponentType.<ColorChangingBehavior>builder()
+            .persistent(CODEC)
+            .build();
+
     private final float[] red;
     private final float[] green;
     private final float[] blue;
     private final float rate;
     private boolean powered;
 
+    public ColorChangingBehavior(final float[] red, final float[] green, final float[] blue) {
+        this(red, green, blue, red.length / 960.F);
+    }
+
     public ColorChangingBehavior(final float[] red, final float[] green, final float[] blue, final float rate) {
+        assert red.length == green.length && red.length == blue.length;
         this.red = red;
         this.green = green;
         this.blue = blue;
@@ -29,14 +46,26 @@ public class ColorChangingBehavior implements ColorLightBehavior {
         return this.get(this.red, delta);
     }
 
+    public float[] getRedRaw() {
+        return this.red;
+    }
+
     @Override
     public float getGreen(final float delta) {
         return this.get(this.green, delta);
     }
 
+    public float[] getGreenRaw() {
+        return this.green;
+    }
+
     @Override
     public float getBlue(final float delta) {
         return this.get(this.blue, delta);
+    }
+
+    public float[] getBlueRaw() {
+        return this.blue;
     }
 
     private float get(final float[] values, final float delta) {
@@ -54,55 +83,39 @@ public class ColorChangingBehavior implements ColorLightBehavior {
     @Override
     public void tick(final Level world, final Vec3 origin, final Light<?> light) {}
 
-    // FIXME - CompoundTags changes
-//    public static ColorLightBehavior create(final ItemStack stack) {
-//        final CompoundTag tag = stack.getTag();
-//        if (tag == null) {
-//            return new FixedColorBehavior(1.0F, 1.0F, 1.0F);
-//        }
-//        final ListTag list = tag.getList("colors", Tag.TAG_INT);
-//        final float[] red = new float[list.size()];
-//        final float[] green = new float[list.size()];
-//        final float[] blue = new float[list.size()];
-//        for (int i = 0; i < list.size(); i++) {
-//            final int color = list.getInt(i);
-//            red[i] = (color >> 16 & 0xFF) / 255.0F;
-//            green[i] = (color >> 8 & 0xFF) / 255.0F;
-//            blue[i] = (color & 0xFF) / 255.0F;
-//        }
-//        return new ColorChangingBehavior(red, green, blue, list.size() / 960.0F);
-//    }
-//
-//
-//    public static int animate(final ItemStack stack) {
-//        final CompoundTag tag = stack.getTag();
-//        if (tag == null) {
-//            return 0xFFFFFF;
-//        }
-//        final ListTag list = tag.getList("colors", Tag.TAG_INT);
-//        if (list.isEmpty()) {
-//            return 0xFFFFFF;
-//        }
-//        if (list.size() == 1) {
-//            return list.getInt(0);
-//        }
-//        final float p = FLMth.mod(Util.getMillis() * (20.0F / 1000.0F) * (list.size() / 960.0F), list.size());
-//        final int i = (int) p;
-//        final int c0 = list.getInt(i % list.size());
-//        final float r0 = (c0 >> 16 & 0xFF) / 255.0F;
-//        final float g0 = (c0 >> 8 & 0xFF) / 255.0F;
-//        final float b0 = (c0 & 0xFF) / 255.0F;
-//        final int c1 = list.getInt((i + 1) % list.size());
-//        final float r1 = (c1 >> 16 & 0xFF) / 255.0F;
-//        final float g1 = (c1 >> 8 & 0xFF) / 255.0F;
-//        final float b1 = (c1 & 0xFF) / 255.0F;
-//        return (int) (Mth.lerp(p - i, r0, r1) * 255.0F) << 16 |
-//                (int) (Mth.lerp(p - i, g0, g1) * 255.0F) << 8 |
-//                (int) (Mth.lerp(p - i, b0, b1) * 255.0F);
-//    }
-//
-//    public static boolean exists(final ItemStack stack) {
-//        final CompoundTag tag = stack.getTag();
-//        return tag != null && tag.contains("colors", Tag.TAG_LIST);
-//    }
+    public static ColorLightBehavior create(final ItemStack stack) {
+        ColorChangingBehavior comp = stack.get(ColorChangingBehavior.TYPE);
+        if (comp == null) {
+            return new FixedColorBehavior(1.0F, 1.0F, 1.0F);
+        }
+        return comp;
+    }
+
+
+    public static int animate(final ItemStack stack) {
+        ColorChangingBehavior comp = stack.get(ColorChangingBehavior.TYPE);
+        if (comp == null) {
+            return 0xFFFFFF;
+        }
+        if (comp.red.length == 0 || comp.green.length == 0 || comp.blue.length == 0) {
+            return 0xFFFFFF;
+        }
+        if (comp.red.length == 1 && comp.green.length == 1 && comp.blue.length == 1) {
+            return ((int) (comp.red[0] * 255.0F) << 16) |
+                    ((int) (comp.green[0] * 255.0F) << 8) |
+                    ((int) (comp.blue[0] * 255.0F));
+        }
+        // TECH_DEBT - Why the hardcoded math?
+        final float p = FLRMth.mod(Util.getMillis() * (20.0F / 1000.0F) * comp.rate, comp.red.length);
+        final int i = (int) p;
+        final int idx1 = i % comp.red.length;
+        final int idx2 = (i + 1) % comp.red.length;
+        return (int) (Mth.lerp(p - i, comp.red[idx1], comp.red[idx2]) * 255.0F) << 16 |
+                (int) (Mth.lerp(p - i, comp.green[idx1], comp.green[idx2]) * 255.0F) << 8 |
+                (int) (Mth.lerp(p - i, comp.blue[idx1], comp.blue[idx2]) * 255.0F);
+    }
+
+    public static boolean exists(final ItemStack stack) {
+        return stack.has(ColorChangingBehavior.TYPE);
+    }
 }
