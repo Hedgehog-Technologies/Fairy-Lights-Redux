@@ -1,13 +1,16 @@
-package org.hedgetech.fairylightsredux.content.block;
+package org.hedgetech.fairylightsredux.block.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import org.hedgetech.fairylightsredux.block.FastenerBlock;
 import org.hedgetech.fairylightsredux.fastener.BlockFastener;
 import org.hedgetech.fairylightsredux.fastener.Fastener;
 import org.hedgetech.fairylightsredux.fastener.RegularBlockView;
@@ -51,11 +54,10 @@ public final class FastenerBlockEntity extends BlockEntity {
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
-    // TODO - Figure out compound tag usage
-//    @Override
-//    public CompoundTag getUpdateTag() {
-//        return this.saveWithoutMetadata();
-//    }
+    @Override
+    public @NotNull CompoundTag getUpdateTag(HolderLookup.@NotNull Provider registries) {
+        return this.saveWithoutMetadata(registries);
+    }
 
     @Override
     public void setLevel(final @NotNull Level world) {

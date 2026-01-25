@@ -6,6 +6,8 @@ import java.util.List;
 
 public final class BlockDefs {
     public static final String FASTENER = "fastener";
+    public static final String LIGHT = "light";
+
     public static final List<BlockDef> BLOCKS = List.of(
 //            new BlockDef(
 //                    "blue_candle",

@@ -4,7 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import org.hedgetech.fairylightsredux.content.block.FastenerBlockEntity;
+import org.hedgetech.fairylightsredux.block.entity.FastenerBlockEntity;
 import org.hedgetech.fairylightsredux.fastener.accessor.BlockFastenerAccessor;
 
 import java.util.Objects;

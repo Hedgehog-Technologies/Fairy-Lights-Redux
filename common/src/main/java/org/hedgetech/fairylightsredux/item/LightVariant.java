@@ -4,8 +4,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import org.hedgetech.fairylightsredux.feature.light.LightBehavior;
 
-import java.util.Optional;
-
 public interface LightVariant<T extends LightBehavior> {
     boolean parallelsCord();
 
@@ -18,4 +16,6 @@ public interface LightVariant<T extends LightBehavior> {
     T createBehavior(final ItemStack stack);
 
     boolean isOrientable();
+
+    LightVariantType<?> type();
 }

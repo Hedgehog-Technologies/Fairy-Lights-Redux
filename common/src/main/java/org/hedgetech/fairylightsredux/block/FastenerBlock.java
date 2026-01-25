@@ -1,4 +1,4 @@
-package org.hedgetech.fairylightsredux.content.block;
+package org.hedgetech.fairylightsredux.block;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -23,6 +23,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.hedgetech.fairylightsredux.connection.HangingLightsConnection;
+import org.hedgetech.fairylightsredux.content.block.BlockDefs;
+import org.hedgetech.fairylightsredux.block.entity.FastenerBlockEntity;
 import org.hedgetech.fairylightsredux.fastener.Fastener;
 import org.hedgetech.fairylightsredux.fastener.accessor.BlockFastenerAccessor;
 import org.hedgetech.fairylightsredux.handler.ServerEventHandler;

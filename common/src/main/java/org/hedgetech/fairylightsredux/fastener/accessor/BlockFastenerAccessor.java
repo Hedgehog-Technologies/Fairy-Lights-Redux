@@ -6,7 +6,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import org.apache.commons.lang3.NotImplementedException;
-import org.hedgetech.fairylightsredux.content.block.FastenerBlockEntity;
+import org.hedgetech.fairylightsredux.block.entity.FastenerBlockEntity;
 import org.hedgetech.fairylightsredux.fastener.BlockFastener;
 import org.hedgetech.fairylightsredux.fastener.Fastener;
 import org.hedgetech.fairylightsredux.fastener.FastenerType;
