@@ -8,11 +8,15 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.item.ItemModel;
+import net.minecraft.client.renderer.item.ItemStackRenderState;
+import net.minecraft.client.resources.model.ModelManager;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -122,15 +126,26 @@ public class FastenerRenderer {
         }
     }
 
-    public static void renderBakedModel(final ResourceLocation path, final PoseStack matrix, final VertexConsumer buf, final float r, final float g, final float b, final int packedLight, final int packedOverlay) {
-        renderBakedModel(Minecraft.getInstance().getModelManager().getItemModel(path), matrix, buf, r, g, b, packedLight, packedOverlay);
+    public static void renderItemModel(ResourceLocation path, ItemDisplayContext context, PoseStack pose, MultiBufferSource source, int packedLight, int packedOverlay) {
+        Minecraft mc = Minecraft.getInstance();
+        ModelManager models = mc.getModelManager();
+        ItemModel model = models.getItemModel(path);
+        renderItemModel(model, context, pose, source, packedLight, packedOverlay);
     }
-//
-//    public static void renderBakedModel(final ItemModel model, final PoseStack matrix, final VertexConsumer buf, final float r, final float g, final float b, final int packedLight, final int packedOverlay) {
-//        renderBakedModel(model, ItemDisplayContext.FIXED, matrix, buf, r, g, b, packedLight, packedOverlay);
-//    }
-//
-//    public static void renderBakedModel(final ItemModel model, final ItemDisplayContext type, final PoseStack matrix, final VertexConsumer buf, final float r, final float g, final float b, final int packedLight, final int packedoverlay) {
-//        model.
+
+    public static void renderItemModel(ItemModel model, ItemDisplayContext context, PoseStack pose, MultiBufferSource source, int packedLight, int packedOverlay) {
+        Minecraft mc = Minecraft.getInstance();
+        ItemRenderer itemRenderer = mc.getItemRenderer();
+        ItemStackRenderState state = new ItemStackRenderState();
+
+        model.update(state, ItemStack.EMPTY, mc.getItemModelResolver(), context, mc.level, null, 0);
+        pose.pushPose();
+        // TODO - Is this even right?!
+        state.render(pose, source, packedLight, packedOverlay);
+        pose.popPose();
+    }
+
+//    public static void renderBakedModel(final ResourceLocation path, final PoseStack matrix, final VertexConsumer buf, final float r, final float g, final float b, final int packedLight, final int packedOverlay) {
+//        renderBakedModel(Minecraft.getInstance().getModelManager().getItemModel(path), matrix, buf, r, g, b, packedLight, packedOverlay);
 //    }
 }
