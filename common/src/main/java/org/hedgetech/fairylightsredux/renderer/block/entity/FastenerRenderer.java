@@ -24,6 +24,7 @@ import org.hedgetech.fairylightsredux.connection.Connection;
 import org.hedgetech.fairylightsredux.connection.HangingLightsConnection;
 import org.hedgetech.fairylightsredux.fastener.Fastener;
 import org.hedgetech.fairylightsredux.fastener.FenceFastener;
+import org.hedgetech.fairylightsredux.network.NetworkClientProxy;
 
 import java.util.function.Function;
 
@@ -65,7 +66,7 @@ public class FastenerRenderer {
             if (world == null) return false;
             final BlockState state = world.getBlockState(fastener.getPos());
             if (!state.is(BlockTags.FENCES)) return false;
-            final VertexConsumer buf = ClientProxy.SOLID_TEXTURE.buffer(source, RenderType::entityCutout);
+            final VertexConsumer buf = NetworkClientProxy.SOLID_TEXTURE.buffer(source, RenderType::entityCutout);
             final float offset = -1.5F / 16.0F;
             final boolean north = state.getValue(FenceBlock.NORTH);
             final boolean east = state.getValue(FenceBlock.EAST);
@@ -95,7 +96,7 @@ public class FastenerRenderer {
             }
             return bow;
         } else if (fastener.getFacing().getAxis() != Direction.Axis.Y) {
-            final VertexConsumer buf = ClientProxy.SOLID_TEXTURE.buffer(source, RenderType::entityCutout);
+            final VertexConsumer buf = NetworkClientProxy.SOLID_TEXTURE.buffer(source, RenderType::entityCutout);
             this.bow(matrix, fastener.getFacing(), 0.0F, buf, packedLight, packedOverlay);
             return true;
         }

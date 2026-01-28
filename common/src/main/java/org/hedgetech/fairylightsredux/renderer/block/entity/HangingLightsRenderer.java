@@ -14,7 +14,7 @@ import org.hedgetech.fairylightsredux.util.FLRMth;
 
 import java.util.function.Function;
 
-public class HangingLightsRenderer extends ConnectionRenderer<HangingLightsRenderer> {
+public class HangingLightsRenderer extends ConnectionRenderer<HangingLightsConnection> {
     private final LightRenderer lights;
 
     public HangingLightsRenderer(final Function<ModelLayerLocation, ModelPart> baker) {

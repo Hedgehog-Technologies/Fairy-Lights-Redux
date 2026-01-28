@@ -1,6 +1,7 @@
 package org.hedgetech.fairylightsredux.network;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
@@ -16,6 +17,13 @@ public final class NetworkProxy {
             throw new IllegalStateException("Network not initialized");
         }
         PLATFORM.sendToPlayersWatchingChunk(message, level, pos);
+    }
+
+    public static void sendToPlayersWatchingEntity(Object message, Entity entity) {
+        if (PLATFORM == null) {
+            throw new IllegalStateException("Network not initialized");
+        }
+        PLATFORM.sendToPlayersWatchingEntity(message, entity);
     }
 
     public static void sendToServer(Object message) {
