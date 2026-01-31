@@ -1,6 +1,8 @@
 package org.hedgetech.fairylightsredux.util;
 
+import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Quaternionf;
 
 import java.util.Objects;
 import java.util.function.ToIntFunction;
@@ -135,6 +137,19 @@ public final class FLRMth {
             inverse[asInt.applyAsInt(map[i])] = i;
         }
         return inverse;
+    }
+
+    public static float[] toEuler(final Quaternionf q) {
+        final float r11 = 2.0F * (q.x() * q.y() + q.w() * q.z());
+        final float r12 = q.w() * q.w() + q.x() * q.x() - q.y() * q.y() - q.z() * q.z();
+        final float r21 = -2.0F * (q.x() * q.z() - q.w() * q.y());
+        final float r31 = 2.0F * (q.y() * q.z() + q.w() * q.x());
+        final float r32 = q.w() * q.w() - q.x() * q.x() - q.y() * q.y() + q.z() * q.z();
+        return new float[]{
+                (float) Mth.atan2(r31, r32),
+                (float) Math.asin(r21),
+                (float) Mth.atan2(r11, r12)
+        };
     }
 
     private FLRMth() {}

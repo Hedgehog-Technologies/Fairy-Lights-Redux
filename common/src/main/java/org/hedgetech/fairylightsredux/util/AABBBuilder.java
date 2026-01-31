@@ -80,6 +80,11 @@ public final class AABBBuilder {
         return this;
     }
 
+    public AABBBuilder include(final float x, final float y, final float z) {
+        this.include((double)x, (double)y, (double)z);
+        return this;
+    }
+
     public AABBBuilder expand(final double amount) {
         this.minX -= amount;
         this.minY -= amount;

@@ -10,7 +10,9 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.phys.AABB;
 import org.hedgetech.fairylightsredux.feature.light.Light;
 import org.hedgetech.fairylightsredux.feature.light.LightBehavior;
+import org.hedgetech.fairylightsredux.util.AABBBuilder;
 import org.hedgetech.fairylightsredux.util.ColorUtil;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -79,7 +81,7 @@ public abstract class LightModel<T extends LightBehavior> extends Model {
     public AABB getBounds() {
         if (this.bounds == null) {
             final PoseStack matrix = new PoseStack();
-            final AABBVertexBuilder builder = new AABBVertextBuilder();
+            final AABBVertexBuilder builder = new AABBVertexBuilder();
             this.renderToBuffer(matrix, builder, 0, 0, 1.0F, 1.0F, 1.0F, 1.0F);
             this.renderTranslucent(matrix, builder, 0, 0, 1.0F, 1.0F, 1.0F, 1.0F);
             this.bounds = builder.build();
@@ -116,5 +118,116 @@ public abstract class LightModel<T extends LightBehavior> extends Model {
 
     protected int getLight(final int packedLight) {
         return (int) Math.max((this.brightness * 15.0F * 16.0F), this.powered ? 0 : packedLight & 255) | packedLight & (255 << 16);
+    }
+
+    static class AABBVertexBuilder implements VertexConsumer {
+        final AABBBuilder builder = new AABBBuilder();
+
+        @Override
+        public @NotNull VertexConsumer addVertex(final float x, final float y, final float z) {
+            this.builder.include(x, y, z);
+            return this;
+        }
+
+        @Override
+        public @NotNull VertexConsumer setColor(int r, int g, int b, int a) {
+            return this;
+        }
+
+        @Override
+        public @NotNull VertexConsumer setUv(float u, float v) {
+            return this;
+        }
+
+        @Override
+        public @NotNull VertexConsumer setUv1(int u, int v) {
+            return this;
+        }
+
+        @Override
+        public @NotNull VertexConsumer setUv2(int u, int v) {
+            return this;
+        }
+
+        @Override
+        public @NotNull VertexConsumer setNormal(float x, float y, float z) {
+            return this;
+        }
+
+        @Override
+        public @NotNull VertexConsumer setOverlay(int packedOverlay) {
+            return this;
+        }
+
+//        @Override
+        public void defaultColor(int r, int g, int b, int a) {
+        }
+
+//        @Override
+        public void unsetDefaultColor() {
+        }
+
+        AABB build() {
+            return this.builder.build();
+        }
+    }
+
+    static class BulbBuilder {
+        EasyMeshBuilder base;
+        EasyMeshBuilder glow;
+
+        public BulbBuilder(final EasyMeshBuilder base, final EasyMeshBuilder glow) {
+            this.base = base;
+            this.glow = glow;
+        }
+
+        public BulbBuilder setUV(final int u, final int v) {
+            this.base.setTextureOffset(u, v);
+            this.glow.setTextureOffset(u, v);
+            return this;
+        }
+
+        void addBox(final float x, final float y, final float z, final float width, final float height, final float depth) {
+            this.addBox(x, y, z, width, height, depth, 0.0F);
+        }
+
+        void addBox(final float x, final float y, final float z, final float width, final float height, final float depth, final float expand) {
+            this.addBox(x, y, z, width, height, depth, expand, 0.7F);
+        }
+
+        void addBox(final float x, final float y, final float z, final float width, final float height, final float depth, final float expand, final float glow) {
+            this.base.addBox(x, y, z, width, height, depth, expand);
+            this.glow.addBox(x, y, z, width, height, depth, expand + glow);
+        }
+
+        BulbBuilder createChild(final String name, final int u, final int v) {
+            return this.createChild(name, u, v, EasyMeshBuilder::new);
+        }
+
+        BulbBuilder createChild(final String name, final int u, final int v, final ModelPartFactory factory) {
+            final EasyMeshBuilder base = factory.create(name, u, v);
+            final EasyMeshBuilder glow = factory.create(name, u, v);
+            this.base.addChild(base);
+            this.glow.addChild(glow);
+            return new BulbBuilder(base, glow);
+        }
+
+        public void setPosition(final float x, final float y, final float z) {
+            this.base.setRotationPoint(x, y, z);
+            this.glow.setRotationPoint(x, y, z);
+        }
+
+        public void setAngles(final float x, final float y, final float z) {
+            this.base.xRot = x;
+            this.base.yRot = y;
+            this.base.zRot = z;
+            this.glow.xRot = x;
+            this.glow.yRot = y;
+            this.glow.zRot = z;
+        }
+    }
+
+    interface ModelPartFactory {
+        EasyMeshBuilder create(final String name, final int u, final int v);
     }
 }
