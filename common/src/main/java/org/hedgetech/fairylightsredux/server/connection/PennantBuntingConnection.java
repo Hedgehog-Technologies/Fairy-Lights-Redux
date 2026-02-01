@@ -20,6 +20,8 @@ import org.hedgetech.fairylightsredux.item.DyeableItem;
 import org.hedgetech.fairylightsredux.registry.FLRSounds;
 import org.hedgetech.fairylightsredux.server.feature.FeatureType;
 import org.hedgetech.fairylightsredux.server.feature.Pennant;
+import org.hedgetech.fairylightsredux.util.ItemUtils;
+import org.hedgetech.fairylightsredux.util.OreDictUtils;
 import org.hedgetech.fairylightsredux.util.styledstring.StyledString;
 
 import java.util.ArrayList;
@@ -57,7 +59,7 @@ public final class PennantBuntingConnection extends HangingFeatureConnection<Pen
             if (!ItemStack.matches(pennant, heldStack)) {
                 final ItemStack placed = heldStack.split(1);
                 this.pattern.set(index, placed);
-                ItemHandlerHelper.giveItemToPlayer(player, pennant);
+                ItemUtils.giveItemToPlayer(player, pennant);
                 this.computeCatenary();
                 heldStack.shrink(1);
                 this.world.playSound(null, hit.x, hit.y, hit.z, FLRSounds.get(SoundDefs.FEATURE_COLOR_CHANGE), SoundSource.BLOCKS, 1, 1);

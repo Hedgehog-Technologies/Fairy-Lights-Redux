@@ -17,6 +17,7 @@ import org.hedgetech.fairylightsredux._old.server.connection.PlayerAction;
 import org.hedgetech.fairylightsredux.collision.Collidable;
 import org.hedgetech.fairylightsredux.collision.CollidableList;
 import org.hedgetech.fairylightsredux.collision.FeatureCollisionTree;
+import org.hedgetech.fairylightsredux.collision.Intersection;
 import org.hedgetech.fairylightsredux.content.item.ConnectionItem;
 import org.hedgetech.fairylightsredux.content.sound.SoundDefs;
 import org.hedgetech.fairylightsredux.fastener.Fastener;
@@ -27,7 +28,6 @@ import org.hedgetech.fairylightsredux.server.feature.FeatureType;
 import org.hedgetech.fairylightsredux.registry.FLRSounds;
 import org.hedgetech.fairylightsredux.util.*;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Intersectiond;
 
 import java.util.UUID;
 
@@ -168,7 +168,7 @@ public abstract class Connection {
         this.updateCatenary = true;
     }
 
-    public void processClientAction(final Player player, final PlayerAction action, final Intersectiond intersection) {
+    public void processClientAction(final Player player, final PlayerAction action, final Intersection intersection) {
         // FIXME - Networking code needed
         throw new NotImplementedException("Connection.processClientAction");
     }

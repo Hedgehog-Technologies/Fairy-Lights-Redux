@@ -4,12 +4,12 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMultimap;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import org.hedgetech.fairylightsredux.content.tag.TagDefs;
 
 public final class OreDictUtils {
     private OreDictUtils() {}
@@ -19,8 +19,12 @@ public final class OreDictUtils {
             if (stack.getItem() instanceof DyeItem) {
                 return true;
             }
-            // FIXME - check for dye
-            return stack.is(Tags.Items);
+            // check tags for dyes
+            for (final Dye dye : Dye.values()) {
+                if (stack.is(dye.getName())) {
+                    return true;
+                }
+            }
         }
         return false;
     }
@@ -58,22 +62,22 @@ public final class OreDictUtils {
     }
 
     private enum Dye {
-        WHITE(Tags.Items.DYES_WHITE, DyeColor.WHITE),
-        ORANGE(Tags.Items.DYES_ORANGE, DyeColor.ORANGE),
-        MAGENTA(Tags.Items.DYES_MAGENTA, DyeColor.MAGENTA),
-        LIGHT_BLUE(Tags.Items.DYES_LIGHT_BLUE, DyeColor.LIGHT_BLUE),
-        YELLOW(Tags.Items.DYES_YELLOW, DyeColor.YELLOW),
-        LIME(Tags.Items.DYES_LIME, DyeColor.LIME),
-        PINK(Tags.Items.DYES_PINK, DyeColor.PINK),
-        GRAY(Tags.Items.DYES_GRAY, DyeColor.GRAY),
-        LIGHT_GRAY(Tags.Items.DYES_LIGHT_GRAY, DyeColor.LIGHT_GRAY),
-        CYAN(Tags.Items.DYES_CYAN, DyeColor.CYAN),
-        PURPLE(Tags.Items.DYES_PURPLE, DyeColor.PURPLE),
-        BLUE(Tags.Items.DYES_BLUE, DyeColor.BLUE),
-        BROWN(Tags.Items.DYES_BROWN, DyeColor.BROWN),
-        GREEN(Tags.Items.DYES_GREEN, DyeColor.GREEN),
-        RED(Tags.Items.DYES_RED, DyeColor.RED),
-        BLACK(Tags.Items.DYES_BLACK, DyeColor.BLACK);
+        WHITE(TagDefs.DYES_WHITE.key(), DyeColor.WHITE),
+        ORANGE(TagDefs.DYES_ORANGE.key(), DyeColor.ORANGE),
+        MAGENTA(TagDefs.DYES_MAGENTA.key(), DyeColor.MAGENTA),
+        LIGHT_BLUE(TagDefs.DYES_LIGHT_BLUE.key(), DyeColor.LIGHT_BLUE),
+        YELLOW(TagDefs.DYES_YELLOW.key(), DyeColor.YELLOW),
+        LIME(TagDefs.DYES_LIME.key(), DyeColor.LIME),
+        PINK(TagDefs.DYES_PINK.key(), DyeColor.PINK),
+        GRAY(TagDefs.DYES_GRAY.key(), DyeColor.GRAY),
+        LIGHT_GRAY(TagDefs.DYES_LIGHT_GRAY.key(), DyeColor.LIGHT_GRAY),
+        CYAN(TagDefs.DYES_CYAN.key(), DyeColor.CYAN),
+        PURPLE(TagDefs.DYES_PURPLE.key(), DyeColor.PURPLE),
+        BLUE(TagDefs.DYES_BLUE.key(), DyeColor.BLUE),
+        BROWN(TagDefs.DYES_BROWN.key(), DyeColor.BROWN),
+        GREEN(TagDefs.DYES_GREEN.key(), DyeColor.GREEN),
+        RED(TagDefs.DYES_RED.key(), DyeColor.RED),
+        BLACK(TagDefs.DYES_BLACK.key(), DyeColor.BLACK);
 
         private final TagKey<Item> name;
 
