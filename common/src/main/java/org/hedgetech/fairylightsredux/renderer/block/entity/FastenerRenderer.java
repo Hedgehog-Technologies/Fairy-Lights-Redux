@@ -22,11 +22,16 @@ import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import org.hedgetech.fairylightsredux.client.model.FLRModelLayers;
 import org.hedgetech.fairylightsredux.client.model.light.BowModel;
+import org.hedgetech.fairylightsredux.client.renderer.block.entity.GarlandTinselRenderer;
+import org.hedgetech.fairylightsredux.client.renderer.block.entity.GarlandVineRenderer;
 import org.hedgetech.fairylightsredux.connection.Connection;
 import org.hedgetech.fairylightsredux.connection.HangingLightsConnection;
 import org.hedgetech.fairylightsredux.fastener.Fastener;
 import org.hedgetech.fairylightsredux.fastener.FenceFastener;
 import org.hedgetech.fairylightsredux.network.NetworkClientProxy;
+import org.hedgetech.fairylightsredux.server.connection.GarlandTinselConnection;
+import org.hedgetech.fairylightsredux.server.connection.GarlandVineConnection;
+import org.hedgetech.fairylightsredux.util.ColorUtil;
 
 import java.util.function.Function;
 
@@ -111,7 +116,7 @@ public class FastenerRenderer {
         if (offset != 0.0F) {
             matrix.translate(0.0D, 0.0D, offset);
         }
-        this.bow.renderToBuffer(matrix, buf, packedLight, packedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
+        this.bow.renderToBuffer(matrix, buf, packedLight, packedOverlay, ColorUtil.packColor(1.0F, 1.0F, 1.0F, 1.0F));
         matrix.popPose();
     }
 
