@@ -7,8 +7,9 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.phys.Vec3;
+import org.hedgetech.fairylightsredux.client.model.FLRModelLayers;
 import org.hedgetech.fairylightsredux.connection.HangingLightsConnection;
-import org.hedgetech.fairylightsredux.feature.light.Light;
+import org.hedgetech.fairylightsredux.server.feature.light.Light;
 import org.hedgetech.fairylightsredux.item.SimpleLightVariant;
 import org.hedgetech.fairylightsredux.util.FLRMth;
 

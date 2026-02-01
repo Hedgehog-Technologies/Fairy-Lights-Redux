@@ -1,4 +1,4 @@
-package org.hedgetech.fairylightsredux.feature;
+package org.hedgetech.fairylightsredux.server.feature;
 
 import com.mojang.serialization.Lifecycle;
 import net.minecraft.core.DefaultedMappedRegistry;

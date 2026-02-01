@@ -20,6 +20,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import org.hedgetech.fairylightsredux.client.model.FLRModelLayers;
+import org.hedgetech.fairylightsredux.client.model.light.BowModel;
 import org.hedgetech.fairylightsredux.connection.Connection;
 import org.hedgetech.fairylightsredux.connection.HangingLightsConnection;
 import org.hedgetech.fairylightsredux.fastener.Fastener;

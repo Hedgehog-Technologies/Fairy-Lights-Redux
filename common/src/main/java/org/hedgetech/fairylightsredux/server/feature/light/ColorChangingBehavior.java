@@ -1,4 +1,4 @@
-package org.hedgetech.fairylightsredux.feature.light;
+package org.hedgetech.fairylightsredux.server.feature.light;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

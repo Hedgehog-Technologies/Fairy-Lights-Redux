@@ -1,10 +1,14 @@
-package org.hedgetech.fairylightsredux.feature.light;
+package org.hedgetech.fairylightsredux.server.feature.light;
 
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
-public class DefaultBrightnessBehavior implements BrightnessLightBehavior {
+public class DefaultBehavior extends FixedColorBehavior implements StandardLightBehavior {
     private float value = 1.0F;
+
+    public DefaultBehavior(final float red, final float green, final float blue) {
+        super(red, green, blue);
+    }
 
     @Override
     public float getBrightness(final float delta) {

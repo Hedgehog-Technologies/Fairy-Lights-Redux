@@ -1,4 +1,4 @@
-package org.hedgetech.fairylightsredux.feature;
+package org.hedgetech.fairylightsredux.server.feature;
 
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -81,7 +81,7 @@ public abstract class HangingFeature implements Feature {
         return this.point.add(origin);
     }
 
-    public Vec3 getTransformedPoint(final Vec3 origin) {
+    public Vec3 getTransformedPoint(final Vec3 origin, final Vec3 point) {
         final MatrixStack matrix = new MatrixStack();
         matrix.rotate(-this.getYaw(), 0.0F, 1.0F, 0.0F);
         if (this.parallelsCord()) {

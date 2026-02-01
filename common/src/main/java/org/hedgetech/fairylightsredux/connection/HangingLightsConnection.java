@@ -1,10 +1,6 @@
 package org.hedgetech.fairylightsredux.connection;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.NbtUtils;
-import net.minecraft.nbt.Tag;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -19,9 +15,9 @@ import org.hedgetech.fairylightsredux.content.block.BlockDefs;
 import org.hedgetech.fairylightsredux.content.recipe.RecipeDefs;
 import org.hedgetech.fairylightsredux.content.sound.SoundDefs;
 import org.hedgetech.fairylightsredux.fastener.Fastener;
-import org.hedgetech.fairylightsredux.feature.FeatureType;
-import org.hedgetech.fairylightsredux.feature.light.Light;
-import org.hedgetech.fairylightsredux.feature.light.LightBehavior;
+import org.hedgetech.fairylightsredux.server.feature.FeatureType;
+import org.hedgetech.fairylightsredux.server.feature.light.Light;
+import org.hedgetech.fairylightsredux.server.feature.light.LightBehavior;
 import org.hedgetech.fairylightsredux.item.LightVariant;
 import org.hedgetech.fairylightsredux.item.LightVariantUtil;
 import org.hedgetech.fairylightsredux.item.SimpleLightVariant;

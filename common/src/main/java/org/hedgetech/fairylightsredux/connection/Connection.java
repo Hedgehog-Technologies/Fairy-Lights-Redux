@@ -1,8 +1,6 @@
 package org.hedgetech.fairylightsredux.connection;
 
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -24,8 +22,8 @@ import org.hedgetech.fairylightsredux.content.sound.SoundDefs;
 import org.hedgetech.fairylightsredux.fastener.Fastener;
 import org.hedgetech.fairylightsredux.fastener.FenceFastener;
 import org.hedgetech.fairylightsredux.fastener.accessor.FastenerAccessor;
-import org.hedgetech.fairylightsredux.feature.Feature;
-import org.hedgetech.fairylightsredux.feature.FeatureType;
+import org.hedgetech.fairylightsredux.server.feature.Feature;
+import org.hedgetech.fairylightsredux.server.feature.FeatureType;
 import org.hedgetech.fairylightsredux.registry.FLRSounds;
 import org.hedgetech.fairylightsredux.util.*;
 import org.jetbrains.annotations.Nullable;

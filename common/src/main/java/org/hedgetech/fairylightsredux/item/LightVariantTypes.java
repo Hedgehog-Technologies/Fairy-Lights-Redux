@@ -2,7 +2,6 @@ package org.hedgetech.fairylightsredux.item;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.resources.ResourceLocation;
-import org.hedgetech.fairylightsredux.feature.light.LightBehavior;
 
 import java.util.Collection;
 import java.util.HashMap;

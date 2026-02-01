@@ -1,4 +1,4 @@
-package org.hedgetech.fairylightsredux.feature.light;
+package org.hedgetech.fairylightsredux.server.feature.light;
 
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;

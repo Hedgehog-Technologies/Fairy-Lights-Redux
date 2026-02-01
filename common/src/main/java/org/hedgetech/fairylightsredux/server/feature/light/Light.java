@@ -1,4 +1,4 @@
-package org.hedgetech.fairylightsredux.feature.light;
+package org.hedgetech.fairylightsredux.server.feature.light;
 
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -10,7 +10,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.hedgetech.fairylightsredux.config.FLRConfig;
 import org.hedgetech.fairylightsredux.content.sound.SoundDefs;
-import org.hedgetech.fairylightsredux.feature.HangingFeature;
+import org.hedgetech.fairylightsredux.server.feature.HangingFeature;
 import org.hedgetech.fairylightsredux.item.LightVariant;
 import org.hedgetech.fairylightsredux.registry.FLRSounds;
 

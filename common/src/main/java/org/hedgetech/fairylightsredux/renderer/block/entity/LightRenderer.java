@@ -7,9 +7,11 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import org.hedgetech.fairylightsredux.client.model.light.LightModel;
-import org.hedgetech.fairylightsredux.feature.light.Light;
-import org.hedgetech.fairylightsredux.feature.light.LightBehavior;
+import org.hedgetech.fairylightsredux.client.model.FLRModelLayers;
+import org.hedgetech.fairylightsredux.client.model.light.*;
+import org.hedgetech.fairylightsredux.client.renderer.block.entity.ForwardingVertexConsumer;
+import org.hedgetech.fairylightsredux.server.feature.light.Light;
+import org.hedgetech.fairylightsredux.server.feature.light.LightBehavior;
 import org.hedgetech.fairylightsredux.item.LightVariant;
 import org.hedgetech.fairylightsredux.item.SimpleLightVariant;
 import org.hedgetech.fairylightsredux.network.NetworkClientProxy;
@@ -84,8 +86,8 @@ public class LightRenderer {
             }
 
             @Override
-            public VertexConsumer normal(float x, float y, float z) {
-                return super.normal(0.0F, 1.0F, 0.0F);
+            public VertexConsumer setNormal(float x, float y, float z) {
+                return super.setNormal(0.0F, 1.0F, 0.0F);
             }
         };
         return new Data(buf, translucent);
@@ -95,6 +97,7 @@ public class LightRenderer {
         return this.getModel(light.getVariant(), index);
     }
 
+    @SuppressWarnings("unchecked")
     public <T extends LightBehavior> LightModel<T> getModel(final LightVariant<?> variant, final int index) {
         return (LightModel<T>) this.lights.getOrDefault(variant, this.defaultLight).get(index);
     }

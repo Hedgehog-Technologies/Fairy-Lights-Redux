@@ -1,4 +1,4 @@
-package org.hedgetech.fairylightsredux.feature;
+package org.hedgetech.fairylightsredux.server.feature;
 
 @FunctionalInterface
 public interface Feature {

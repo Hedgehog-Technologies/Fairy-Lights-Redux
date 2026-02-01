@@ -1,4 +1,4 @@
-package org.hedgetech.fairylightsredux.feature.light;
+package org.hedgetech.fairylightsredux.server.feature.light;
 
 public interface ColorLightBehavior extends LightBehavior {
     float getRed(final float delta);

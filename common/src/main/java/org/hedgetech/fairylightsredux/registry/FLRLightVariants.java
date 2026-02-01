@@ -2,7 +2,7 @@ package org.hedgetech.fairylightsredux.registry;
 
 import net.minecraft.resources.ResourceLocation;
 import org.hedgetech.fairylightsredux.Constants;
-import org.hedgetech.fairylightsredux.feature.light.LightBehavior;
+import org.hedgetech.fairylightsredux.server.feature.light.LightBehavior;
 import org.hedgetech.fairylightsredux.item.LightVariant;
 
 import java.util.HashMap;

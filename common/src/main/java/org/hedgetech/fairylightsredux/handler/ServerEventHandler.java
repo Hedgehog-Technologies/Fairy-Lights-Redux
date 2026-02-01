@@ -3,7 +3,7 @@ package org.hedgetech.fairylightsredux.handler;
 import net.minecraft.world.level.Level;
 import org.hedgetech.fairylightsredux.Constants;
 import org.hedgetech.fairylightsredux.connection.HangingLightsConnection;
-import org.hedgetech.fairylightsredux.feature.light.Light;
+import org.hedgetech.fairylightsredux.server.feature.light.Light;
 import org.hedgetech.fairylightsredux.jingle.Jingle;
 import org.hedgetech.fairylightsredux.jingle.JingleLibrary;
 import org.hedgetech.fairylightsredux.jingle.JingleManager;
