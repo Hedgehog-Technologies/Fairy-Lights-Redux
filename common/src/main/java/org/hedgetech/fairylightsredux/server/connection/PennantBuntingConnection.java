@@ -11,6 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.hedgetech.fairylightsredux._old.server.connection.PlayerAction;
+import org.hedgetech.fairylightsredux.client.gui.EditLetteredConnectionScreen;
 import org.hedgetech.fairylightsredux.collision.Intersection;
 import org.hedgetech.fairylightsredux.connection.ConnectionType;
 import org.hedgetech.fairylightsredux.connection.HangingFeatureConnection;
@@ -29,7 +30,7 @@ import java.util.List;
 import java.util.UUID;
 
 public final class PennantBuntingConnection extends HangingFeatureConnection<Pennant> implements Lettered {
-    private List<ItemStack> pattern;
+    private final List<ItemStack> pattern;
 
     private StyledString text;
 

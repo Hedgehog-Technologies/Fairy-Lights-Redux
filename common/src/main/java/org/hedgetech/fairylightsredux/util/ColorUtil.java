@@ -8,6 +8,14 @@ public final class ColorUtil {
         return new float[] { r, g, b };
     }
 
+    public static int argb(float r, float g, float b, float a) {
+        return packColor(r, g, b, a);
+    }
+
+    public static int argb(float a) {
+        return packColor(1.0F, 1.0F, 1.0F, a);
+    }
+
     public static int packColor(final float r, final float g, final float b, final float a) {
         int ri = Math.round(r * 255.0F) & 0xFF;
         int gi = Math.round(g * 255.0F) & 0xFF;

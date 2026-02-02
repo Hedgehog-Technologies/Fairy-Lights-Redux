@@ -14,19 +14,25 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.phys.Vec3;
 import org.hedgetech.fairylightsredux.Constants;
 import org.hedgetech.fairylightsredux.client.model.FLRModelLayers;
 import org.hedgetech.fairylightsredux.registry.FLRItems;
+import org.hedgetech.fairylightsredux.renderer.block.entity.ConnectionRenderer;
 import org.hedgetech.fairylightsredux.renderer.block.entity.FastenerRenderer;
+import org.hedgetech.fairylightsredux.server.connection.PennantBuntingConnection;
+import org.hedgetech.fairylightsredux.server.feature.Pennant;
 import org.hedgetech.fairylightsredux.util.Curve;
 import org.hedgetech.fairylightsredux.util.styledstring.Style;
 import org.hedgetech.fairylightsredux.util.styledstring.StyledString;
 import org.joml.Matrix3f;
 import org.joml.Vector3f;
 
+import java.util.Objects;
 import java.util.function.Function;
 
 public class PennantBuntingRenderer extends ConnectionRenderer<PennantBuntingConnection> {
@@ -48,6 +54,7 @@ public class PennantBuntingRenderer extends ConnectionRenderer<PennantBuntingCon
         super(baker, FLRModelLayers.PENNANT_WIRE, 0.25F);
     }
 
+    // TECH_DEBT - Are `buf` and `r`, `g`, `b` needed? what were they doing in the old code?
     @Override
     protected void render(final PennantBuntingConnection conn, final Curve catenary, final float delta, final PoseStack matrix, final MultiBufferSource source, final int packedLight, final int packedOverlay) {
         super.render(conn, catenary, delta, matrix, source, packedLight, packedOverlay);
@@ -70,7 +77,7 @@ public class PennantBuntingRenderer extends ConnectionRenderer<PennantBuntingCon
                 final float r = ((color >> 16) & 0xFF) / 255.0F;
                 final float g = ((color >> 8) & 0xFF) / 255.0F;
                 final float b = (color & 0xFF) / 255.0F;
-                final BakedModel model = Minecraft.getInstance().getModelManager().getModel(this.models.getOrDefault(currPennant.getItem(), TRIANGLE_MODEL));
+                final ItemModel model = Minecraft.getInstance().getModelManager().getItemModel(Objects.requireNonNull(this.models.getOrDefault(currPennant.getItem(), TRIANGLE_MODEL)));
                 final Vec3 pos = currPennant.getPoint(delta);
                 matrix.pushPose();
                 matrix.translate(pos.x, pos.y, pos.z);
@@ -78,7 +85,7 @@ public class PennantBuntingRenderer extends ConnectionRenderer<PennantBuntingCon
                 matrix.mulPose(Axis.ZP.rotation(currPennant.getPitch(delta)));
                 matrix.mulPose(Axis.XP.rotation(currPennant.getRoll(delta)));
                 matrix.pushPose();
-                FastenerRenderer.renderBakedModel(model, matrix, buf, r, g, b, packedLight, packedOverlay);
+                FastenerRenderer.renderItemModel(model, ItemDisplayContext.FIXED, matrix, source, packedLight, packedOverlay);
                 matrix.popPose();
                 if (i >= offset && i < offset + text.length()) {
                     this.drawLetter(matrix, source, currPennant, packedLight, font, text, i - offset, 1, delta);

@@ -16,6 +16,7 @@ import org.hedgetech.fairylightsredux.item.LightVariant;
 import org.hedgetech.fairylightsredux.item.SimpleLightVariant;
 import org.hedgetech.fairylightsredux.network.NetworkClientProxy;
 import org.hedgetech.fairylightsredux.util.FLRMth;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
@@ -86,7 +87,7 @@ public class LightRenderer {
             }
 
             @Override
-            public VertexConsumer setNormal(float x, float y, float z) {
+            public @NotNull VertexConsumer setNormal(float x, float y, float z) {
                 return super.setNormal(0.0F, 1.0F, 0.0F);
             }
         };

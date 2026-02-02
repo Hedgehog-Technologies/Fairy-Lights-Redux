@@ -24,6 +24,7 @@ import org.hedgetech.fairylightsredux.client.model.FLRModelLayers;
 import org.hedgetech.fairylightsredux.client.model.light.BowModel;
 import org.hedgetech.fairylightsredux.client.renderer.block.entity.GarlandTinselRenderer;
 import org.hedgetech.fairylightsredux.client.renderer.block.entity.GarlandVineRenderer;
+import org.hedgetech.fairylightsredux.client.renderer.block.entity.PennantBuntingRenderer;
 import org.hedgetech.fairylightsredux.connection.Connection;
 import org.hedgetech.fairylightsredux.connection.HangingLightsConnection;
 import org.hedgetech.fairylightsredux.fastener.Fastener;
@@ -31,6 +32,7 @@ import org.hedgetech.fairylightsredux.fastener.FenceFastener;
 import org.hedgetech.fairylightsredux.network.NetworkClientProxy;
 import org.hedgetech.fairylightsredux.server.connection.GarlandTinselConnection;
 import org.hedgetech.fairylightsredux.server.connection.GarlandVineConnection;
+import org.hedgetech.fairylightsredux.server.connection.PennantBuntingConnection;
 import org.hedgetech.fairylightsredux.util.ColorUtil;
 
 import java.util.function.Function;
@@ -148,7 +150,7 @@ public class FastenerRenderer {
 
         model.update(state, ItemStack.EMPTY, mc.getItemModelResolver(), context, mc.level, null, 0);
         pose.pushPose();
-        // TODO - Is this even right?!
+        // TECH_DEBT - Is this even right?!
         state.render(pose, source, packedLight, packedOverlay);
         pose.popPose();
     }

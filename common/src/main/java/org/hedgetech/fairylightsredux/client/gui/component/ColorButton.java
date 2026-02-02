@@ -1,24 +1,22 @@
 package org.hedgetech.fairylightsredux.client.gui.component;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.hedgetech.fairylightsredux.client.gui.EditLetteredConnectionScreen;
+import org.hedgetech.fairylightsredux.util.Utils;
 import org.hedgetech.fairylightsredux.util.styledstring.StyledString;
 
 public final class ColorButton extends Button {
-    private static final int TEX_U = 0;
-
-    private static final int TEX_V = 0;
+    private static final float TEX_U = 0F;
+    private static final float TEX_V = 0F;
 
     private ChatFormatting displayColor;
-
     private float displayColorR;
-
     private float displayColorG;
-
     private float displayColorB;
 
     public ColorButton(final int x, final int y, final Component msg, final Button.OnPress onPress) {
@@ -46,16 +44,15 @@ public final class ColorButton extends Button {
     }
 
     @Override
-    public void renderWidget(final GuiGraphics stack, final int mouseX, final int mouseY, final float delta) {
-        if (this.visible) {
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-            stack.blit(EditLetteredConnectionScreen.WIDGETS_TEXTURE, this.getX(), this.getY(), TEX_U, this.isHovered ? TEX_V + this.height : TEX_V, this.width, this.height);
-            if (this.displayColor != null) {
-                stack.blit(EditLetteredConnectionScreen.WIDGETS_TEXTURE, this.getX(), this.getY(), TEX_U + this.width, TEX_V, this.width, this.height);
-                RenderSystem.setShaderColor(this.displayColorR, this.displayColorG, this.displayColorB, 1.0F);
-                stack.blit(EditLetteredConnectionScreen.WIDGETS_TEXTURE, this.getX(), this.getY(), TEX_U + this.width, TEX_V + this.height, this.width, this.height);
-                RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-            }
+    public void renderWidget(final @NonNull GuiGraphics stack, final int mouseX, final int mouseY, final float delta) {
+        if (!this.visible) return;
+
+        stack.blit(RenderPipelines.GUI, EditLetteredConnectionScreen.WIDGETS_TEXTURE, this.getX(), this.getY(), TEX_U, this.isHovered ? TEX_V + this.height : TEX_V, this.width, this.height, EditLetteredConnectionScreen.WIDGETS_TEXTURE_WIDTH, EditLetteredConnectionScreen.WIDGETS_TEXTURE_HEIGHT);
+
+        if (this.displayColor != null) {
+            stack.blit(RenderPipelines.GUI, EditLetteredConnectionScreen.WIDGETS_TEXTURE, this.getX(), this.getY(), TEX_U + this.width, TEX_V, this.width, this.height, EditLetteredConnectionScreen.WIDGETS_TEXTURE_WIDTH, EditLetteredConnectionScreen.WIDGETS_TEXTURE_HEIGHT);
+            int tint = Utils.argb(this.displayColorR, this.displayColorG, this.displayColorB, 1.0F);
+            stack.blit(RenderPipelines.GUI, EditLetteredConnectionScreen.WIDGETS_TEXTURE, this.getX(), this.getY(), TEX_U + this.width, TEX_V + this.height, this.width, this.height, EditLetteredConnectionScreen.WIDGETS_TEXTURE_WIDTH, EditLetteredConnectionScreen.WIDGETS_TEXTURE_HEIGHT, tint);
         }
     }
 }
