@@ -2,13 +2,10 @@ package org.hedgetech.fairylightsredux.content.recipe;
 
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.ItemLike;
 import org.hedgetech.fairylightsredux.Constants;
 
 import java.util.List;
@@ -53,4 +50,5 @@ public class RecipeDefs {
                 )
         );
     }
+
 }

@@ -11,6 +11,12 @@ import org.hedgetech.fairylightsredux.content.recipe.RecipeDefs;
 import java.util.List;
 
 public class ItemDefs {
+    public static String HANGING_LIGHTS = "hanging_lights";
+    public static String TRIANGLE_PENNANT = "triangle_pennant";
+    public static String SPEARHEAD_PENNANT = "spearhead_pennant";
+    public static String SWALLOWTAIL_PENNANT = "swallowtail_pennant";
+    public static String SQUARE_PENNANT = "square_pennant";
+
     public static final List<ItemDef> ITEMS = List.of(
 //            new ItemDef(
 //                    "steel_hammer",
@@ -26,11 +32,19 @@ public class ItemDefs {
 //            )
 
             new ItemDef(
-                    "hanging_lights",
+                    HANGING_LIGHTS,
                     RecipeCategory.DECORATIONS,
                     ItemDefs::defaultProperties,
                     (props, def) -> new HangingLightsConnectionItem(props),
                     RecipeDefs.hangingLights()
+            ),
+
+            new ItemDef(
+                    TRIANGLE_PENNANT,
+                    RecipeCategory.DECORATIONS,
+                    ItemDefs::defaultProperties,
+                    (props, def) -> new PennantItem(props),
+                    RecipeDefs.
             )
     );
 
