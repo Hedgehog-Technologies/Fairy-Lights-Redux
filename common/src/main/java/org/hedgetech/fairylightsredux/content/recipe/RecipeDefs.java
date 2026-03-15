@@ -51,4 +51,7 @@ public class RecipeDefs {
         );
     }
 
+    public static RecipeDef pennant() {
+
+    }
 }

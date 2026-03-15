@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.hedgetech.fairylightsredux.client.gui.EditLetteredConnectionScreen;
-import org.hedgetech.fairylightsredux.util.Utils;
+import org.hedgetech.fairylightsredux.util.ColorUtil;
 import org.hedgetech.fairylightsredux.util.styledstring.StyledString;
 
 public final class ColorButton extends Button {
@@ -51,7 +51,7 @@ public final class ColorButton extends Button {
 
         if (this.displayColor != null) {
             stack.blit(RenderPipelines.GUI, EditLetteredConnectionScreen.WIDGETS_TEXTURE, this.getX(), this.getY(), TEX_U + this.width, TEX_V, this.width, this.height, EditLetteredConnectionScreen.WIDGETS_TEXTURE_WIDTH, EditLetteredConnectionScreen.WIDGETS_TEXTURE_HEIGHT);
-            int tint = Utils.argb(this.displayColorR, this.displayColorG, this.displayColorB, 1.0F);
+            int tint = ColorUtil.argb(this.displayColorR, this.displayColorG, this.displayColorB, 1.0F);
             stack.blit(RenderPipelines.GUI, EditLetteredConnectionScreen.WIDGETS_TEXTURE, this.getX(), this.getY(), TEX_U + this.width, TEX_V + this.height, this.width, this.height, EditLetteredConnectionScreen.WIDGETS_TEXTURE_WIDTH, EditLetteredConnectionScreen.WIDGETS_TEXTURE_HEIGHT, tint);
         }
     }

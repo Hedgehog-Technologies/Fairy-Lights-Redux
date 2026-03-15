@@ -115,7 +115,7 @@ public final class PennantBuntingConnection extends HangingFeatureConnection<Pen
         return new EditLetteredConnectionScreen<>(this);
     }
 
-    // FIXME - CompountTag serialization
+    // FIXME - CompoundTag serialization
 //    @Override
 //    public CompoundTag serializeLogic() {
 //        final CompoundTag compound = super.serializeLogic();
