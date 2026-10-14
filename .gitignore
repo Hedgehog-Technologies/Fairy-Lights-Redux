@@ -8,11 +8,11 @@ bin
 
 # idea
 out
-logs
 *.ipr
 *.iws
 *.iml
-.idea
+.idea/*
+!.idea/scopes
 
 # gradle
 build
@@ -21,3 +21,10 @@ build
 # other
 eclipse
 run
+runs
+
+# datagen
+common/src/generated/resources/.cache
+
+# Debug images / docs
+docs/fairy-lights-redux/temp
