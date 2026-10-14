@@ -137,6 +137,7 @@ Package: `org.hedgetech.fairylightsredux`. Mod id: `fairylightsredux`.
 - Keep commits focused on one change.
 - Don't mention AI or "generated" in commit messages.
 - Never commit `build/`, `.gradle/`, `run/`, or IDE files.
+- Whenever you add a "Co-Authored-By" line, note what the co-author contributed in the commit message body.
 
 ---
 
