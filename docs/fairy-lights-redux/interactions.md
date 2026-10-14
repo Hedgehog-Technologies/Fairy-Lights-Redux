@@ -89,8 +89,8 @@ Contrast Block Outline accessibility option on, the outline is cyan on black, li
 - **Use with a different connection item:** swaps the connection for one made from the held item.
   The old item goes into your inventory and the slack is kept.
 
-- **Pick block (middle-click):** gives you the connection's item, with its pattern, colour or text.
-  In survival it selects a matching stack from your inventory if you have one; in creative it adds
+- **Pick block (middle-click):** gives you the connection's item, with its pattern, color or text.
+  In survival, it selects a matching stack from your inventory if you have one; in creative it adds
   one if you don't, the same as picking an entity.
 
 Interactions only work where you could edit blocks (spawn protection and adventure mode apply) and
@@ -132,11 +132,11 @@ get no bow.
 
 The text editor sets the text on pennant bunting and letter bunting.
 
-| | Pennant bunting | Letter bunting |
-| --- | --- | --- |
-| Characters | Anything except combining marks | 0-9, A-Z, &, ! and ? (typed letters become capitals and lose accents) |
-| Styling | Colour, bold, italic, underline, strikethrough | Colour only |
-| Length | At most one character per pennant | Must fit along the cord (I and ! are narrower) |
+|            | Pennant bunting                                | Letter bunting                                                        |
+|------------|------------------------------------------------|-----------------------------------------------------------------------|
+| Characters | Anything except combining marks                | 0-9, A-Z, &, ! and ? (typed letters become capitals and lose accents) |
+| Styling    | Colour, bold, italic, underline, strikethrough | Colour only                                                           |
+| Length     | At most one character per pennant              | Must fit along the cord (I and ! are narrower)                        |
 
 Editor keys:
 
@@ -160,17 +160,17 @@ Every light item can also be placed as a block.
   face. Floors and ceilings need at least a 2×2 pixel area of support in the middle, so fences and
   walls work. Any face of leaves works.
 - **Use with an empty hand:** toggles it on or off. Lit lights give off light level 15.
-- **Use a dye:** recolours dyeable lights. Modded dyes work if they're in the `c:dyes/<color>`
+- **Use a dye:** recolors dyeable lights. Modded dyes work if they're in the `c:dyes/<color>`
   tags. It does nothing on undyed lights (oil lantern, candle lantern, incandescent light) or if the
-  light is already that colour.
-- **Breaking and pick block:** both give back the exact item, including its colour and modifiers.
+  light is already that color.
+- **Breaking and pick block:** both give back the exact item, including its color and modifiers.
 - Twinkling, meteor and incandescent flicker animate on placed lights too, and incandescent lights
   fade on and off when toggled, like on hanging lights.
 
 Caveats:
 
 - Placed lights don't play jingles.
-- Dyeing a colour-changing light sets its underlying colour, but it keeps changing colour.
+- Dyeing a color-changing light sets its underlying color, but it keeps changing color.
 
 ## Jingles
 
@@ -195,17 +195,17 @@ libraries, and the rest are the random library. Datapacks can add songs in the s
 
 - Empty hanging lights (no pattern) show red and green lights blinking at Christmas, and orange and
   purple at Halloween.
-- Colour-changing lights cycle through their colours in the inventory too.
-- Tooltips show a light's modifiers (Twinkles, and the colour list), a hanging lights or pennant
+- Color-changing lights cycle through their colors in the inventory too.
+- Tooltips show a light's modifiers (Twinkles, and the color list), a hanging lights or pennant
   bunting pattern, and bunting text.
 
 ## JEI
 
 With JEI installed:
 
-- Each colour of a light, pennant or tinsel is its own JEI entry (Fabric and NeoForge).
+- Each color of a light, pennant or tinsel is its own JEI entry (Fabric and NeoForge).
 - On NeoForge, the special recipes (hanging lights, pennant bunting, changing a pattern, twinkling,
-  colour changing, dyeing and copying a colour) show cycling examples. Looking up an item shows the
+  color changing, dyeing and copying a color) show cycling examples. Looking up an item shows the
   example that uses or makes it.
 - Hovering a slot gives the old hints, such as adding white dye for white string.
 
@@ -225,11 +225,11 @@ progress option in the client config, and setting that back to none shows it aga
 
 ## Config
 
-| Option | Default | What it does |
-| --- | --- | --- |
-| christmas_jingles | true | Whether jingles switch to the Christmas songs from December 24 to 26 |
-| jingles_amplitude | 40 | How far away jingle bells can be heard, in blocks (at least 1) |
-| tutorial progress | none | Client only. How far through the tutorial this player is: none, hanging_lights or complete |
+| Option            | Default | What it does                                                                               |
+|-------------------|---------|--------------------------------------------------------------------------------------------|
+| christmas_jingles | true    | Whether jingles switch to the Christmas songs from December 24 to 26                       |
+| jingles_amplitude | 40      | How far away jingle bells can be heard, in blocks (at least 1)                             |
+| tutorial progress | none    | Client only. How far through the tutorial this player is: none, hanging_lights or complete |
 
 - **NeoForge:** config/fairylightsredux-common.toml, plus config/fairylightsredux-client.toml for
   the tutorial (as `[tutorial] progress`). Both are editable from the mod list's config screen.
