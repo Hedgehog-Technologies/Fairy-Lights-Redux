@@ -30,9 +30,9 @@ committed before the next one.
 
 ---
 
-## Phase 0: Prepare
+## [COMPLETED] Phase 0: Prepare
 
-### Step 0: Confirm the baseline builds and launches
+### [COMPLETED] Step 0: Confirm the baseline builds and launches
 
 **Do:**
 1. Run `./gradlew build`.
@@ -48,7 +48,7 @@ committed before the next one.
 
 **Done when:** all three loaders launch to the main menu with your mod listed.
 
-### Step 1: Inventory the old mod
+### [SKIPPED] Step 1: Inventory the old mod
 
 **Do:** Write a checklist in `notes.md` that maps each old package to its destination, for example
 `server/block` to `common/.../server/block`. Mark each package "port as is", "needs redesign" or
