@@ -153,6 +153,7 @@ Package: `org.hedgetech.fairylightsredux`. Mod id: `fairylightsredux`.
 - When done, explain what you changed and why in 2-3 sentences.
 - If you found something unexpected, mention it.
 - If you made a judgment call, explain your reasoning.
+- DO NOT implement any code unless explicitly asked.
 
 ---
 
