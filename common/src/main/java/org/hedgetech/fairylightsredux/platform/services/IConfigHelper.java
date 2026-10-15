@@ -1,6 +1,11 @@
 package org.hedgetech.fairylightsredux.platform.services;
 
 public interface IConfigHelper {
+    String CHRISTMAS_JINGLES_KEY = "christmas_jingles";
+    String HALLOWEEN_JINGLES_KEY = "halloween_jingles";
+    String JINGLE_AMPLITUDE_KEY = "jingle_amplitude";
+    String TUTORIAL_PROGRESS_KEY = "tutorial_progress";
+
     int DEFAULT_JINGLE_AMPLITUDE = 40;
     boolean DEFAULT_CHRISTMAS_JINGLES = true;
     boolean DEFAULT_HALLOWEEN_JINGLES = true;

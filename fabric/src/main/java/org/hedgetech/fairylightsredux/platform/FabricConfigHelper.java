@@ -12,11 +12,6 @@ import java.util.List;
 import java.util.Properties;
 
 public class FabricConfigHelper implements IConfigHelper {
-    private static final String CHRISTMAS_JINGLES = "christmas_jingles";
-    private static final String HALLOWEEN_JINGLES = "halloween_jingles";
-    private static final String JINGLE_AMPLITUDE = "jingle_amplitude";
-    private static final String TUTORIAL_PROGRESS = "tutorial_progress";
-
     private final Path path = FabricLoader.getInstance().getConfigDir().resolve(Constants.MOD_ID + ".properties");
     private final boolean christmasJingles;
     private final boolean halloweenJingles;
@@ -35,10 +30,10 @@ public class FabricConfigHelper implements IConfigHelper {
             }
         }
 
-        this.christmasJingles = readBoolean(properties, CHRISTMAS_JINGLES, DEFAULT_CHRISTMAS_JINGLES);
-        this.halloweenJingles = readBoolean(properties, HALLOWEEN_JINGLES, DEFAULT_HALLOWEEN_JINGLES);
+        this.christmasJingles = readBoolean(properties, CHRISTMAS_JINGLES_KEY, DEFAULT_CHRISTMAS_JINGLES);
+        this.halloweenJingles = readBoolean(properties, HALLOWEEN_JINGLES_KEY, DEFAULT_HALLOWEEN_JINGLES);
         this.jingleAmplitude = readAmplitude(properties);
-        this.tutorialProgress = properties.getProperty(TUTORIAL_PROGRESS, DEFAULT_TUTORIAL_PROGRESS).trim();
+        this.tutorialProgress = properties.getProperty(TUTORIAL_PROGRESS_KEY, DEFAULT_TUTORIAL_PROGRESS).trim();
 
         if (!exists) {
             this.save();
@@ -76,14 +71,14 @@ public class FabricConfigHelper implements IConfigHelper {
             Files.createDirectories(this.path.getParent());
             Files.write(this.path, List.of(
                     "# If true, redstone-triggered jingles play Christmas songs from December 24 to 26.",
-                    CHRISTMAS_JINGLES + "=" + this.christmasJingles,
-                    "# If true, redstone-triggered jingles play Halloween songs from October 25 to November 1.",
-                    HALLOWEEN_JINGLES + "=" + this.halloweenJingles,
+                    CHRISTMAS_JINGLES_KEY + "=" + this.christmasJingles,
+                    "# If true, redstone-triggered jingles play Halloween songs from October 30 to November 1.",
+                    HALLOWEEN_JINGLES_KEY + "=" + this.halloweenJingles,
                     "# The distance that jingles can be heard, in blocks, at least 1.",
-                    JINGLE_AMPLITUDE + "=" + this.jingleAmplitude,
+                    JINGLE_AMPLITUDE_KEY + "=" + this.jingleAmplitude,
                     "# The hanging lights tutorial progress. Once any light enters the inventory a toast appears",
                     "# prompting to craft hanging lights. A finished tutorial is 'complete' and an unstarted one is 'none'.",
-                    TUTORIAL_PROGRESS + "=" + this.tutorialProgress
+                    TUTORIAL_PROGRESS_KEY + "=" + this.tutorialProgress
             ));
         } catch (final IOException e) {
             Constants.LOG.warn("Could not write config to {}", this.path, e);
@@ -113,7 +108,7 @@ public class FabricConfigHelper implements IConfigHelper {
     }
 
     private static int readAmplitude(final Properties properties) {
-        final int amplitude = readInteger(properties, JINGLE_AMPLITUDE, DEFAULT_JINGLE_AMPLITUDE);
+        final int amplitude = readInteger(properties, JINGLE_AMPLITUDE_KEY, DEFAULT_JINGLE_AMPLITUDE);
         return Math.max(1, amplitude);
     }
 }
