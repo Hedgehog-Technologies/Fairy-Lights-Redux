@@ -1,5 +1,6 @@
 package org.hedgetech.fairylightsredux;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.bus.BusGroup;
@@ -11,6 +12,8 @@ import net.minecraftforge.network.Channel;
 import net.minecraftforge.network.ChannelBuilder;
 import net.minecraftforge.registries.RegisterEvent;
 import org.hedgetech.fairylightsredux.platform.ForgeConfigHelper;
+import org.hedgetech.fairylightsredux.server.creativeTabs.FLRCreativeTabs;
+import org.hedgetech.fairylightsredux.server.item.FLRItems;
 
 @Mod(Constants.MOD_ID)
 public class ForgeFairyLightsRedux {
@@ -36,6 +39,7 @@ public class ForgeFairyLightsRedux {
     }
 
     private static void register(final RegisterEvent event) {
-
+        event.register(Registries.ITEM, helper -> FLRItems.register(helper::register));
+        event.register(Registries.CREATIVE_MODE_TAB, helper -> FLRCreativeTabs.register(helper::register));
     }
 }

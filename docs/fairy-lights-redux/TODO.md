@@ -71,7 +71,7 @@ classes. Drop Valkyrien Warfare, `MidiJingler` and `/jingler` unless you want th
 
 ## Phase 1: Registries and the simplest content
 
-### Step 2: Registration pattern across loaders
+### [COMPLETED] Step 2: Registration pattern across loaders
 
 **Do:**
 1. Pick one way to register things in `common` and use it everywhere: registry-holder suppliers that
@@ -87,6 +87,7 @@ classes. Drop Valkyrien Warfare, `MidiJingler` and `/jingler` unless you want th
   common code doesn't read a registry object before it exists.
 
 **Done when:** a dummy item registers and shows up in the creative tab on all three loaders.
+    - NOTE: I had to also include `FLCreativeTabs` to get to this done state.
 
 ### Step 3: Sounds, creative tab, config
 
