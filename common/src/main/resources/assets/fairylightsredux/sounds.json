@@ -1,0 +1,42 @@
+{
+  "jingle_bell": {
+    "sounds": [ "fairylightsredux:jingle_bell" ],
+    "subtitle": "subtitles.block.fairylightsredux.jingle_bell"
+  },
+  "cord.connect": {
+    "sounds": [
+      "entity/leashknot/leash1",
+      "entity/leashknot/leash2",
+      "entity/leashknot/leash3"
+    ],
+    "subtitle": "subtitles.block.fairylightsredux.cord.connect"
+  },
+  "cord.disconnect": {
+    "sounds": [
+      "entity/leashknot/unleash1",
+      "entity/leashknot/unleash2",
+      "entity/leashknot/unleash3"
+    ],
+    "subtitle": "subtitles.block.fairylightsredux.cord.disconnect"
+  },
+  "cord.stretch": {
+    "sounds": [ "fairylightsredux:cord_stretch" ],
+    "subtitle": "subtitles.block.fairylightsredux.cord.stretch"
+  },
+  "cord.snap": {
+    "sounds": [ "fairylightsredux:cord_snap" ],
+    "subtitle": "subtitles.block.fairylightsredux.cord.snap"
+  },
+  "feature.color_change": {
+    "sounds": [ "minecraft:random/pop" ],
+    "subtitle": "subtitles.block.fairylightsredux.feature.colorChange"
+  },
+  "feature.light_turn_on": {
+    "sounds": [ "minecraft:random/click" ],
+    "subtitle": "subtitles.block.fairylightsredux.feature.lightTurnOn"
+  },
+  "feature.light_turn_off": {
+    "sounds": [ "minecraft:random/click" ],
+    "subtitle": "subtitles.block.fairylightsredux.feature.lightTurnOff"
+  }
+}

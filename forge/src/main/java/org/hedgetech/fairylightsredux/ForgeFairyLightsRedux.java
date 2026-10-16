@@ -14,6 +14,7 @@ import net.minecraftforge.registries.RegisterEvent;
 import org.hedgetech.fairylightsredux.platform.ForgeConfigHelper;
 import org.hedgetech.fairylightsredux.server.creativeTabs.FLRCreativeTabs;
 import org.hedgetech.fairylightsredux.server.item.FLRItems;
+import org.hedgetech.fairylightsredux.server.sound.FLRSounds;
 
 @Mod(Constants.MOD_ID)
 public class ForgeFairyLightsRedux {
@@ -39,6 +40,7 @@ public class ForgeFairyLightsRedux {
     }
 
     private static void register(final RegisterEvent event) {
+        event.register(Registries.SOUND_EVENT, helper -> FLRSounds.register(helper::register));
         event.register(Registries.ITEM, helper -> FLRItems.register(helper::register));
         event.register(Registries.CREATIVE_MODE_TAB, helper -> FLRCreativeTabs.register(helper::register));
     }

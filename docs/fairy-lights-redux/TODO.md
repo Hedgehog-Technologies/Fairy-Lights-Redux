@@ -69,7 +69,7 @@ classes. Drop Valkyrien Warfare, `MidiJingler` and `/jingler` unless you want th
 
 ---
 
-## Phase 1: Registries and the simplest content
+## [COMPLETED] Phase 1: Registries and the simplest content
 
 ### [COMPLETED] Step 2: Registration pattern across loaders
 
@@ -89,7 +89,7 @@ classes. Drop Valkyrien Warfare, `MidiJingler` and `/jingler` unless you want th
 **Done when:** a dummy item registers and shows up in the creative tab on all three loaders.
     - NOTE: I had to also include `FLCreativeTabs` to get to this done state.
 
-### Step 3: Sounds, creative tab, config
+### [COMPLETED] Step 3: Sounds, creative tab, config
 
 **Do:**
 1. Port `FLSounds`, `sounds.json` and the 3 sound files. Sound events are now `Holder`-based.
