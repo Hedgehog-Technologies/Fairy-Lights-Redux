@@ -72,7 +72,7 @@ public class FabricConfigHelper implements IConfigHelper {
             Files.write(this.path, List.of(
                     "# If true, redstone-triggered jingles play Christmas songs from December 24 to 26.",
                     CHRISTMAS_JINGLES_KEY + "=" + this.christmasJingles,
-                    "# If true, redstone-triggered jingles play Halloween songs from October 30 to November 1.",
+                    "# If true, redstone-triggered jingles play Halloween songs on October 31.",
                     HALLOWEEN_JINGLES_KEY + "=" + this.halloweenJingles,
                     "# The distance that jingles can be heard, in blocks, at least 1.",
                     JINGLE_AMPLITUDE_KEY + "=" + this.jingleAmplitude,

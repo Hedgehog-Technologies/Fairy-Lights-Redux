@@ -19,7 +19,7 @@ public interface IConfigHelper {
 
     /**
      * Whether redstone-triggered jingles pick from Halloween songs during Halloween.
-     * @return True to use the Halloween songs from October 30 to November 1.
+     * @return True to use the Halloween songs on October 31.
      */
     boolean halloweenJingles();
 

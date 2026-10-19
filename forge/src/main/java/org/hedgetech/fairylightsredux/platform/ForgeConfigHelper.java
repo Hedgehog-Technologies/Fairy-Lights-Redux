@@ -19,7 +19,7 @@ public class ForgeConfigHelper implements IConfigHelper {
         CHRISTMAS_JINGLES = builder.comment("If true, redstone-triggered jingles play Christmas songs from December 24 to 26.")
                 .define(CHRISTMAS_JINGLES_KEY, DEFAULT_CHRISTMAS_JINGLES);
         
-        HALLOWEEN_JINGLES = builder.comment("If true, redstone-triggered jingles play Halloween songs from October 30 to November 1.")
+        HALLOWEEN_JINGLES = builder.comment("If true, redstone-triggered jingles play Halloween songs on October 31.")
                 .define(HALLOWEEN_JINGLES_KEY, DEFAULT_HALLOWEEN_JINGLES);
 
         JINGLE_AMPLITUDE = builder.comment("The distance that jingles can be heard, in blocks, at least 1.")
