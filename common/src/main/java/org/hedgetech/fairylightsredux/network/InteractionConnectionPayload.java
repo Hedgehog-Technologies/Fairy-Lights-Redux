@@ -15,7 +15,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.TagValueInput;
 import net.minecraft.world.phys.Vec3;
 import org.hedgetech.fairylightsredux.Constants;
-import org.hedgetech.fairylightsredux.server.Fastener.FastenerType;
+import org.hedgetech.fairylightsredux.server.fastener.FastenerType;
 import org.hedgetech.fairylightsredux.server.connection.Connection;
 import org.hedgetech.fairylightsredux.server.connection.PlayerAction;
 import org.hedgetech.fairylightsredux.server.feature.FeatureType;

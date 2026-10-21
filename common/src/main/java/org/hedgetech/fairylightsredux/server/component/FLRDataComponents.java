@@ -7,12 +7,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.Unit;
 import org.hedgetech.fairylightsredux.Constants;
+import org.hedgetech.fairylightsredux.util.styledstring.StyledString;
 
 import java.util.List;
 import java.util.function.BiConsumer;
 
 public final class FLRDataComponents {
     public static DataComponentType<HangingLights> HANGING_LIGHTS;
+    public static DataComponentType<PennantBunting> PENNANT_BUNTING;
+    public static DataComponentType<StyledString> LETTER_BUNTING;
     public static DataComponentType<Unit> TWINKLE;
     public static DataComponentType<List<Integer>> COLORS;
 
@@ -20,6 +23,18 @@ public final class FLRDataComponents {
         HANGING_LIGHTS = register(registry, "hanging_lights", DataComponentType.<HangingLights>builder()
                 .persistent(HangingLights.CODEC)
                 .networkSynchronized(HangingLights.STREAM_CODEC)
+                .cacheEncoding()
+                .build()
+        );
+        PENNANT_BUNTING = register(registry, "pennant_bunting", DataComponentType.<PennantBunting>builder()
+                .persistent(PennantBunting.CODEC)
+                .networkSynchronized(PennantBunting.STREAM_CODEC)
+                .cacheEncoding()
+                .build()
+        );
+        LETTER_BUNTING = register(registry, "letter_bunting", DataComponentType.<StyledString>builder()
+                .persistent(StyledString.CODEC)
+                .networkSynchronized(StyledString.STREAM_CODEC)
                 .cacheEncoding()
                 .build()
         );

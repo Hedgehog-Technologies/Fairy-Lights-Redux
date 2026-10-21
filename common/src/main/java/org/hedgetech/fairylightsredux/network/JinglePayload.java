@@ -10,7 +10,7 @@ import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.TagValueInput;
 import org.hedgetech.fairylightsredux.Constants;
-import org.hedgetech.fairylightsredux.server.Fastener.FastenerType;
+import org.hedgetech.fairylightsredux.server.fastener.FastenerType;
 import org.hedgetech.fairylightsredux.server.connection.HangingLightsConnection;
 import org.hedgetech.fairylightsredux.server.jingle.Jingle;
 import org.jetbrains.annotations.NotNull;

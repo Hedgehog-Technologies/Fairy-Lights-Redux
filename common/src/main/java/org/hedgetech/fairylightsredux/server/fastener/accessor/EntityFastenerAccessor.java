@@ -1,4 +1,4 @@
-package org.hedgetech.fairylightsredux.server.Fastener.accessor;
+package org.hedgetech.fairylightsredux.server.fastener.accessor;
 
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.server.level.ServerLevel;
@@ -8,9 +8,9 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import org.hedgetech.fairylightsredux.server.Fastener.EntityFastener;
-import org.hedgetech.fairylightsredux.server.Fastener.Fastener;
-import org.hedgetech.fairylightsredux.server.Fastener.IFastenerHolder;
+import org.hedgetech.fairylightsredux.server.fastener.EntityFastener;
+import org.hedgetech.fairylightsredux.server.fastener.Fastener;
+import org.hedgetech.fairylightsredux.server.fastener.IFastenerHolder;
 
 import java.util.Optional;
 import java.util.UUID;

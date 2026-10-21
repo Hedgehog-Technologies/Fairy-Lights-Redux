@@ -1,7 +1,7 @@
-package org.hedgetech.fairylightsredux.server.Fastener.accessor;
+package org.hedgetech.fairylightsredux.server.fastener.accessor;
 
-import org.hedgetech.fairylightsredux.server.Fastener.EntityFastener;
-import org.hedgetech.fairylightsredux.server.Fastener.FastenerType;
+import org.hedgetech.fairylightsredux.server.fastener.EntityFastener;
+import org.hedgetech.fairylightsredux.server.fastener.FastenerType;
 import org.hedgetech.fairylightsredux.server.entity.FenceFastenerEntity;
 
 public final class FenceFastenerAccessor extends EntityFastenerAccessor<FenceFastenerEntity> {

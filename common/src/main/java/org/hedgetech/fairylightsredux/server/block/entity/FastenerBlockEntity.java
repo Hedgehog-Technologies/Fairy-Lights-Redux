@@ -14,9 +14,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
-import org.hedgetech.fairylightsredux.server.Fastener.BlockFastener;
-import org.hedgetech.fairylightsredux.server.Fastener.Fastener;
-import org.hedgetech.fairylightsredux.server.Fastener.IFastenerHolder;
+import org.hedgetech.fairylightsredux.server.fastener.BlockFastener;
+import org.hedgetech.fairylightsredux.server.fastener.Fastener;
+import org.hedgetech.fairylightsredux.server.fastener.IFastenerHolder;
 import org.hedgetech.fairylightsredux.server.block.FastenerBlock;
 import org.jetbrains.annotations.NotNull;
 

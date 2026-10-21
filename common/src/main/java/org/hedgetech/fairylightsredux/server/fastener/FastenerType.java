@@ -1,10 +1,11 @@
-package org.hedgetech.fairylightsredux.server.Fastener;
+package org.hedgetech.fairylightsredux.server.fastener;
 
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import org.hedgetech.fairylightsredux.server.Fastener.accessor.BlockFastenerAccessor;
-import org.hedgetech.fairylightsredux.server.Fastener.accessor.FenceFastenerAccessor;
-import org.hedgetech.fairylightsredux.server.Fastener.accessor.IFastenerAccessor;
+import org.hedgetech.fairylightsredux.server.fastener.accessor.BlockFastenerAccessor;
+import org.hedgetech.fairylightsredux.server.fastener.accessor.FenceFastenerAccessor;
+import org.hedgetech.fairylightsredux.server.fastener.accessor.IFastenerAccessor;
+import org.hedgetech.fairylightsredux.server.fastener.accessor.PlayerFastenerAccessor;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -14,7 +15,8 @@ import java.util.function.Supplier;
 
 public enum FastenerType {
     BLOCK(BlockFastenerAccessor::new),
-    FENCE(FenceFastenerAccessor::new);
+    FENCE(FenceFastenerAccessor::new),
+    PLAYER(PlayerFastenerAccessor::new);
 
     private static final Map<String, FastenerType> NAME_TO_TYPE = new HashMap<>();
 

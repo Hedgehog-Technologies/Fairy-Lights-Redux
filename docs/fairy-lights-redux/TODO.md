@@ -109,7 +109,7 @@ classes. Drop Valkyrien Warfare, `MidiJingler` and `/jingler` unless you want th
 
 ## Phase 2: Core model (no rendering yet)
 
-### Step 4: Pure logic: strings, jingles, math
+### [COMPLETED] Step 4: Pure logic: strings, jingles, math
 
 **Do:** Port the pieces with no Minecraft dependencies first: `string/StringType(s)`,
 `jingle/Jingle`, `JingleLibrary`, `JingleManager`, `JinglePlayer`, and the `util/` helpers you still
@@ -125,7 +125,7 @@ need. Skip `matrix/` and `OreDictUtils` if nothing uses them.
 
 **Done when:** a JSON jingle loads and parses on server start with the right count in the log.
 
-### Step 5: Features and connection types
+### [COMPLETED] Step 5: Features and connection types
 
 **Do:** Port `feature/*` (including `light/*`), `connection/*`, `Fastener`, `AbstractFastener`,
 `BlockFastener`, `FenceFastener`, `PlayerFastener` and `accessor/*`. Port NBT serialization at the

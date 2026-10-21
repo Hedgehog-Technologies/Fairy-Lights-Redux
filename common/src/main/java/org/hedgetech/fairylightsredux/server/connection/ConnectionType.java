@@ -2,7 +2,7 @@ package org.hedgetech.fairylightsredux.server.connection;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
-import org.hedgetech.fairylightsredux.server.Fastener.Fastener;
+import org.hedgetech.fairylightsredux.server.fastener.Fastener;
 
 import java.util.UUID;
 import java.util.function.Supplier;

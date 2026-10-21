@@ -3,7 +3,7 @@ package org.hedgetech.fairylightsredux.server.connection;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import org.hedgetech.fairylightsredux.server.Fastener.Fastener;
+import org.hedgetech.fairylightsredux.server.fastener.Fastener;
 import org.hedgetech.fairylightsredux.server.collision.FeatureCollisionTree;
 import org.hedgetech.fairylightsredux.server.collision.ICollidable;
 import org.hedgetech.fairylightsredux.server.feature.FeatureType;

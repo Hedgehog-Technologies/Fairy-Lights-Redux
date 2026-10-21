@@ -1,13 +1,13 @@
-package org.hedgetech.fairylightsredux.server.Fastener.accessor;
+package org.hedgetech.fairylightsredux.server.fastener.accessor;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import org.hedgetech.fairylightsredux.server.Fastener.BlockFastener;
-import org.hedgetech.fairylightsredux.server.Fastener.Fastener;
-import org.hedgetech.fairylightsredux.server.Fastener.FastenerType;
-import org.hedgetech.fairylightsredux.server.Fastener.IFastenerHolder;
+import org.hedgetech.fairylightsredux.server.fastener.BlockFastener;
+import org.hedgetech.fairylightsredux.server.fastener.Fastener;
+import org.hedgetech.fairylightsredux.server.fastener.FastenerType;
+import org.hedgetech.fairylightsredux.server.fastener.IFastenerHolder;
 
 import java.util.Optional;
 

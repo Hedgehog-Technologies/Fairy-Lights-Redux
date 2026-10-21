@@ -1,4 +1,4 @@
-package org.hedgetech.fairylightsredux.server.Fastener;
+package org.hedgetech.fairylightsredux.server.fastener;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
@@ -13,7 +13,7 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import org.hedgetech.fairylightsredux.server.Fastener.accessor.IFastenerAccessor;
+import org.hedgetech.fairylightsredux.server.fastener.accessor.IFastenerAccessor;
 import org.hedgetech.fairylightsredux.server.connection.Connection;
 import org.hedgetech.fairylightsredux.server.connection.ConnectionType;
 import org.hedgetech.fairylightsredux.server.connection.ConnectionTypes;

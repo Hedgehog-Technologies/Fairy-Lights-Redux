@@ -18,7 +18,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import org.hedgetech.fairylightsredux.network.JinglePayload;
 import org.hedgetech.fairylightsredux.platform.Services;
-import org.hedgetech.fairylightsredux.server.Fastener.Fastener;
+import org.hedgetech.fairylightsredux.server.fastener.Fastener;
 import org.hedgetech.fairylightsredux.server.block.FLRBlocks;
 import org.hedgetech.fairylightsredux.server.component.FLRDataComponents;
 import org.hedgetech.fairylightsredux.server.component.HangingLights;

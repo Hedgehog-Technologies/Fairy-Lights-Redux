@@ -1,10 +1,10 @@
-package org.hedgetech.fairylightsredux.server.Fastener;
+package org.hedgetech.fairylightsredux.server.fastener;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
-import org.hedgetech.fairylightsredux.server.Fastener.accessor.EntityFastenerAccessor;
+import org.hedgetech.fairylightsredux.server.fastener.accessor.EntityFastenerAccessor;
 
 public abstract class EntityFastener<E extends Entity> extends Fastener<EntityFastenerAccessor<E>> {
     protected final E entity;

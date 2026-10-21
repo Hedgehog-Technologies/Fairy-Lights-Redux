@@ -1,10 +1,10 @@
-package org.hedgetech.fairylightsredux.server.Fastener.accessor;
+package org.hedgetech.fairylightsredux.server.fastener.accessor;
 
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import org.hedgetech.fairylightsredux.server.Fastener.Fastener;
-import org.hedgetech.fairylightsredux.server.Fastener.FastenerType;
+import org.hedgetech.fairylightsredux.server.fastener.Fastener;
+import org.hedgetech.fairylightsredux.server.fastener.FastenerType;
 
 import java.util.Optional;
 
