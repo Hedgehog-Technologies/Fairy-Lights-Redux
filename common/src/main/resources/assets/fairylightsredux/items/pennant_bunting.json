@@ -1,0 +1,13 @@
+{
+    "model": {
+        "type": "minecraft:model",
+        "model": "fairylightsredux:item/pennant_bunting",
+        "tints": [
+            { "type": "fairylightsredux:pennant_bunting", "index": 0 },
+            { "type": "fairylightsredux:pennant_bunting", "index": 1 },
+            { "type": "fairylightsredux:pennant_bunting", "index": 2 },
+            { "type": "fairylightsredux:pennant_bunting", "index": 3 },
+            { "type": "fairylightsredux:pennant_bunting", "index": 4 }
+        ]
+    }
+}

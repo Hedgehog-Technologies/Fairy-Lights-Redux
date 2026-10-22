@@ -91,7 +91,7 @@ public final class FenceFastenerEntity extends BlockAttachedEntity implements IF
     }
 
     @Override
-    public boolean hurtServer(final ServerLevel level, final DamageSource source, final float amount) {
+    public boolean hurtServer(final @NotNull ServerLevel level, final @NotNull DamageSource source, final float amount) {
         if (this.isInvulnerableToBase(source)) return false;
         if (!this.isRemoved()) {
             this.markHurt();
@@ -103,7 +103,7 @@ public final class FenceFastenerEntity extends BlockAttachedEntity implements IF
     }
 
     @Override
-    public void dropItem(final ServerLevel level, final Entity breaker) {
+    public void dropItem(final @NotNull ServerLevel level, final Entity breaker) {
         this.fastener.dropItems(level, this.pos);
         if (breaker != null) level.levelEvent(2001, this.pos, Block.getId(FLRBlocks.FASTENER.defaultBlockState()));
     }

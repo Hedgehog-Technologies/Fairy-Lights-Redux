@@ -16,7 +16,28 @@ public final class FLRBlockEntities {
         FASTENER = new BlockEntityType<>(FastenerBlockEntity::new, Set.of(FLRBlocks.FASTENER));
         registry.accept(Constants.id("fastener"), FASTENER);
 
-        LIGHT = new BlockEntityType<>(LightBlockEntity::new, Set.of());
+        LIGHT = new BlockEntityType<>(LightBlockEntity::new, Set.of(
+                FLRBlocks.FAIRY_LIGHT,
+                FLRBlocks.PAPER_LANTERN,
+                FLRBlocks.ORB_LANTERN,
+                FLRBlocks.FLOWER_LIGHT,
+                FLRBlocks.CANDLE_LANTERN_LIGHT,
+                FLRBlocks.OIL_LANTERN_LIGHT,
+                FLRBlocks.JACK_O_LANTERN,
+                FLRBlocks.SKULL_LIGHT,
+                FLRBlocks.GHOST_LIGHT,
+                FLRBlocks.SPIDER_LIGHT,
+                FLRBlocks.WITCH_LIGHT,
+                FLRBlocks.SNOWFLAKE_LIGHT,
+                FLRBlocks.HEART_LIGHT,
+                FLRBlocks.MOON_LIGHT,
+                FLRBlocks.STAR_LIGHT,
+                FLRBlocks.ICICLE_LIGHTS,
+                FLRBlocks.METEOR_LIGHT,
+                FLRBlocks.OIL_LANTERN,
+                FLRBlocks.CANDLE_LANTERN,
+                FLRBlocks.INCANDESCENT_LIGHT
+        ));
         registry.accept(Constants.id("light"), LIGHT);
     }
 

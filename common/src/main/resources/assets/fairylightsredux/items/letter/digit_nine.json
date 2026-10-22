@@ -1,0 +1,9 @@
+{
+    "model": {
+        "type": "minecraft:model",
+        "model": "fairylightsredux:item/letter/digit_nine",
+        "tints": [
+            { "type": "minecraft:dye", "default": -1 }
+        ]
+    }
+}

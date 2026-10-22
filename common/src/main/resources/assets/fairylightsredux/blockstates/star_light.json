@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "":  { "model": "fairylightsredux:block/floor_light_fastener" }
+    }
+}

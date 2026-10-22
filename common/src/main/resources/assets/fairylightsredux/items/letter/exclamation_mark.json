@@ -1,0 +1,9 @@
+{
+    "model": {
+        "type": "minecraft:model",
+        "model": "fairylightsredux:item/letter/exclamation_mark",
+        "tints": [
+            { "type": "minecraft:dye", "default": -1 }
+        ]
+    }
+}

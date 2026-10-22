@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "fairylightsredux:item/icicle_lights_0",
+        "layer1": "fairylightsredux:item/icicle_lights_1"
+    }
+}
