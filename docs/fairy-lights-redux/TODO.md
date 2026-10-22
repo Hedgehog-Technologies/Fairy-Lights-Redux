@@ -142,7 +142,7 @@ same time.
 **Done when:** it compiles, and you can log a round trip of a connection's NBT even though you can't
 place anything yet.
 
-### Step 6: Blocks, block entities, fence fastener entity, items
+### [COMPLETED] Step 6: Blocks, block entities, fence fastener entity, items
 
 **Do:**
 1. Port `FastenerBlock`, `LightBlock`, `FastenerBlockEntity`, `LightBlockEntity`.
