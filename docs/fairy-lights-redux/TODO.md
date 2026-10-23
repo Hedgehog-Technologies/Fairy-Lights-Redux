@@ -107,7 +107,7 @@ classes. Drop Valkyrien Warfare, `MidiJingler` and `/jingler` unless you want th
 
 ---
 
-## Phase 2: Core model (no rendering yet)
+## [COMPLETED] Phase 2: Core model (no rendering yet)
 
 ### [COMPLETED] Step 4: Pure logic: strings, jingles, math
 
@@ -167,7 +167,7 @@ place anything yet.
 **Done when:** you can get items from the creative tab and place a fastener block and a fence
 fastener.
 
-### Step 7: Replace the player capability
+### [COMPLETED] Step 7: Replace the player capability
 
 **Do:** Work out how to attach "what the player is carrying" (`PlayerFastener`, the in-progress
 connection) without a Forge capability. First check whether Fabric attachments or NeoForge data
