@@ -9,7 +9,9 @@
     "MixinPlayer",
     "MixinServerGamePacketListenerImpl"
   ],
-  "client": [],
+  "client": [
+    "MixinGameRenderer"
+  ],
   "server": [],
   "injectors": {
     "defaultRequire": 1

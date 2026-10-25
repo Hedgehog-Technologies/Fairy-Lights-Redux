@@ -16,6 +16,7 @@ import org.hedgetech.fairylightsredux.Constants;
 import org.hedgetech.fairylightsredux.mixin.MixinServerGamePacketListenerImpl;
 import org.hedgetech.fairylightsredux.server.connection.Connection;
 import org.hedgetech.fairylightsredux.server.fastener.FastenerType;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
@@ -32,7 +33,7 @@ public record PickConnectionPayload(CompoundTag fastener, UUID connection, Vec3 
     private static final double RANGE = (Connection.MAX_LENGTH + 1) * (Connection.MAX_LENGTH + 1);
 
     @Override
-    public Type<PickConnectionPayload> type() {
+    public @NotNull Type<PickConnectionPayload> type() {
         return TYPE;
     }
 

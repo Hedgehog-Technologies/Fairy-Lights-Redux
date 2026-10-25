@@ -185,7 +185,7 @@ attachments suffice. They differ per loader, so a mixin on `Player` that exposes
 
 ## Phase 3: Networking and interaction
 
-### Step 8: Networking
+### [COMPLETED] Step 8: Networking
 
 **Do:**
 1. Replace the old `Message` / `NetBuilder` system with `CustomPacketPayload` records and
@@ -224,9 +224,9 @@ jingle with a lever.
 
 ---
 
-## Phase 4: Client
+## [COMPLETED] Phase 4: Client
 
-### Step 10: Rendering
+### [COMPLETED] Step 10: Rendering
 
 **Do:**
 1. Port the renderers: `client/renderer/block/entity`, `client/renderer/entity` and the model
@@ -247,7 +247,7 @@ jingle with a lever.
 **Done when:** lights, pennants, tinsel, vines and letters all render correctly on NeoForge and
 Fabric, and on Forge too.
 
-### Step 11: GUI, editor and tutorial
+### [COMPLETED] Step 11: GUI, editor and tutorial
 
 **Do:** Port the letter-text editor screen (`client/gui`, `client/gui/component`), the jingle
 overlay and the hanging-lights tutorial (`client/tutorial`).
