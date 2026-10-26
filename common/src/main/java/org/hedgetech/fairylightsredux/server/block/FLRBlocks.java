@@ -8,6 +8,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import org.hedgetech.fairylightsredux.Constants;
+import org.hedgetech.fairylightsredux.FLRNames;
 import org.hedgetech.fairylightsredux.server.item.LightVariant;
 
 import java.util.function.BiConsumer;
@@ -36,27 +37,27 @@ public final class FLRBlocks {
     public static LightBlock INCANDESCENT_LIGHT;
 
     public static void register(final BiConsumer<ResourceLocation, Block> registry) {
-        FASTENER = createFastener(registry, "fastener");
-        FAIRY_LIGHT = createLight(registry, "fairy_light", LightVariant.FAIRY_LIGHT);
-        PAPER_LANTERN = createLight(registry, "paper_lantern", LightVariant.PAPER_LANTERN);
-        ORB_LANTERN = createLight(registry, "orb_lantern", LightVariant.ORB_LANTERN);
-        FLOWER_LIGHT = createLight(registry, "flower_light", LightVariant.FLOWER_LIGHT);
-        CANDLE_LANTERN_LIGHT = createLight(registry, "candle_lantern_light", LightVariant.CANDLE_LANTERN_LIGHT);
-        OIL_LANTERN_LIGHT = createLight(registry, "oil_lantern_light", LightVariant.OIL_LANTERN_LIGHT);
-        JACK_O_LANTERN = createLight(registry, "jack_o_lantern", LightVariant.JACK_O_LANTERN);
-        SKULL_LIGHT = createLight(registry, "skull_light", LightVariant.SKULL_LIGHT);
-        GHOST_LIGHT = createLight(registry, "ghost_light", LightVariant.GHOST_LIGHT);
-        SPIDER_LIGHT = createLight(registry, "spider_light", LightVariant.SPIDER_LIGHT);
-        WITCH_LIGHT = createLight(registry, "witch_light", LightVariant.WITCH_LIGHT);
-        SNOWFLAKE_LIGHT = createLight(registry, "snowflake_light", LightVariant.SNOWFLAKE_LIGHT);
-        HEART_LIGHT = createLight(registry, "heart_light", LightVariant.HEART_LIGHT);
-        MOON_LIGHT = createLight(registry, "moon_light", LightVariant.MOON_LIGHT);
-        STAR_LIGHT = createLight(registry, "star_light", LightVariant.STAR_LIGHT);
-        ICICLE_LIGHTS = createLight(registry, "icicle_lights", LightVariant.ICICLE_LIGHTS);
-        METEOR_LIGHT = createLight(registry, "meteor_lights", LightVariant.METEOR_LIGHT);
-        OIL_LANTERN = createLight(registry, "oil_lantern", LightVariant.OIL_LANTERN);
-        CANDLE_LANTERN = createLight(registry, "candle_lantern", LightVariant.CANDLE_LANTERN);
-        INCANDESCENT_LIGHT = createLight(registry, "incandescent_light", LightVariant.INCANDESCENT_LIGHT);
+        FASTENER = createFastener(registry, FLRNames.FASTENER);
+        FAIRY_LIGHT = createLight(registry, FLRNames.FAIRY_LIGHT, LightVariant.FAIRY_LIGHT);
+        PAPER_LANTERN = createLight(registry, FLRNames.PAPER_LANTERN, LightVariant.PAPER_LANTERN);
+        ORB_LANTERN = createLight(registry, FLRNames.ORB_LANTERN, LightVariant.ORB_LANTERN);
+        FLOWER_LIGHT = createLight(registry, FLRNames.FLOWER_LIGHT, LightVariant.FLOWER_LIGHT);
+        CANDLE_LANTERN_LIGHT = createLight(registry, FLRNames.CANDLE_LANTERN_LIGHT, LightVariant.CANDLE_LANTERN_LIGHT);
+        OIL_LANTERN_LIGHT = createLight(registry, FLRNames.OIL_LANTERN_LIGHT, LightVariant.OIL_LANTERN_LIGHT);
+        JACK_O_LANTERN = createLight(registry, FLRNames.JACK_O_LANTERN, LightVariant.JACK_O_LANTERN);
+        SKULL_LIGHT = createLight(registry, FLRNames.SKULL_LIGHT, LightVariant.SKULL_LIGHT);
+        GHOST_LIGHT = createLight(registry, FLRNames.GHOST_LIGHT, LightVariant.GHOST_LIGHT);
+        SPIDER_LIGHT = createLight(registry, FLRNames.SPIDER_LIGHT, LightVariant.SPIDER_LIGHT);
+        WITCH_LIGHT = createLight(registry, FLRNames.WITCH_LIGHT, LightVariant.WITCH_LIGHT);
+        SNOWFLAKE_LIGHT = createLight(registry, FLRNames.SNOWFLAKE_LIGHT, LightVariant.SNOWFLAKE_LIGHT);
+        HEART_LIGHT = createLight(registry, FLRNames.HEART_LIGHT, LightVariant.HEART_LIGHT);
+        MOON_LIGHT = createLight(registry, FLRNames.MOON_LIGHT, LightVariant.MOON_LIGHT);
+        STAR_LIGHT = createLight(registry, FLRNames.STAR_LIGHT, LightVariant.STAR_LIGHT);
+        ICICLE_LIGHTS = createLight(registry, FLRNames.ICICLE_LIGHTS, LightVariant.ICICLE_LIGHTS);
+        METEOR_LIGHT = createLight(registry, FLRNames.METEOR_LIGHT, LightVariant.METEOR_LIGHT);
+        OIL_LANTERN = createLight(registry, FLRNames.OIL_LANTERN, LightVariant.OIL_LANTERN);
+        CANDLE_LANTERN = createLight(registry, FLRNames.CANDLE_LANTERN, LightVariant.CANDLE_LANTERN);
+        INCANDESCENT_LIGHT = createLight(registry, FLRNames.INCANDESCENT_LIGHT, LightVariant.INCANDESCENT_LIGHT);
     }
 
     private static FastenerBlock createFastener(final BiConsumer<ResourceLocation, Block> registry, final String name) {

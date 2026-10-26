@@ -16,7 +16,7 @@ public final class ConnectionTypes {
     public static final ConnectionType<LetterBuntingConnection> LETTER_BUNTING = register("letter_bunting", new ConnectionType<>(LetterBuntingConnection::new, () -> FLRItems.LETTER_BUNTING));
 
     private static <T extends Connection> ConnectionType<T> register(final String name, final ConnectionType<T> type) {
-        TYPES.put(Constants.id("name"), type);
+        TYPES.put(Constants.id(name), type);
         return type;
     }
 

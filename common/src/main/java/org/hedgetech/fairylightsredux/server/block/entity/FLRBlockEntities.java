@@ -3,6 +3,7 @@ package org.hedgetech.fairylightsredux.server.block.entity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import org.hedgetech.fairylightsredux.Constants;
+import org.hedgetech.fairylightsredux.FLRNames;
 import org.hedgetech.fairylightsredux.server.block.FLRBlocks;
 
 import java.util.Set;
@@ -14,7 +15,7 @@ public final class FLRBlockEntities {
 
     public static void register(final BiConsumer<ResourceLocation, BlockEntityType<?>> registry) {
         FASTENER = new BlockEntityType<>(FastenerBlockEntity::new, Set.of(FLRBlocks.FASTENER));
-        registry.accept(Constants.id("fastener"), FASTENER);
+        registry.accept(Constants.id(FLRNames.FASTENER), FASTENER);
 
         LIGHT = new BlockEntityType<>(LightBlockEntity::new, Set.of(
                 FLRBlocks.FAIRY_LIGHT,
@@ -38,7 +39,7 @@ public final class FLRBlockEntities {
                 FLRBlocks.CANDLE_LANTERN,
                 FLRBlocks.INCANDESCENT_LIGHT
         ));
-        registry.accept(Constants.id("light"), LIGHT);
+        registry.accept(Constants.id(FLRNames.LIGHT), LIGHT);
     }
 
     private FLRBlockEntities() {}

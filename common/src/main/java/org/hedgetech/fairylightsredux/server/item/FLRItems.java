@@ -7,9 +7,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.component.TooltipDisplay;
 import org.hedgetech.fairylightsredux.Constants;
+import org.hedgetech.fairylightsredux.FLRNames;
 import org.hedgetech.fairylightsredux.server.block.FLRBlocks;
 import org.hedgetech.fairylightsredux.server.connection.ConnectionTypes;
-import org.hedgetech.fairylightsredux.server.connection.HangingLightsConnection;
 
 import java.util.function.BiConsumer;
 
@@ -47,37 +47,37 @@ public final class FLRItems {
     public static LightItem INCANDESCENT_LIGHT;
 
     public static void register(final BiConsumer<ResourceLocation, Item> registry) {
-        HANGING_LIGHTS = register(registry, "hanging_lights", new HangingLightsConnectionItem(defaultProperties("hanging_lights")));
-        PENNANT_BUNTING = register(registry, "pennant_bunting", new PennantBuntingConnectionItem(defaultProperties("pennant_bunting")));
-        TINSEL = register(registry, "tinsel", new TinselConnectionItem(dyeableProperties("tinsel")));
-        LETTER_BUNTING = register(registry, "letter_bunting", new LetterBuntingConnectionItem(defaultProperties("letter_bunting")));
-        GARLAND = register(registry, "garland", new ConnectionItem(defaultProperties("garland"), () -> ConnectionTypes.VINE_GARLAND));
+        HANGING_LIGHTS = register(registry, FLRNames.HANGING_LIGHTS, new HangingLightsConnectionItem(defaultProperties(FLRNames.HANGING_LIGHTS)));
+        PENNANT_BUNTING = register(registry, FLRNames.PENNANT_BUNTING, new PennantBuntingConnectionItem(defaultProperties(FLRNames.PENNANT_BUNTING)));
+        TINSEL = register(registry, FLRNames.TINSEL, new TinselConnectionItem(dyeableProperties(FLRNames.TINSEL)));
+        LETTER_BUNTING = register(registry, FLRNames.LETTER_BUNTING, new LetterBuntingConnectionItem(defaultProperties(FLRNames.LETTER_BUNTING)));
+        GARLAND = register(registry, FLRNames.GARLAND, new ConnectionItem(defaultProperties(FLRNames.GARLAND), () -> ConnectionTypes.VINE_GARLAND));
 
-        TRIANGLE_PENNANT = register(registry, "triangle_pennant", new PennantItem(dyeableProperties("triangle_pennant")));
-        SPEARHEAD_PENNANT = register(registry, "spearhead_pennant", new PennantItem(dyeableProperties("spearhead_pennant")));
-        SWALLOWTAIL_PENNANT = register(registry, "swallowtail_pennant", new PennantItem(dyeableProperties("swallowtail_pennant")));
-        SQUARE_PENNANT = register(registry, "square_pennant", new PennantItem(dyeableProperties("square_pennant")));
+        TRIANGLE_PENNANT = register(registry, FLRNames.TRIANGLE_PENNANT, new PennantItem(dyeableProperties(FLRNames.TRIANGLE_PENNANT)));
+        SPEARHEAD_PENNANT = register(registry, FLRNames.SPEARHEAD_PENNANT, new PennantItem(dyeableProperties(FLRNames.SPEARHEAD_PENNANT)));
+        SWALLOWTAIL_PENNANT = register(registry, FLRNames.SWALLOWTAIL_PENNANT, new PennantItem(dyeableProperties(FLRNames.SWALLOWTAIL_PENNANT)));
+        SQUARE_PENNANT = register(registry, FLRNames.SQUARE_PENNANT, new PennantItem(dyeableProperties(FLRNames.SQUARE_PENNANT)));
 
-        FAIRY_LIGHT = register(registry, "fairy_light", new ColorLightItem(FLRBlocks.FAIRY_LIGHT, lightProperties("fairy_light")));
-        PAPER_LANTERN = register(registry, "paper_lantern", new ColorLightItem(FLRBlocks.PAPER_LANTERN, lightProperties("paper_lantern")));
-        ORB_LANTERN = register(registry, "orb_lantern", new ColorLightItem(FLRBlocks.ORB_LANTERN, lightProperties("orb_lantern")));
-        FLOWER_LIGHT = register(registry, "flower_light", new ColorLightItem(FLRBlocks.FLOWER_LIGHT, lightProperties("flower_light")));
-        CANDLE_LANTERN_LIGHT = register(registry, "candle_lantern_light", new ColorLightItem(FLRBlocks.CANDLE_LANTERN_LIGHT, lightProperties("candle_lantern_light")));
-        OIL_LANTERN_LIGHT = register(registry, "oil_lantern_light", new ColorLightItem(FLRBlocks.OIL_LANTERN_LIGHT, lightProperties("oil_lantern_light")));
-        JACK_O_LANTERN = register(registry, "jack_o_lantern", new ColorLightItem(FLRBlocks.JACK_O_LANTERN, lightProperties("jack_o_lantern")));
-        SKULL_LIGHT = register(registry, "skull_light", new ColorLightItem(FLRBlocks.SKULL_LIGHT, lightProperties("skull_light")));
-        GHOST_LIGHT = register(registry, "ghost_light", new ColorLightItem(FLRBlocks.GHOST_LIGHT, lightProperties("ghost_light")));
-        SPIDER_LIGHT = register(registry, "spider_light", new ColorLightItem(FLRBlocks.SPIDER_LIGHT, lightProperties("spider_light")));
-        WITCH_LIGHT = register(registry, "witch_light", new ColorLightItem(FLRBlocks.WITCH_LIGHT, lightProperties("witch_light")));
-        SNOWFLAKE_LIGHT = register(registry, "snowflake_light", new ColorLightItem(FLRBlocks.SNOWFLAKE_LIGHT, lightProperties("snowflake_light")));
-        HEART_LIGHT = register(registry, "heart_light", new ColorLightItem(FLRBlocks.HEART_LIGHT, lightProperties("heart_light")));
-        MOON_LIGHT = register(registry, "moon_light", new ColorLightItem(FLRBlocks.MOON_LIGHT, lightProperties("moon_light")));
-        STAR_LIGHT = register(registry, "star_light", new ColorLightItem(FLRBlocks.STAR_LIGHT, lightProperties("star_light")));
-        ICICLE_LIGHTS = register(registry, "icicle_lights", new ColorLightItem(FLRBlocks.ICICLE_LIGHTS, lightProperties("icicle_lights")));
-        METEOR_LIGHT = register(registry, "meteor_light", new ColorLightItem(FLRBlocks.METEOR_LIGHT, lightProperties("meteor_lights")));
-        OIL_LANTERN = register(registry, "oil_lantern", new ColorLightItem(FLRBlocks.OIL_LANTERN, lightProperties("oil_lantern")));
-        CANDLE_LANTERN = register(registry, "candle_lantern", new ColorLightItem(FLRBlocks.CANDLE_LANTERN, lightProperties("candle_lantern")));
-        INCANDESCENT_LIGHT = register(registry, "incandescent_light", new ColorLightItem(FLRBlocks.INCANDESCENT_LIGHT, lightProperties("incandescent_light")));
+        FAIRY_LIGHT = register(registry, FLRNames.FAIRY_LIGHT, new ColorLightItem(FLRBlocks.FAIRY_LIGHT, lightProperties(FLRNames.FAIRY_LIGHT)));
+        PAPER_LANTERN = register(registry, FLRNames.PAPER_LANTERN, new ColorLightItem(FLRBlocks.PAPER_LANTERN, lightProperties(FLRNames.PAPER_LANTERN)));
+        ORB_LANTERN = register(registry, FLRNames.ORB_LANTERN, new ColorLightItem(FLRBlocks.ORB_LANTERN, lightProperties(FLRNames.ORB_LANTERN)));
+        FLOWER_LIGHT = register(registry, FLRNames.FLOWER_LIGHT, new ColorLightItem(FLRBlocks.FLOWER_LIGHT, lightProperties(FLRNames.FLOWER_LIGHT)));
+        CANDLE_LANTERN_LIGHT = register(registry, FLRNames.CANDLE_LANTERN_LIGHT, new ColorLightItem(FLRBlocks.CANDLE_LANTERN_LIGHT, lightProperties(FLRNames.CANDLE_LANTERN_LIGHT)));
+        OIL_LANTERN_LIGHT = register(registry, FLRNames.OIL_LANTERN_LIGHT, new ColorLightItem(FLRBlocks.OIL_LANTERN_LIGHT, lightProperties(FLRNames.OIL_LANTERN_LIGHT)));
+        JACK_O_LANTERN = register(registry, FLRNames.JACK_O_LANTERN, new ColorLightItem(FLRBlocks.JACK_O_LANTERN, lightProperties(FLRNames.JACK_O_LANTERN)));
+        SKULL_LIGHT = register(registry, FLRNames.SKULL_LIGHT, new ColorLightItem(FLRBlocks.SKULL_LIGHT, lightProperties(FLRNames.SKULL_LIGHT)));
+        GHOST_LIGHT = register(registry, FLRNames.GHOST_LIGHT, new ColorLightItem(FLRBlocks.GHOST_LIGHT, lightProperties(FLRNames.GHOST_LIGHT)));
+        SPIDER_LIGHT = register(registry, FLRNames.SPIDER_LIGHT, new ColorLightItem(FLRBlocks.SPIDER_LIGHT, lightProperties(FLRNames.SPIDER_LIGHT)));
+        WITCH_LIGHT = register(registry, FLRNames.WITCH_LIGHT, new ColorLightItem(FLRBlocks.WITCH_LIGHT, lightProperties(FLRNames.WITCH_LIGHT)));
+        SNOWFLAKE_LIGHT = register(registry, FLRNames.SNOWFLAKE_LIGHT, new ColorLightItem(FLRBlocks.SNOWFLAKE_LIGHT, lightProperties(FLRNames.SNOWFLAKE_LIGHT)));
+        HEART_LIGHT = register(registry, FLRNames.HEART_LIGHT, new ColorLightItem(FLRBlocks.HEART_LIGHT, lightProperties(FLRNames.HEART_LIGHT)));
+        MOON_LIGHT = register(registry, FLRNames.MOON_LIGHT, new ColorLightItem(FLRBlocks.MOON_LIGHT, lightProperties(FLRNames.MOON_LIGHT)));
+        STAR_LIGHT = register(registry, FLRNames.STAR_LIGHT, new ColorLightItem(FLRBlocks.STAR_LIGHT, lightProperties(FLRNames.STAR_LIGHT)));
+        ICICLE_LIGHTS = register(registry, FLRNames.ICICLE_LIGHTS, new ColorLightItem(FLRBlocks.ICICLE_LIGHTS, lightProperties(FLRNames.ICICLE_LIGHTS)));
+        METEOR_LIGHT = register(registry, FLRNames.METEOR_LIGHT, new ColorLightItem(FLRBlocks.METEOR_LIGHT, lightProperties(FLRNames.METEOR_LIGHT)));
+        OIL_LANTERN = register(registry, FLRNames.OIL_LANTERN, new ColorLightItem(FLRBlocks.OIL_LANTERN, lightProperties(FLRNames.OIL_LANTERN)));
+        CANDLE_LANTERN = register(registry, FLRNames.CANDLE_LANTERN, new ColorLightItem(FLRBlocks.CANDLE_LANTERN, lightProperties(FLRNames.CANDLE_LANTERN)));
+        INCANDESCENT_LIGHT = register(registry, FLRNames.INCANDESCENT_LIGHT, new ColorLightItem(FLRBlocks.INCANDESCENT_LIGHT, lightProperties(FLRNames.INCANDESCENT_LIGHT)));
     }
 
     private static <T extends Item> T register(final BiConsumer<ResourceLocation, Item> registry, final String name, final T item) {
