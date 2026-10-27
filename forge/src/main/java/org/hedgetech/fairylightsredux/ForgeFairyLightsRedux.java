@@ -14,6 +14,7 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.network.Channel;
 import net.minecraftforge.network.ChannelBuilder;
 import net.minecraftforge.registries.RegisterEvent;
+import org.hedgetech.fairylightsredux.network.*;
 import org.hedgetech.fairylightsredux.platform.ForgeConfigHelper;
 import org.hedgetech.fairylightsredux.server.block.FLRBlocks;
 import org.hedgetech.fairylightsredux.server.block.FastenerBlock;
@@ -34,7 +35,13 @@ public class ForgeFairyLightsRedux {
             .payloadChannel()
                 .play()
                     .clientbound()
+                        .addMain(UpdateEntityFastenerPayload.TYPE, UpdateEntityFastenerPayload.STREAM_CODEC, (payload, context) -> ForgeFairyLightsReduxClient.handle(payload))
+                        .addMain(JinglePayload.TYPE, JinglePayload.STREAM_CODEC, (payload, context) -> ForgeFairyLightsReduxClient.handle(payload))
+                        .addMain(OpenEditLetteredConnectionScreenPayload.TYPE, OpenEditLetteredConnectionScreenPayload.STREAM_CODEC, (payload, context) -> ForgeFairyLightsReduxClient.handle(payload))
                     .serverbound()
+                        .addMain(InteractionConnectionPayload.TYPE, InteractionConnectionPayload.STREAM_CODEC, (payload, context) -> payload.handle(context.getSender()))
+                        .addMain(EditLetteredConnectionPayload.TYPE, EditLetteredConnectionPayload.STREAM_CODEC, (payload, context) -> payload.handle(context.getSender()))
+                        .addMain(PickConnectionPayload.TYPE, PickConnectionPayload.STREAM_CODEC, (payload, context) -> payload.handle(context.getSender()))
             .build();
 
     public ForgeFairyLightsRedux(FMLJavaModLoadingContext context) {

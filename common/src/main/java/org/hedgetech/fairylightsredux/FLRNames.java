@@ -4,6 +4,13 @@ public final class FLRNames {
     public static final String BOW = "bow";
     public static final String CANDLE_LANTERN = "candle_lantern";
     public static final String CANDLE_LANTERN_LIGHT = "candle_lantern_light";
+    public static final String COLOR_CHANGING_LIGHT = "color_changing_light";
+    public static final String COLORS = "colors";
+    public static final String COPY_COLOR = "copy_color";
+    public static final String CRAFTING_DYE_SHAPED = "crafting_dye_shaped";
+    public static final String DYEABLE = "dyeable";
+    public static final String DYEABLE_LIGHTS = "dyeable_lights";
+    public static final String EDIT_COLOR = "edit_color";
     public static final String FAIRY_LIGHT = "fairy_light";
     public static final String FASTENER = "fastener";
     public static final String FLOWER_LIGHT = "flower_light";
@@ -11,6 +18,7 @@ public final class FLRNames {
     public static final String GARLAND_RINGS = "garland_rings";
     public static final String GHOST_LIGHT = "ghost_light";
     public static final String HANGING_LIGHTS = "hanging_lights";
+    public static final String HANGING_LIGHTS_AUGMENTATION = "hanging_lights_augmentation";
     public static final String HEART_LIGHT = "heart_light";
     public static final String ICICLE_LIGHTS = "icicle_lights";
     public static final String INCANDESCENT_LIGHT = "incandescent_light";
@@ -18,6 +26,8 @@ public final class FLRNames {
     public static final String LETTER_BUNTING = "letter_bunting";
     public static final String LETTER_WIRE = "letter_wire";
     public static final String LIGHT = "light";
+    public static final String LIGHT_TWINKLE = "light_twinkle";
+    public static final String LIGHTS = "lights";
     public static final String LIGHTS_WIRE = "lights_wire";
     public static final String METEOR_LIGHT = "meteor_light";
     public static final String MOON_LIGHT = "moon_light";
@@ -26,7 +36,9 @@ public final class FLRNames {
     public static final String ORB_LANTERN = "orb_lantern";
     public static final String PAPER_LANTERN = "paper_lantern";
     public static final String PENNANT_BUNTING = "pennant_bunting";
+    public static final String PENNANT_BUNTING_AUGMENTATION = "pennant_bunting_augmentation";
     public static final String PENNANT_WIRE = "pennant_wire";
+    public static final String PENNANTS = "pennants";
     public static final String SKULL_LIGHT = "skull_light";
     public static final String SNOWFLAKE_LIGHT = "snowflake_light";
     public static final String SPEARHEAD_PENNANT = "spearhead_pennant";
@@ -35,11 +47,25 @@ public final class FLRNames {
     public static final String STAR_LIGHT = "star_light";
     public static final String SWALLOWTAIL_PENNANT = "swallowtail_pennant";
     public static final String TINSEL = "tinsel";
+    public static final String TINSEL_GARLAND = "tinsel_garland";
     public static final String TINSEL_STRIP = "tinsel_strip";
     public static final String TINSEL_WIRE = "tinsel_wire";
     public static final String TRIANGLE_PENNANT = "triangle_pennant";
+    public static final String TWINKLE = "twinkle";
+    public static final String TWINKLING_LIGHTS = "twinkling_lights";
+    public static final String VINE_GARLAND = "vine_garland";
     public static final String VINE_WIRE = "vine_wire";
     public static final String WITCH_LIGHT = "witch_light";
+
+    private static final String CRAFTING_SPECIAL = "crafting_special_";
+    public static final String CRAFTING_SPECIAL_COLOR_CHANGING_LIGHT = CRAFTING_SPECIAL + COLOR_CHANGING_LIGHT;
+    public static final String CRAFTING_SPECIAL_COPY_COLOR = CRAFTING_SPECIAL + COPY_COLOR;
+    public static final String CRAFTING_SPECIAL_EDIT_COLOR = CRAFTING_SPECIAL + EDIT_COLOR;
+    public static final String CRAFTING_SPECIAL_HANGING_LIGHTS = CRAFTING_SPECIAL + HANGING_LIGHTS;
+    public static final String CRAFTING_SPECIAL_HANGING_LIGHTS_AUGMENTATION = CRAFTING_SPECIAL + HANGING_LIGHTS + "augmentation";
+    public static final String CRAFTING_SPECIAL_LIGHT_TWINKLE = CRAFTING_SPECIAL + LIGHT_TWINKLE;
+    public static final String CRAFTING_SPECIAL_PENNANT_BUNTING = CRAFTING_SPECIAL + PENNANT_BUNTING;
+    public static final String CRAFTING_SPECIAL_PENNANT_BUNTING_AUGMENTATION = CRAFTING_SPECIAL + PENNANT_BUNTING+ "_augmentation";
 
     private FLRNames() {}
 }

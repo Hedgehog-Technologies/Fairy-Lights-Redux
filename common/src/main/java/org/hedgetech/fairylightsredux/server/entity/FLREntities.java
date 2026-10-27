@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import org.hedgetech.fairylightsredux.Constants;
+import org.hedgetech.fairylightsredux.FLRNames;
 
 import java.util.function.BiConsumer;
 
@@ -13,7 +14,7 @@ public final class FLREntities {
     public static EntityType<FenceFastenerEntity> FASTENER;
 
     public static void register(final BiConsumer<ResourceLocation, EntityType<?>> registry) {
-        final ResourceLocation id = Constants.id("fastener");
+        final ResourceLocation id = Constants.id(FLRNames.FASTENER);
         FASTENER = EntityType.Builder.<FenceFastenerEntity>of(FenceFastenerEntity::new, MobCategory.MISC)
                 .noLootTable()
                 .sized(1.15F, 2.8F)

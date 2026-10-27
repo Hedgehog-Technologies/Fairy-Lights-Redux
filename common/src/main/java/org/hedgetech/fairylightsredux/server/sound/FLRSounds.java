@@ -25,8 +25,8 @@ public final class FLRSounds {
         CORD_STRETCH = create(registry, "cord.stretch");
         CORD_SNAP = create(registry, "cord.snap");
         FEATURE_COLOR_CHANGE = create(registry, "feature.color_change");
-        FEATURE_LIGHT_TURN_ON = create(registry, "ffeature.light_turn_on");
-        FEATURE_LIGHT_TURN_OFF = create(registry, "ffeature.light_turn_off");
+        FEATURE_LIGHT_TURN_ON = create(registry, "feature.light_turn_on");
+        FEATURE_LIGHT_TURN_OFF = create(registry, "feature.light_turn_off");
     }
 
     private static SoundEvent create(final BiConsumer<ResourceLocation, SoundEvent> registry, final String name) {

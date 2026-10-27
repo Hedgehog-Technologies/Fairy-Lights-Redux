@@ -10,7 +10,8 @@
     "MixinServerGamePacketListenerImpl"
   ],
   "client": [
-    "MixinGameRenderer"
+    "MixinGameRenderer",
+    "MixinMinecraft"
   ],
   "server": [],
   "injectors": {

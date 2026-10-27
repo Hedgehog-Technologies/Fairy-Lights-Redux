@@ -1,15 +1,21 @@
 package org.hedgetech.fairylightsredux;
 
 import net.minecraft.core.registries.Registries;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
 import net.neoforged.neoforge.event.level.NoteBlockEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.registries.RegisterEvent;
+import org.hedgetech.fairylightsredux.client.gui.EditLetteredConnectionScreen;
+import org.hedgetech.fairylightsredux.data.FLRRecipeProvider;
+import org.hedgetech.fairylightsredux.network.*;
 import org.hedgetech.fairylightsredux.platform.NeoForgeConfigHelper;
 import org.hedgetech.fairylightsredux.server.block.FLRBlocks;
 import org.hedgetech.fairylightsredux.server.block.FastenerBlock;
@@ -26,15 +32,20 @@ import org.hedgetech.fairylightsredux.server.sound.FLRSounds;
 public class NeoForgeFairyLightsRedux {
     public NeoForgeFairyLightsRedux(IEventBus eventBus, ModContainer container) {
         CommonClass.init();
+
         container.registerConfig(ModConfig.Type.COMMON, NeoForgeConfigHelper.SPEC);
         container.registerConfig(ModConfig.Type.CLIENT, NeoForgeConfigHelper.CLIENT_SPEC);
+
         NeoForge.EVENT_BUS.addListener((final AddServerReloadListenersEvent event) -> event.addListener(JingleManager.ID, JingleManager.INSTANCE));
         NeoForge.EVENT_BUS.addListener((final NoteBlockEvent.Play event) -> {
             if (FastenerBlock.ringNoteBlockBell((Level) event.getLevel(), event.getPos(), event.getState(), event.getVanillaNoteId())) {
                 event.setCanceled(true);
             }
         });
+
         eventBus.addListener(NeoForgeFairyLightsRedux::register);
+        eventBus.addListener(NeoForgeFairyLightsRedux::gatherData);
+        eventBus.addListener(NeoForgeFairyLightsRedux::registerPayloads);
     }
 
     private static void register(final RegisterEvent event) {
@@ -46,5 +57,19 @@ public class NeoForgeFairyLightsRedux {
         event.register(Registries.BLOCK_ENTITY_TYPE, helper -> FLRBlockEntities.register(helper::register));
         event.register(Registries.ENTITY_TYPE, helper -> FLREntities.register(helper::register));
         event.register(Registries.CREATIVE_MODE_TAB, helper -> FLRCreativeTabs.register(helper::register));
+    }
+
+    private static void gatherData(final GatherDataEvent.Client event) {
+        event.createProvider(FLRRecipeProvider.Runner::new);
+    }
+
+    private static void registerPayloads(final RegisterPayloadHandlersEvent event) {
+        event.registrar("1")
+                .playToClient(UpdateEntityFastenerPayload.TYPE, UpdateEntityFastenerPayload.STREAM_CODEC, (payload, context) -> payload.handle(context.player().level()))
+                .playToClient(JinglePayload.TYPE, JinglePayload.STREAM_CODEC, (payload, context) -> payload.handle(context.player().level()))
+                .playToClient(OpenEditLetteredConnectionScreenPayload.TYPE, OpenEditLetteredConnectionScreenPayload.STREAM_CODEC, (payload, context) -> payload.getConnection(context.player().level()).ifPresent(EditLetteredConnectionScreen::open))
+                .playToServer(InteractionConnectionPayload.TYPE, InteractionConnectionPayload.STREAM_CODEC, (payload, context) -> payload.handle((ServerPlayer) context.player()))
+                .playToServer(EditLetteredConnectionPayload.TYPE, EditLetteredConnectionPayload.STREAM_CODEC, (payload, context) -> payload.handle((ServerPlayer) context.player()))
+                .playToServer(PickConnectionPayload.TYPE, PickConnectionPayload.STREAM_CODEC, (payload, context) -> payload.handle((ServerPlayer) context.player()));
     }
 }
