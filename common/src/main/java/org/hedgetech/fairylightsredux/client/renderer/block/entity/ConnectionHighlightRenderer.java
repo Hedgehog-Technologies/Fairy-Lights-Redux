@@ -106,7 +106,7 @@ public final class ConnectionHighlightRenderer {
         }
 
         up.normalize();
-        side.set(v1.x(), v1.y(), v2.z());
+        side.set(v1.x(), v1.y(), v1.z());
         side.cross(up);
         side.normalize();
         side.mul(edge == 0 || edge == 3 ? -r : r);
