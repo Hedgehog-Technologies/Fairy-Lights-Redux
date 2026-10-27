@@ -1,0 +1,20 @@
+{
+  "type": "fairylightsredux:crafting_dye_shaped",
+  "category": "misc",
+  "group": "snowflake_light",
+  "key": {
+    "D": "#c:dyes",
+    "G": "minecraft:white_stained_glass_pane",
+    "I": "#c:ingots/iron",
+    "S": "minecraft:snowball"
+  },
+  "pattern": [
+    " I ",
+    "SDS",
+    " G "
+  ],
+  "result": {
+    "count": 4,
+    "id": "fairylightsredux:snowflake_light"
+  }
+}

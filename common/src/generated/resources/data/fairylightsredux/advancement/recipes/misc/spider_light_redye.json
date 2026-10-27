@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_spider_light": {
+      "conditions": {
+        "items": [
+          {
+            "items": "fairylightsredux:spider_light"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "fairylightsredux:spider_light_redye"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_spider_light"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "fairylightsredux:spider_light_redye"
+    ]
+  }
+}

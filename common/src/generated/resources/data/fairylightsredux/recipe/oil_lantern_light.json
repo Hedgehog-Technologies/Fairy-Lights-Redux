@@ -1,0 +1,20 @@
+{
+  "type": "fairylightsredux:crafting_dye_shaped",
+  "category": "misc",
+  "group": "oil_lantern_light",
+  "key": {
+    "D": "#c:dyes",
+    "G": "#c:glass_panes/colorless",
+    "I": "#c:ingots/iron",
+    "S": "minecraft:stick"
+  },
+  "pattern": [
+    " I ",
+    "SDS",
+    "IGI"
+  ],
+  "result": {
+    "count": 4,
+    "id": "fairylightsredux:oil_lantern_light"
+  }
+}

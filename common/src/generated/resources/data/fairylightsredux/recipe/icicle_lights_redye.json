@@ -1,0 +1,18 @@
+{
+  "type": "fairylightsredux:crafting_dye_shaped",
+  "category": "misc",
+  "group": "icicle_lights",
+  "key": {
+    "D": "#c:dyes",
+    "L": "fairylightsredux:icicle_lights"
+  },
+  "pattern": [
+    "LLL",
+    "LDL",
+    "LLL"
+  ],
+  "result": {
+    "count": 8,
+    "id": "fairylightsredux:icicle_lights"
+  }
+}

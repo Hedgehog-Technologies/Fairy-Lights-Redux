@@ -1,0 +1,19 @@
+{
+  "type": "fairylightsredux:crafting_dye_shaped",
+  "category": "misc",
+  "group": "swallowtail_pennant",
+  "key": {
+    "-": "#c:strings",
+    "D": "#c:dyes",
+    "P": "minecraft:paper"
+  },
+  "pattern": [
+    "- -",
+    "PDP",
+    "P P"
+  ],
+  "result": {
+    "count": 1,
+    "id": "fairylightsredux:swallowtail_pennant"
+  }
+}

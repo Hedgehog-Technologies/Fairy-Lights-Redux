@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_icicle_lights": {
+      "conditions": {
+        "items": [
+          {
+            "items": "fairylightsredux:icicle_lights"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "fairylightsredux:icicle_lights_redye"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_icicle_lights"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "fairylightsredux:icicle_lights_redye"
+    ]
+  }
+}

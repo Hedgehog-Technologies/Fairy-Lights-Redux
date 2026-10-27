@@ -1,0 +1,20 @@
+{
+  "type": "fairylightsredux:crafting_dye_shaped",
+  "category": "misc",
+  "group": "icicle_lights",
+  "key": {
+    "B": "minecraft:water_bucket",
+    "D": "#c:dyes",
+    "G": "#c:glass_panes/colorless",
+    "I": "#c:ingots/iron"
+  },
+  "pattern": [
+    " I ",
+    "GDG",
+    " B "
+  ],
+  "result": {
+    "count": 4,
+    "id": "fairylightsredux:icicle_lights"
+  }
+}

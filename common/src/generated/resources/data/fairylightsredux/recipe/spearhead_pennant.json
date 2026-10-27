@@ -1,0 +1,19 @@
+{
+  "type": "fairylightsredux:crafting_dye_shaped",
+  "category": "misc",
+  "group": "spearhead_pennant",
+  "key": {
+    "-": "#c:strings",
+    "D": "#c:dyes",
+    "P": "minecraft:paper"
+  },
+  "pattern": [
+    "- -",
+    "PDP",
+    " PP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "fairylightsredux:spearhead_pennant"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "fairylightsredux:crafting_dye_shaped",
+  "category": "misc",
+  "group": "triangle_pennant",
+  "key": {
+    "-": "#c:strings",
+    "D": "#c:dyes",
+    "P": "minecraft:paper"
+  },
+  "pattern": [
+    "- -",
+    "PDP",
+    " P "
+  ],
+  "result": {
+    "count": 1,
+    "id": "fairylightsredux:triangle_pennant"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "fairylightsredux:crafting_dye_shaped",
+  "category": "misc",
+  "group": "jack_o_lantern",
+  "key": {
+    "D": "#c:dyes",
+    "G": "minecraft:torch",
+    "I": "#c:ingots/iron",
+    "P": "minecraft:jack_o_lantern",
+    "S": "#minecraft:wooden_slabs"
+  },
+  "pattern": [
+    " I ",
+    "SDS",
+    "GPG"
+  ],
+  "result": {
+    "count": 4,
+    "id": "fairylightsredux:jack_o_lantern"
+  }
+}

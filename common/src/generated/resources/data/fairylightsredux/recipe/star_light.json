@@ -1,0 +1,20 @@
+{
+  "type": "fairylightsredux:crafting_dye_shaped",
+  "category": "misc",
+  "group": "star_light",
+  "key": {
+    "D": "#c:dyes",
+    "G": "#c:nuggets/gold",
+    "I": "#c:ingots/iron",
+    "P": "minecraft:white_stained_glass_pane"
+  },
+  "pattern": [
+    " I ",
+    "PDP",
+    " G "
+  ],
+  "result": {
+    "count": 4,
+    "id": "fairylightsredux:star_light"
+  }
+}

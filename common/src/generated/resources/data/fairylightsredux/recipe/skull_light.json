@@ -1,0 +1,19 @@
+{
+  "type": "fairylightsredux:crafting_dye_shaped",
+  "category": "misc",
+  "group": "skull_light",
+  "key": {
+    "B": "#c:bones",
+    "D": "#c:dyes",
+    "I": "#c:ingots/iron"
+  },
+  "pattern": [
+    " I ",
+    "IDI",
+    " B "
+  ],
+  "result": {
+    "count": 4,
+    "id": "fairylightsredux:skull_light"
+  }
+}

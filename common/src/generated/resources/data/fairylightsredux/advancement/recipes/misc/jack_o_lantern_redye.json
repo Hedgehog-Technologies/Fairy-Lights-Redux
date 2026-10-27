@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_jack_o_lantern": {
+      "conditions": {
+        "items": [
+          {
+            "items": "fairylightsredux:jack_o_lantern"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "fairylightsredux:jack_o_lantern_redye"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_jack_o_lantern"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "fairylightsredux:jack_o_lantern_redye"
+    ]
+  }
+}

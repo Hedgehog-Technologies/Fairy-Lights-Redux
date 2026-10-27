@@ -1,0 +1,19 @@
+{
+  "type": "fairylightsredux:crafting_dye_shaped",
+  "category": "misc",
+  "group": "paper_lantern",
+  "key": {
+    "D": "#c:dyes",
+    "I": "#c:ingots/iron",
+    "P": "minecraft:paper"
+  },
+  "pattern": [
+    " I ",
+    "PDP",
+    "PPP"
+  ],
+  "result": {
+    "count": 4,
+    "id": "fairylightsredux:paper_lantern"
+  }
+}

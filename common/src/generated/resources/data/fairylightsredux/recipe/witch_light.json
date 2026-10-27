@@ -1,0 +1,21 @@
+{
+  "type": "fairylightsredux:crafting_dye_shaped",
+  "category": "misc",
+  "group": "witch_light",
+  "key": {
+    "B": "minecraft:glass_bottle",
+    "D": "#c:dyes",
+    "I": "#c:ingots/iron",
+    "S": "minecraft:stick",
+    "W": "minecraft:wheat"
+  },
+  "pattern": [
+    " I ",
+    "BDW",
+    " S "
+  ],
+  "result": {
+    "count": 4,
+    "id": "fairylightsredux:witch_light"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "fairylightsredux:witch_light_redye"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_witch_light": {
+      "conditions": {
+        "items": [
+          {
+            "items": "fairylightsredux:witch_light"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_witch_light"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "fairylightsredux:witch_light_redye"
+    ]
+  }
+}

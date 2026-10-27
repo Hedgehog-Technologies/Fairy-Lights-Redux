@@ -1,0 +1,20 @@
+{
+  "type": "fairylightsredux:crafting_dye_shaped",
+  "category": "misc",
+  "group": "moon_light",
+  "key": {
+    "C": "minecraft:clock",
+    "D": "#c:dyes",
+    "G": "minecraft:white_stained_glass_pane",
+    "I": "#c:ingots/iron"
+  },
+  "pattern": [
+    " I ",
+    "GDG",
+    " C "
+  ],
+  "result": {
+    "count": 4,
+    "id": "fairylightsredux:moon_light"
+  }
+}

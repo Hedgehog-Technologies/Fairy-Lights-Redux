@@ -1,0 +1,20 @@
+{
+  "type": "fairylightsredux:crafting_dye_shaped",
+  "category": "misc",
+  "group": "ghost_light",
+  "key": {
+    "D": "#c:dyes",
+    "G": "minecraft:white_stained_glass_pane",
+    "I": "#c:ingots/iron",
+    "P": "minecraft:paper"
+  },
+  "pattern": [
+    " I ",
+    "PDP",
+    "IGI"
+  ],
+  "result": {
+    "count": 4,
+    "id": "fairylightsredux:ghost_light"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "fairylightsredux:crafting_dye_shaped",
+  "category": "misc",
+  "group": "candle_lantern_light",
+  "key": {
+    "D": "#c:dyes",
+    "G": "#c:nuggets/gold",
+    "I": "#c:ingots/iron"
+  },
+  "pattern": [
+    " I ",
+    "GDG",
+    "IGI"
+  ],
+  "result": {
+    "count": 4,
+    "id": "fairylightsredux:candle_lantern_light"
+  }
+}

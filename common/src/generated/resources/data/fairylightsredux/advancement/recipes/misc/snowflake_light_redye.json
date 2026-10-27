@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_snowflake_light": {
+      "conditions": {
+        "items": [
+          {
+            "items": "fairylightsredux:snowflake_light"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "fairylightsredux:snowflake_light_redye"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_snowflake_light"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "fairylightsredux:snowflake_light_redye"
+    ]
+  }
+}

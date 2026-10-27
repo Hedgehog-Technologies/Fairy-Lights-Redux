@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_heart_light": {
+      "conditions": {
+        "items": [
+          {
+            "items": "fairylightsredux:heart_light"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "fairylightsredux:heart_light_redye"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_heart_light"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "fairylightsredux:heart_light_redye"
+    ]
+  }
+}

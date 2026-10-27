@@ -1,0 +1,18 @@
+{
+  "type": "fairylightsredux:crafting_dye_shaped",
+  "category": "misc",
+  "group": "meteor_light",
+  "key": {
+    "D": "#c:dyes",
+    "L": "fairylightsredux:meteor_light"
+  },
+  "pattern": [
+    "LLL",
+    "LDL",
+    "LLL"
+  ],
+  "result": {
+    "count": 8,
+    "id": "fairylightsredux:meteor_light"
+  }
+}

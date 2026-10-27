@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "-": "#c:strings",
+    "B": "minecraft:ink_sac",
+    "F": "#c:feathers",
+    "I": "#c:ingots/iron",
+    "P": "minecraft:paper"
+  },
+  "pattern": [
+    "I-I",
+    "PBF"
+  ],
+  "result": {
+    "count": 1,
+    "id": "fairylightsredux:letter_bunting"
+  }
+}

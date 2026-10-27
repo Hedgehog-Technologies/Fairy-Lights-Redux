@@ -1,0 +1,21 @@
+{
+  "type": "fairylightsredux:crafting_dye_shaped",
+  "category": "misc",
+  "group": "flower_light",
+  "key": {
+    "B": "minecraft:blue_orchid",
+    "D": "#c:dyes",
+    "I": "#c:ingots/iron",
+    "R": "minecraft:poppy",
+    "Y": "minecraft:dandelion"
+  },
+  "pattern": [
+    " I ",
+    "RDB",
+    " Y "
+  ],
+  "result": {
+    "count": 4,
+    "id": "fairylightsredux:flower_light"
+  }
+}

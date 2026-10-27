@@ -1,0 +1,21 @@
+{
+  "type": "fairylightsredux:crafting_dye_shaped",
+  "category": "misc",
+  "group": "spider_light",
+  "key": {
+    "D": "#c:dyes",
+    "E": "minecraft:spider_eye",
+    "I": "#c:ingots/iron",
+    "S": "#c:strings",
+    "W": "minecraft:cobweb"
+  },
+  "pattern": [
+    " I ",
+    "WDW",
+    "SES"
+  ],
+  "result": {
+    "count": 4,
+    "id": "fairylightsredux:spider_light"
+  }
+}

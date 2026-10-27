@@ -1,0 +1,19 @@
+{
+  "type": "fairylightsredux:crafting_dye_shaped",
+  "category": "misc",
+  "group": "heart_light",
+  "key": {
+    "D": "#c:dyes",
+    "G": "minecraft:red_stained_glass_pane",
+    "I": "#c:ingots/iron"
+  },
+  "pattern": [
+    " I ",
+    "IDI",
+    " G "
+  ],
+  "result": {
+    "count": 4,
+    "id": "fairylightsredux:heart_light"
+  }
+}

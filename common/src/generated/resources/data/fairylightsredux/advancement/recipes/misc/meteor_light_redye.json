@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_meteor_light": {
+      "conditions": {
+        "items": [
+          {
+            "items": "fairylightsredux:meteor_light"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "fairylightsredux:meteor_light_redye"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_meteor_light"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "fairylightsredux:meteor_light_redye"
+    ]
+  }
+}

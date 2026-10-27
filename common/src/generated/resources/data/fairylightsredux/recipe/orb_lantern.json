@@ -1,0 +1,20 @@
+{
+  "type": "fairylightsredux:crafting_dye_shaped",
+  "category": "misc",
+  "group": "orb_lantern",
+  "key": {
+    "D": "#c:dyes",
+    "I": "#c:ingots/iron",
+    "S": "#c:strings",
+    "W": "minecraft:white_wool"
+  },
+  "pattern": [
+    " I ",
+    "SDS",
+    " W "
+  ],
+  "result": {
+    "count": 4,
+    "id": "fairylightsredux:orb_lantern"
+  }
+}

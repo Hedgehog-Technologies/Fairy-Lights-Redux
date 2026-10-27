@@ -1,0 +1,20 @@
+{
+  "type": "fairylightsredux:crafting_dye_shaped",
+  "category": "misc",
+  "group": "tinsel",
+  "key": {
+    "-": "#c:strings",
+    "D": "#c:dyes",
+    "I": "#c:ingots/iron",
+    "P": "minecraft:paper"
+  },
+  "pattern": [
+    " P ",
+    "I-I",
+    " D "
+  ],
+  "result": {
+    "count": 1,
+    "id": "fairylightsredux:tinsel"
+  }
+}

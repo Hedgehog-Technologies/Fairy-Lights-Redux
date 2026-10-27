@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_orb_lantern": {
+      "conditions": {
+        "items": [
+          {
+            "items": "fairylightsredux:orb_lantern"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "fairylightsredux:orb_lantern_redye"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_orb_lantern"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "fairylightsredux:orb_lantern_redye"
+    ]
+  }
+}
